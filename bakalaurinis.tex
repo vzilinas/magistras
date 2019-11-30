@@ -1,0 +1,135 @@
+\documentclass{VUMIFPSbakalaurinis}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{wrapfig}
+
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setenumerate{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
+% Ignore all trivial warnings
+\hbadness=5000
+% Titulinio aprašas
+\university{Vilniaus universitetas}
+\faculty{Informatikos institutas}
+\department{Programų sistemų katedra}
+\papertype{Magistro baigiamajo darbo planas}
+\title{Srautinio apdorojimo sistemų balansavimas taikant mašininio mokymosi algoritmus}
+\titleineng{Balancing stream processing systems using machine learning algorithms}
+\author{Vytautas Žilinas}
+\supervisor{Partn. Doc. Andrius Adamonis}
+\reviewer{doc. dr. Vardauskas Pavardauskas}
+\date{Vilnius – \the\year}
+
+% Nustatymai
+% \setmainfont{Palemonas}   % Pakeisti teksto šriftą į Palemonas (turi būti įdiegtas sistemoje)
+\bibliography{bibliografija}
+
+\begin{document} 
+\maketitle
+
+\cleardoublepage\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\section{Tyrimo objektas ir aktualumas}
+Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas eksperimentinis sprendimas, galintis prisitaikyti, kai keičiama rodiklių duomenų struktūra. Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Pavyzdžiui, įvairių matuoklių – temperatūros, resursų suvartojimo – fiksuojamus rodmenis, kasmėnesinius veiklos indikatorius, tokius kaip veiklos finansines ataskaitas ar veiklos procesų indikatorius. Taip pat rodiklių struktūra gali būti keičiama laikui bėgant: objektų atributų taksonomija (pvz., mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamų rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius, auga, todėl standartiniai sprendimai, pavyzdžiui, reliacinės duomenų bazės, netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku ir saugos jau apdorotus. \par
+Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. Darbe yra analizuojami jau egzistuojantys srautinio apdorojimo sprendimai pagal srautinio apdorojimo programų savybes aprašytas Michael Stonebraker, pasirenkamas vieną srautinio apdorojimo sprendimas ir su juo daromas eksperimentas. 
+\par
+Kadangi rodikliai laikui bėgant gali būti keičiami, reikia, kad sprendimas galėtų prisitaikyti prie pokyčių. Yra keli būdai kaip tokie sprendimai gali būti kuriami:
+\begin{itemize}
+    \item Rankinio atnaujinimo sprendimas. Sukuriamas sprendimas pagal esamus reikalavimus, o atsiradus naujiems reikalavimams būtų kuriamos naujos arba keičiamos esamos apdorojimo sistemos. 
+    \item Universalus sprendimas. Sukuriamas universalus parametrizuojamas sprendimas ir pritaikomas užduotims nustatant parametrus.
+    \item Kodo generavimo sprendimas. Sukuriamas sprendimas, kuris generuoja srautinio duomenų apdorojimo sistemas pagal iš anksto aprašytą struktūrą.  
+\end{itemize}   
+Jei nėra numatomas kitimas, pagal ką turi būti apdorojami duomenys, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas, jei pirminiai rodiklių duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būseną (temperatūrą, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. \par
+Pagal Jack Herrington 2003 metų knygą „Code Generation in Action“ kodo generavimas — tai kūrimas programinės įrangos, kuri kurs reikiamą programinę įrangą problemai spręsti. Tai daroma tokiais atvejais, kai sprendžiama problema reikalauja daug rankinio darbo, kurį įmanoma automatizuoti. Kuo didesnio sprendimo reikalauja uždavinys, tuo patraukliau tampa naudoti kodo generavimą sprendimo kūrimui. Kodo generavimas suteikia tokius privalumus: 
+\begin{itemize}
+    \item Architektūrinį nuoseklumą: 
+    \begin{itemize}
+        \item Verčia programuotojus labiau mąstyti apie architektūrą.
+        \item Jei sunku „priversti“ generatorių generuoti reikiamą kodą, problema gali būti architektūroje.
+        \item Geros dokumentacijos buvimas sumažina problemą, kai nariai palieka projektą.
+    \end{itemize}
+    \item Abstrakciją:
+    \begin{itemize}
+        \item Programuotojai galės kurti naujus šablonus, kurie leis esamą funkcionalumą pritaikyti kitomis kalbomis, sprendimams daug paprasčiau negu rankomis parašytą kodą.
+        \item Verslo analitikai galės apžvelgti ir patvirtinti sprendimo abstrakciją.
+        \item Abstrakcija padės paprasčiau paruošti dokumentaciją, testavimo atvejus, produkto palaikymo medžiagą ir t.t.  
+    \end{itemize}
+    \item Aukštą komandos moralę — rašomas kodas bus nuoseklus ir kokybiškas, todėl kels komandos pasitikėjimą savimi.
+    \item Tinkamas sprendimas judriajam (angl. agile) programavimui, kadangi kodo generavimo kuriami sprendimai yra lankstesni, tai leidžia ateityje juos lengviau keisti ir atnaujinti.   
+\end{itemize} 
+Kodo generavimas tampa tikrai naudingas tada, kai jis naudojamas didelių kiekių rankiniam kodavimui pakeisti \cite{herrington2003code}. \par
+Darbe nagrinėjami architektūra ir eksperimentinis sprendimas, generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelius. Rodiklių duomenis apdorojantis eksperimentinis sprendimas turi pasižymėti tokiomis savybėmis: 
+\begin{itemize}
+    \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
+    \item Galimybė keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
+    \item Išvestinių rodiklių gavimas iš daugiau nei vieno rodiklio transformacijos.
+    \item Išvestinių rodiklių apdorojimas pagal iš anksto apibrėžtas funkcijas.
+\end{itemize}  
+
+
+\subsection{Darbo tikslas}
+Ištirti mašininio mokimosi tinkamumą srautinio apdorojimo sistemų balansavimui. 
+
+\subsection{Uždaviniai}
+\begin{enumerate}
+    \item Apsibrėžti srautinio apdorojimo sistemų metrikas, kuriuos bus naudojamos balansavimui.
+    \item Pasirinkti mašininio mokymosi algoritmą, kuris bus naudojamas tyrimo metu.
+    \item Pritaikyti pasirinkta mašininio mokymosi algoritmą tyrimui (???) 
+    \item Atlikti eksperimentą, ir  palyginti (???) rezultatą su esamu sprendimų (Dhalion?) 
+\end{enumerate}
+
+\subsection{Laukiami rezultatai}
+\begin{enumerate}
+    \item Pasirinktos metrikos reikalingos "Heron" srautinio apdorojimo sistemos balansavimui. 
+    \item Pasirinktas "AutoML" mašininio mokymosi algoritmas 
+    \item Sukurta implementacija naudojanti mašininį mokymosi algoritmą, pritaikyta "Heron" srautinio apdorojimo varikliui.  
+    \item Sukurta bandomojį sistemą ir atliktas eksperimentas naudojant sukurta implementaciją ir skirtingo pobūdžio dirbtines apkrovas.
+    \item Palyginti rezultatai su alternatyvomis (???).
+\end{enumerate}
+% Tikimasi, kad pasiūlytas sprendimas bus naudingas dažnai nežymiai kintant duomenų struktūrai. Taip pat pasirinkta srautinio 
+% duomenų apdorojimo sistema leis nesudėtingai įgyvendinti modulių kūrimą.
+% \section{Tyrimo metodas ir numatomas darbo atlikimo procesas}
+
+% \subsection{Tyrimo metodas}
+% Numatomas tyrimo metodas: eksperimentas, kurio metu bus aprašytos duomenų struktūros ir duomenų struktūrų pokyčiai. Remiantis interneto straipsniais ir srautinio apdorojimo sistemų dokumentacijomis bus pasirinkta srautinio apdorojimo sistema sprendimui kurti. Bus sukurtas srautinio apdorojimo modulių generatorius (remiantis knyga: Code Generation in Action parašyta Jack Herrington) ir aprašytas sprendimo generuojamas kodas. \par 
+
+% \subsection{Darbo atlikimo procesas}
+% \begin{enumerate}
+%     \item Apibrėžtas rodiklių duomenų modelis, XML arba JSON (Protobuff netinka iš esmės, kadangi jie automatiškai ignoruoja duomenis, kurie nėra 
+%     '.proto' apraše) formatu keliaujantys duomenys.
+%     \item Apibrėžtas būdas stebėti duomenų pokyčius, lyginimas įeinančių duomenų su schema arba kitaip aprašyta struktūra.
+%     \item Išanalizuotos esamos srautinio apdorojimo sistemos ir pasirinkta tinkamiausia sistema sprendimui pagal:
+%     	\begin{itemize}
+% 		\item Galimybę pridėti modulį.
+% 		\item Srautinio apdorojimo sistemos perkrovimo paprastumą.
+% 	\end{itemize}
+%     \item Su pasirinkta sistema sukurtas sprendimas ir pagalbinės programos eksperimentui atlikti.
+%     \item Su sukurtu sprendimu padarytas eksperimentas ir aprašytas su testiniais duomenimis per tam tikrą laiką sugeneruotas kodas. 
+% \end{enumerate}
+
+% \section{Darbui aktualus literatūros šaltiniai}
+% Aktualu: https://github.com/manuzhang/awesome-streaming \\
+% https://recruitloop.com/blog/rise-big-data-data-science-infographic/ \\
+% https://wso2.com/library/articles/2018/02/stream-processing-101-from-sql-to-streaming-sql-in-ten-minutes/ \\
+% https://dataconomy.com/2017/03/care-big-data-care-stream-processing/ \\
+% Possible frameworks: \\
+%  Python - https://github.com/robinhood/faust \\
+%  Python - https://github.com/WallarooLabs/wallaroo \\
+%  Storm with python - https://github.com/Parsely/streamparse \\
+%  Maybe just KSQL - https://github.com/confluentinc/ksql \\
+ 
+\printbibliography[heading=bibintoc] 
+
+\end{document}
