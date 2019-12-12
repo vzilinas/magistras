@@ -31,7 +31,7 @@
 .buildcache/
 .coverage*
 .idea
-/.vscode/
+# /.vscode/
 .cache
 .pants.d
 .pants.run
@@ -504,7 +504,7 @@ project.lock.json
 .idea/
 
 # Visual Studio Code
-.vscode/
+# .vscode/
 
 # Output folder used by Webpack or other FE stuff
 **/node_modules/*
