@@ -21,10 +21,10 @@
 % Titulinio aprašas
 \university{Vilniaus universitetas}
 \faculty{Informatikos institutas}
-\department{Programų sistemų katedra}
-\papertype{Magistro baigiamajo darbo planas}
-\title{Srautinio apdorojimo sistemų balansavimas taikant mašininio mokymosi algoritmus}
-\titleineng{Balancing stream processing systems using machine learning algorithms}
+\department{Programų sistemų studijų programa}
+\papertype{Mokslo tyriamasis darbas I}
+\title{Srautinio apdorojimo sistemų balansavimas taikant mašininį mokymąsi}
+\titleineng{Balancing stream processing systems using machine learning}
 \author{Vytautas Žilinas}
 \supervisor{Partn. Doc. Andrius Adamonis}
 \reviewer{Prof. Dr. Aistis Raudys}
@@ -40,19 +40,17 @@
 \cleardoublepage\pagenumbering{arabic}
 \setcounter{page}{2}
 
-\section{Tyrimo aktualumas ir naujumas}
+\section{Tyrimas}
+\subsection{Tyrimo aktualumas ir naujumas}
 
-Šiame magistriniame darbe bus nagrinėjami neuroniniai tinklai, jų algoritmai ir  pritaikymas srautinio apdorojimo sistemų balansavimui. 
+Šiame magistriniame darbe bus nagrinėjami srautinio apdorojimo sistemų balansavimas ir bus bandoma tam pritaikyti mašininį mokymąsi. 
+2018 metų straipsnyje \cite{vaquero2018autotuning} pirmą kartą buvo panaudotas "Reinforcement learning" tipo modifikuotas "REINFORCE" algoritmas \cite{PolicyGradient} siekiant automatiškai balansuoti "Apache Spark" srautinio apdorojimo sistemą. Šiame darbe bus bandomas kitas "Reinforcement learning" tipo algoritmas ir taip pat bus balansuojama "Heron" srautinio apdorojimo sistema.
 
-JUODRAŠTIS:
+Yra sukurta daug "Reinforcement learning" algoritmų, tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris bus tinkamiausias srautinių apdorojimų sistemų balansavimui.
 
-Big data ir realiu laiku apdorojimo duomenų svarba.
-Srautinio apdorojimo sistemų naudojimas realiame pasaulyje.
-Konfigūruojamų elementų kiekis srautinio apdorojimo sistemose.
-Konfigūravimo svarba neapibrėžtuose apkrovose.
-Mašininio mokymosi algoritmų privalumai palyginus su žmonėmis.
-Mašininio mokymosi algoritmų pritaikymas balansavime naujumas.
+Darbe nagrinėjama "Heron" srautinio apdorojimo sistema, kuri 2016 metais buvo išleista "Twitter", kaip alternatyva jau esamai "Apache Storm" srautinio apdorojimo sistemai \cite{openSourcing}. "Apache Spark" skiriasi nuo "Apache Storm" ir "Heron" tuo, kad ji apdoroja duomenis ne srautais, o mikro-paketais \cite{karau2015learning}. Šiame darbe bus nagrinėjamas "Heron", kadangi tai yra naujesnis srautinio apdorojimo variklis nei "Apache Storm" ir todėl, kad jo duomenų apdorojimo būdas yra kitoks nei "Apache Spark" kuris buvo naudojamas \cite{vaquero2018autotuning} straipsnyje.
 
+\section{Darbas}
 
 \subsection{Darbo tikslas}
 Ištirti mašininio mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui. 
@@ -60,8 +58,9 @@ Ištirti mašininio mokymosi tinkamumą srautinio apdorojimo sistemų balansavim
 \subsection{Uždaviniai}
 \begin{enumerate}
     \item Pasirinkti srautinio apdorojimo sistemos metrikas, kurios bus naudojamos balansavimui.
-    \item Išanalizuoti "Reinforcement Learning" algoritmus ir pasirinkti tinkamą tyrimui.
+    \item Išanalizuoti esamus "Reinforcement Learning" algoritmus ir pasirinkti tinkamą tyrimui.
     \item Pritaikyti pasirinktą mašininio mokymosi algoritmą srautinio apdorojimo sistemos balansavimui.
+    \item Straipsnyje \cite{vaquero2018autotuning} pateikto bandymo pritaikymas "Heron" srautinio apdorojimo sistemai.
     \item Atlikti eksperimentą ir palyginti rezultatą su alternatyvomis - standartinė konfigūracija, reaktyvus balansavimas. 
 \end{enumerate}
 
@@ -71,6 +70,7 @@ Ištirti mašininio mokymosi tinkamumą srautinio apdorojimo sistemų balansavim
     \item Pasirinktas "Reinforcement Learning" mašininio mokymosi algoritmas.
     \item Pasirinktas mašininio mokymosi algoritmas pritaikytas "Heron" srautinio apdorojimo sistemų balansavimui.  
     \item Atliktas eksperimentas naudojant sukurtą balansavimo implementaciją ir srautinio apdorojimo sistemos dirbtines apkrovas.
+    \item Išbandytas \cite{vaquero2018autotuning} straipsnyje taikomas algoritmas.
     \item Eksperimento rezultatai palyginti su standartine konfigūraciją ir reaktyviu balansavimu.
 \end{enumerate}
  
