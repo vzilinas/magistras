@@ -20,14 +20,14 @@
 \hbadness=5000
 % Titulinio aprašas
 \university{Vilniaus universitetas}
-\faculty{Informatikos institutas}
+\faculty{Matematikos ir informatikos fakultetas}
 \department{Programų sistemų studijų programa}
-\papertype{Mokslo tyriamasis darbas I}
+\papertype{Mokslo tiriamasis darbas I}
 \title{Srautinio apdorojimo sistemų balansavimas taikant mašininį mokymąsi}
 \titleineng{Balancing stream processing systems using machine learning}
 \author{Vytautas Žilinas}
-\supervisor{Partn. Doc. Andrius Adamonis}
-\reviewer{Prof. Dr. Aistis Raudys}
+\supervisor{Partn. doc. Andrius Adamonis}
+\reviewer{Prof. dr. Aistis Raudys}
 \date{Vilnius – \the\year}
 
 % Nustatymai
@@ -43,12 +43,19 @@
 \section{Tyrimas}
 \subsection{Tyrimo aktualumas ir naujumas}
 
-Šiame magistriniame darbe bus nagrinėjami srautinio apdorojimo sistemų balansavimas ir bus bandoma tam pritaikyti mašininį mokymąsi. 
-2018 metų straipsnyje \cite{vaquero2018autotuning} pirmą kartą buvo panaudotas "Reinforcement learning" tipo modifikuotas "REINFORCE" algoritmas \cite{PolicyGradient} siekiant automatiškai balansuoti "Apache Spark" srautinio apdorojimo sistemą. Šiame darbe bus bandomas kitas "Reinforcement learning" tipo algoritmas ir taip pat bus balansuojama "Heron" srautinio apdorojimo sistema.
+Realaus laiko duomenų apdorojimas (angl. real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. 
 
-Yra sukurta daug "Reinforcement learning" algoritmų, tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris bus tinkamiausias srautinių apdorojimų sistemų balansavimui.
+Yra keli pagrindiniai srautinio apdorojimo varikliai: „Apache Storm“, „Apache Spark“, „Heron“ ir kiti. „Heron“ srautinio apdorojimo variklis, kuris 2016 metais buvo išleistas „Twitter“, kaip alternatyva „Apache Storm“ srautinio apdorojimo varikliui \cite{openSourcing}. O „Apache Spark“ skiriasi nuo „Apache Storm“ ir „Heron“ tuo, kad jis apdoroja duomenis ne srautais, o mikro-paketais \cite{karau2015learning}. Šiame darbe bus naudojamas „Heron“, kadangi tai yra naujesnis ir geresnis srautinio apdorojimo variklis nei „Apache Storm“ \cite{twitterHeron}. Taip pat jo duomenų apdorojimo būdas yra kitoks nei „Apache Spark“, kurio balansavimas jau buvo atliktas naudojant mašininį mokymąsi \cite{vaquero2018autotuning}.
 
-Darbe nagrinėjama "Heron" srautinio apdorojimo sistema, kuri 2016 metais buvo išleista "Twitter", kaip alternatyva jau esamai "Apache Storm" srautinio apdorojimo sistemai \cite{openSourcing}. "Apache Spark" skiriasi nuo "Apache Storm" ir "Heron" tuo, kad ji apdoroja duomenis ne srautais, o mikro-paketais \cite{karau2015learning}. Šiame darbe bus nagrinėjamas "Heron", kadangi tai yra naujesnis srautinio apdorojimo variklis nei "Apache Storm" ir todėl, kad jo duomenų apdorojimo būdas yra kitoks nei "Apache Spark" kuris buvo naudojamas \cite{vaquero2018autotuning} straipsnyje.
+Srautinio apdorojimo sistemų balansavimas (angl. auto-tuning) - tai sistemos konfigūracijos valdymas siekiant užtikrinti geriausią resursų išnaudojimą - duomenų apdorojimas neprarandant greičio, bet ir tuo pačiu naudojant tik reikiamą kiekį resursų. Kadangi srautinio apdorojimo sistemos yra kuriamos lygiagrečios, todėl jos gali būti plečiamos horizontaliai ir vertikaliai \cite{shortstreamproc}, keičiant sistemų konfigūraciją. Tačiau lygiagrečių skaičiavimo vienetų keitimas nėra vienintelis būdas optimizuoti resursų išnaudojimą, kiekvienas variklis turi savo rinkinį konfigūruojamų elementų. Pavyzdžiui „Heron“ leidžia valdyti 56 skirtingus konfigūruojamus svertus (angl. levers) \cite{configDocument}.
+
+Yra skirtingi būdai kaip gali būti parenkama tinkama konfigūracija. Kadangi nėra dar naudojimui pritaikytų sprendimų, kurie balansuotų srautinio apdorojimo sistemos dažniausiai tai daro duomenų inžinieriai, kurie dirba su šiomis sistemomis. Kadangi apkrovos gali būti skirtingų pobūdžiu (duomenų kiekis, skaičiavimų sudėtingumas, nereguliari apkrova), o inžinieriai konfigūruodami išbando keletą derinių ir pasirenka labiausiai tinkanti \cite{selfRegulatingStreaming}, lieka labai daug skirtingų neišbandytų konfigūracijos variacijų. Optimalios konfigūracijos suradimas yra NP sudėtingumo problema \cite{automateTuning}, todėl žmonėms yra sunku suvokti didelį kiekį konfigūracijos variacijų. 
+Kitas būdas valdyti konfigūraciją buvo pasiūlytas 2017 metų straipsnyje „Dhalion: self-regulating stream processing in heron“, kur autoriai sukūrė sprendimą, kuris leidžia konfigūruoti „Heron“ srautinio apdorojimo sistemas pagal dabartinę situaciją, t.y. jei „Dhalion“ mato, jog apdorojimo elementų išnaudojimas yra >100\%, jis padidina lygiagrečiai dirbančių apdorojimo elementų kiekį \cite{dhalion}. Tačiau šis sprendimas leidžia reguliuoti tik elementų lygiagretumą ir tik reaguoti į resursų pokyčius.                         
+Taip pat balansavimui gali būti pritaikytas mašininis mokymasis. Vienas iš tokių bandymų buvo aprašytas 2018 metų straipsnyje „Auto-tuning Distributed Stream Processing Systems using Reinforcement Learning“, kuriame buvo atliktas tyrimas: „Apache Spark“ sistemos balansavimui buvo naudojamas skatinamojo mokymo REINFORCE algoritmas, kuris pagal „Apache Spark“ duodamas sistemos metrikas keitė konfigūracijas ir buvo nustatyta, jog sprendimas naudojantis mašininį mokymąsi greičiau suranda geresne konfigūraciją nei žmogus per trumpesnį laiką ir taip pat sumažina laukimo trukme (angl. latency) 60-70\% palyginus su žmonių pasirinkta konfigūracija \cite{vaquero2018autotuning}. Šiame darbe naudojamas „Heron“ variklis leidžia prie savęs prijungti sukurta išorinę metrikų surinkimo programą, kuri gali rinkti tokias sistemų metrikas kaip: naudojama RAM atmintį, CPU apkrovą, komponentų paralelizmas ir kitas. 
+
+Skatinamasis mokymasis yra vienas iš mašininio mokymosi sričių. Tai mokymasis, kuris nereikalauja duomenų apmokymui, o mokosi darant bandymus ir klystant ir pagrindinis uždavinys yra surasti balansą tarp naujų sprendimų tyrinėjimo (angl. exploration) ir turimos informacijos išnaudojimo (angl. exploitation) \cite{reinforcment}. Vienas iš pagrindinių privalumu naudojant skatinamąjį mokymąsi balansavimui yra tai, kad nereikia turėti išankstinių duomenų apmokymui. Tačiau tokio tipo mašininis mokymasis turi ir problemų: sudėtinga aprašyti teisingo sprendimo apdovanojimo funkciją ir turi būti teisingai aprašytas balansas tarp tyrinėjimo ir išnaudojimo  \cite{selfRegulatingStreaming}.
+
+Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carl, Q-learning, Deep Q Network ir kiti), tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris bus tinkamiausias srautinių apdorojimų sistemų balansavimui.
 
 \section{Darbas}
 
@@ -58,20 +65,15 @@ Ištirti mašininio mokymosi tinkamumą srautinio apdorojimo sistemų balansavim
 \subsection{Uždaviniai}
 \begin{enumerate}
     \item Pasirinkti srautinio apdorojimo sistemos metrikas, kurios bus naudojamos balansavimui.
-    \item Išanalizuoti esamus "Reinforcement Learning" algoritmus ir pasirinkti tinkamą tyrimui.
-    \item Pritaikyti pasirinktą mašininio mokymosi algoritmą srautinio apdorojimo sistemos balansavimui.
-    \item Straipsnyje \cite{vaquero2018autotuning} pateikto bandymo pritaikymas "Heron" srautinio apdorojimo sistemai.
-    \item Atlikti eksperimentą ir palyginti rezultatą su alternatyvomis - standartinė konfigūracija, reaktyvus balansavimas. 
+    \item Išanalizuoti esamus skatinamojo mokymosi algoritmus ir pasirinkti bei pritaikyti tinkamą algoritmą srautinio apdorojimo sistemos balansavimui.
+    \item Atlikti eksperimentą ir palyginti rezultatą su alternatyvomis - „Heron“ su standartine konfigūracija, „Heron“ su „Dhalion“ priedu bei „Heron“ balansavimas pritaikius REINFORCE algoritmą. 
 \end{enumerate}
 
 \subsection{Laukiami rezultatai}
 \begin{enumerate}
-    \item Pritaikant skirtingas apkrovas srautinio apdorojimo sistemoms, surinktos ir surikiuotos metrikos, reikalingos "Heron" srautinio apdorojimo sistemos balansavimui. 
-    \item Pasirinktas "Reinforcement Learning" mašininio mokymosi algoritmas.
-    \item Pasirinktas mašininio mokymosi algoritmas pritaikytas "Heron" srautinio apdorojimo sistemų balansavimui.  
-    \item Atliktas eksperimentas naudojant sukurtą balansavimo implementaciją ir srautinio apdorojimo sistemos dirbtines apkrovas.
-    \item Išbandytas \cite{vaquero2018autotuning} straipsnyje taikomas algoritmas.
-    \item Eksperimento rezultatai palyginti su standartine konfigūraciją ir reaktyviu balansavimu.
+    \item Pritaikant skirtingas apkrovas srautinio apdorojimo sistemoms, surinktos ir surikiuotos metrikos, reikalingos „Heron“ srautinio apdorojimo sistemos balansavimui. 
+    \item Pasirinktas skatinamojo mokymosi algoritmas Deep Q Network ir pritaikytas „Heron“ srautinio apdorojimo sistemų balansavimui.
+    \item Atliktas eksperimentas su „Heron“ ir alternatyvomis ir išanalizuoti bei palyginti gauti rezultatai.     
 \end{enumerate}
  
 \printbibliography[heading=bibintoc] 
