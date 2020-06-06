@@ -1,0 +1,83 @@
+\documentclass{VUMIFPSbakalaurinis}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{wrapfig}
+
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setenumerate{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
+\hbadness=5000
+% Titulinio aprašas
+\university{Vilniaus universitetas}
+\faculty{Matematikos ir informatikos fakultetas}
+\department{Programų sistemų studijų programa}
+\papertype{Mokslo tiriamasis darbas II}
+\title{Srautinio apdorojimo sistemų balansavimas taikant mašininį mokymąsi}
+\titleineng{Balancing stream processing systems using machine learning}
+\author{Vytautas Žilinas}
+\supervisor{Partn. doc. Andrius Adamonis}
+\reviewer{Prof. dr. Aistis Raudys}
+\date{Vilnius – \the\year}
+
+% Nustatymai
+% \setmainfont{Palemonas}   % Pakeisti teksto šriftą į Palemonas (turi būti įdiegtas sistemoje)
+\bibliography{bibliografija}
+
+\begin{document} 
+\maketitle
+
+\cleardoublepage\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\section{Tyrimas}
+\subsection{Tyrimo aktualumas ir naujumas}
+
+Realaus laiko duomenų apdorojimas (angl. real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. 
+
+Yra keli pagrindiniai srautinio apdorojimo varikliai: „Apache Storm“, „Apache Spark“, „Heron“ ir kiti. „Apache Storm“ ir „Heron“ apdoroja duomenis ne duomenų srautais, o „Apache Spark“ mikro-paketais \cite{karau2015learning}. „Heron“ srautinio apdorojimo variklis, buvo išleistas „Twitter“ įmonės 2016 metais kaip greitesnė alternatyva „Apache Storm“ srautinio apdorojimo varikliui \cite{openSourcing}.Šiame darbe bus naudojamas „Heron“, kadangi tai yra naujesnis ir greitesnis srautinio apdorojimo variklis nei „Apache Storm“ \cite{twitterHeron}. 
+
+Srautinio apdorojimo sistemų balansavimas (angl. auto-tuning) - tai sistemos konfigūracijos valdymas siekiant užtikrinti geriausią resursų išnaudojimą - duomenų apdorojimas neprarandant greičio, bet ir naudojant tik reikiamą kiekį resursų. Kadangi srautinio apdorojimo sistemų komponentai yra kuriami kaip lygiagretus skaičiavimo elementai, todėl jie gali būti plečiami horizontaliai ir vertikaliai \cite{shortstreamproc} keičiant sistemų konfigūraciją. Tačiau lygiagrečių elementų kiekio keitimas nėra vienintelis būdas optimizuoti resursų išnaudojimą. Kiekvienas variklis turi savo rinkinį konfigūruojamų elementų. Darbe naudojamas „Heron“ variklis leidžia optimizuoti sistemas naudojant 56 konfigūruojamus svertus (angl. levers) \cite{configDocument}.
+
+Yra skirtingi būdai kaip gali būti parenkama tinkama konfigūracija. Kadangi dar nėra naudojimui paruoštų sprendimų, kurie galėtų balansuoti srautinio apdorojimo sistemas savarankiškai, dažniausiai tai daro duomenų inžinieriai, kurie dirba su šiomis sistemomis. Kadangi srautinio apdorojimo sistemų apkrovos gali būti skirtingų pobūdžiu (duomenų kiekis, skaičiavimų sudėtingumas, nereguliari apkrova), o inžinieriai konfigūruodami išbando tik keletą derinių ir pasirenka labiausiai tinkanti \cite{selfRegulatingStreaming}, lieka labai daug skirtingų neišbandytų konfigūracijos variacijų. Optimalios konfigūracijos suradimas yra NP sudėtingumo problema \cite{automateTuning}, nes žmonėms yra sunku suvokti didelį kiekį konfigūracijos variacijų. 
+Vienas iš būdų automatiškai valdyti konfigūraciją buvo pasiūlytas 2017 metų straipsnyje „Dhalion: self-regulating stream processing in heron“, kuriame autoriai aprašo savo sukurtą sprendimą „Dhalion“, kuris konfigūruoja „Heron“ srautinio apdorojimo sistemas pagal esama apkrova ir resursus, t.y. jei apdorojimo elementų išnaudojimas išauga >100\%, „Dhalion“ padidina lygiagrečiai dirbančių apdorojimo elementų kiekį \cite{dhalion}. Tačiau šis sprendimas leidžia reguliuoti tik elementų lygiagretumą ir tai daro tik reaktyviai.                         
+Vienas iš naujausių būdų balansuoti srautinio apdorojimo sistemas - mašininis mokymasis. Vienas iš tokių bandymų buvo aprašytas 2018 metų straipsnyje „Auto-tuning Distributed Stream Processing Systems using Reinforcement Learning“, kuriame buvo atliktas tyrimas - „Apache Spark“ sistemos balansavimui buvo naudojamas skatinamojo mokymo REINFORCE algoritmas, kuris pagal dabartinę konfigūraciją ir gaunamas metrikas keitė srautinio apdorojimo sistemos konfigūracijas. Šiame tyrime buvo nustatyta, jog sprendimas, naudojantis mašininį mokymąsi, suranda konfigūraciją per trumpesnį laiką nei žmones ir taip pat sukurtą konfigūraciją naudojančios srautinio apdorojimo sistemos laukimo trukme (angl. latency) yra 60-70\% mažesnė nei tyrimo metu žmonių sukurtos konfigūracijos \cite{vaquero2018autotuning}. Šiame darbe naudojamas „Heron“ variklis leidžia prie savęs prijungti sukurtą išorinę metrikų surinkimo programą, kuri gali rinkti tokias sistemų metrikas kaip: naudojama RAM atmintis, CPU apkrova, komponentų paralelizmas ir kitas, kurios bus naudojamos sistemos balansavimui. 
+
+Skatinamasis mokymasis yra vienas iš mašininio mokymosi tipų. Šis mokymasis skiriasi nuo kitų, nes nereikia turėti duomenų apmokymui, o programos mokosi darydamos bandymus ir klysdamos. Pagrindinis uždavinys naudojant skatinamąjį mokymąsi yra surasti balansą tarp naujų sprendimų tyrinėjimo (angl. exploration) ir turimos informacijos išnaudojimo (angl. exploitation) \cite{reinforcment}. Vienas iš pagrindinių privalumų naudojant skatinamąjį mokymąsi balansavimui - nereikia turėti išankstinių duomenų apmokymui kas leidžia jį paprasčiau pritaikyti skirtingoms srautinio apdorojimo sistemų apkrovoms. Tačiau tokio tipo mašininis mokymasis turi ir problemų: sudėtinga aprašyti tinkamos konfigūracijos apdovanojimo (angl. reward) funkciją ir turi būti teisingai aprašytas balansas tarp tyrinėjimo ir išnaudojimo tam, kad nebūtų patirti nuostoliai \cite{selfRegulatingStreaming}.
+
+Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carl, Q-learning, Deep Q Network ir kiti), tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris yra tinkamiausias srautinių apdorojimų sistemų balansavimui.
+
+\section{Darbas}
+
+\subsection{Darbo tikslas}
+Ištirti mašininio mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui. 
+
+\subsection{Uždaviniai}
+\begin{enumerate}
+    \item Apibrėžti duomenų pobūdį ir apkrovas, kurios bus naudojamos eksperimente bei pasirinkti srautinio apdorojimo sistemų metrikas, kurios bus naudojamos eksperimento rezultatų palyginimui.
+    \item Atlikti literatūros analizė apie esamus skatinamojo mokymosi algoritmus ir pasirinkti vieną iš jų eksperimentui. 
+    \item Sukurti eksperimentinį sprendimą, kuris pritaiko pasirinktą mašininio mokymosi algoritmą srautinio apdorojimo sistemų balansavimui.
+    \item Atlikti eksperimentą ir palyginti gautus rezultatus su alternatyvomis - „Heron“ su standartine konfigūracija, „Heron“ su „Dhalion“ priedu bei „Heron“ balansavimas pritaikius REINFORCE algoritmą. 
+\end{enumerate}
+
+\subsection{Laukiami rezultatai}
+\begin{enumerate}
+    \item Apibrėžtas duomenų pobūdis ir surinktos metrikos, reikalingos „Heron“ srautinio apdorojimo sistemos balansavimo efektyvumo įvertinimui ir eksperimento rezultatų palyginimui. 
+    \item Išanalizavus esamų skatinamojo mašininio mokymosi algoritmų savybes pasirinktas algoritmas, kuris tinka balansavimo uždaviniui spręsti. 
+    \item Sukurtas eksperimentinis sprendimas, kuris balansuotų „Heron“ srautinio apdorojimo sistemą naudojant pasirinkta skatinamojo mokymosi algoritmą.
+    \item Atliktas eksperimentas su „Heron“ ir alternatyvomis ir išanalizuoti bei palyginti gauti rezultatai.     
+\end{enumerate}
+ 
+\printbibliography[heading=bibintoc] 
+
+\end{document}
