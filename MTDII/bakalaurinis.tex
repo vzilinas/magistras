@@ -40,8 +40,9 @@
 \cleardoublepage\pagenumbering{arabic}
 \setcounter{page}{2}
 
-\section{Tyrimas}
-\subsection{Tyrimo aktualumas ir naujumas}
+\section{Įvadas}
+
+Šio darbo tikslas - apžvelgti susijusius literatūros šaltinius, pateikti jų santraukas ir panaudoti šią informacija suformuluoti problemą, kuri bus nagrinėjama sekančiame darbe. 
 
 Realaus laiko duomenų apdorojimas (angl. real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. 
 
@@ -57,27 +58,12 @@ Skatinamasis mokymasis yra vienas iš mašininio mokymosi tipų. Šis mokymasis 
 
 Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carl, Q-learning, Deep Q Network ir kiti), tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris yra tinkamiausias srautinių apdorojimų sistemų balansavimui.
 
-\section{Darbas}
+\section{Duomenų pobūdis ir apkrovos}
 
-\subsection{Darbo tikslas}
-Ištirti mašininio mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui. 
+\section{Srautinio apdorojimo sistemų matavimas}
 
-\subsection{Uždaviniai}
-\begin{enumerate}
-    \item Apibrėžti duomenų pobūdį ir apkrovas, kurios bus naudojamos eksperimente bei pasirinkti srautinio apdorojimo sistemų metrikas, kurios bus naudojamos eksperimento rezultatų palyginimui.
-    \item Atlikti literatūros analizė apie esamus skatinamojo mokymosi algoritmus ir pasirinkti vieną iš jų eksperimentui. 
-    \item Sukurti eksperimentinį sprendimą, kuris pritaiko pasirinktą mašininio mokymosi algoritmą srautinio apdorojimo sistemų balansavimui.
-    \item Atlikti eksperimentą ir palyginti gautus rezultatus su alternatyvomis - „Heron“ su standartine konfigūracija, „Heron“ su „Dhalion“ priedu bei „Heron“ balansavimas pritaikius REINFORCE algoritmą. 
-\end{enumerate}
+\section{Skatinamojo mokymosi algoritmai}
 
-\subsection{Laukiami rezultatai}
-\begin{enumerate}
-    \item Apibrėžtas duomenų pobūdis ir surinktos metrikos, reikalingos „Heron“ srautinio apdorojimo sistemos balansavimo efektyvumo įvertinimui ir eksperimento rezultatų palyginimui. 
-    \item Išanalizavus esamų skatinamojo mašininio mokymosi algoritmų savybes pasirinktas algoritmas, kuris tinka balansavimo uždaviniui spręsti. 
-    \item Sukurtas eksperimentinis sprendimas, kuris balansuotų „Heron“ srautinio apdorojimo sistemą naudojant pasirinkta skatinamojo mokymosi algoritmą.
-    \item Atliktas eksperimentas su „Heron“ ir alternatyvomis ir išanalizuoti bei palyginti gauti rezultatai.     
-\end{enumerate}
- 
 \printbibliography[heading=bibintoc] 
 
 \end{document}
