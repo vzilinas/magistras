@@ -58,9 +58,38 @@ Skatinamasis mokymasis yra vienas iš mašininio mokymosi tipų. Šis mokymasis 
 
 Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carl, Q-learning, Deep Q Network ir kiti), tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris yra tinkamiausias srautinių apdorojimų sistemų balansavimui.
 
-\section{Duomenų pobūdis ir apkrovos}
+\section{Srautinio apdorojimo sistemų matavimas ir derinimas}
+\subsection{Srautinio apdorojimo sistemos}
+Srautinis duomenų apdorojimas (angl. stream processing) – terminas naudojamas apibrėžti sistemas sudarytas iš skaičiavimo elementų (angl. modules) galinčių skaičiuoti lygiagrečiai ir kurios bendrauja kanalais. Tokios sistemų elementai dažniausiai skirstomi į tris klases: šaltinius (angl. sources) kurie paduoda duomenis į sistemą, filtrus (angl. filters) kurie atlieka tam tikrus vienetinius (angl. atomic) skaičiavimus ir nuotakus (angl. sink) kurie perduoda duomenis iš sistemų \cite{stephens1997survey}. 
+\begin{figure}[H]
+    \includegraphics[width=15cm]{img/Srautinio apdorojimo sistema.pdf}
+    \caption{Srautinio apdorojimo sistemos pavyzdys}
+    \label{srautinio-apdorojimo-sistema}
+\end{figure} 
+Srautinio apdorojimo sistemos literatūroje yra vaizduojamos orientuotais grafikais (\ref{srautinio-apdorojimo-sistema} pav.). Srautinių apdorojimo sistemos skiriasi nuo reliacinių modelio \cite{babcock2002models}: 
+\begin{itemize}
+    \item Duomenys į sistemą patenka tinklu, o ne iš fizinių talpyklų.
+    \item Duomenų patekimo tvarka negali būti kontroliuojama.
+    \item Duomenų kiekis yra neapibrėžtas.
+    \item Duomenys apdoroti srautinio apdorojimo sistema yra pašalinami arba archyvuojami, t.y. juos pasiekti yra sunku. 
+\end{itemize}
+\subsubsection{Duomenų vykdymas}
+Srautinio apdorojimo sistemų veikimui reikalingas srautinio apdorojimo variklis (angl. stream processing engine). Šie varikliai yra skirti srautinio apdorojimo sistemų vykdymui, dislokavimui ir užtikrinti plečiamumą (angl. scaling) ir toleranciją gedimams (angl. fault-tolerance) \cite{zhao2017taxonomy}. Populiariųjų srautinio apdorojimo variklių pavyzdžiai: "Apache Storm", "Apache Heron, "Apache Spark", "Apache Samza" ir t.t \cite{roger2019comprehensive}. 
+Duomenų vykdymas gali būti išskaidytas į tris komponentus \cite{zhao2017taxonomy}: 
+\begin{itemize}
+    \item Planavimas (angl. scheduling) - duomenų apdorojimo užduočių planavimas daro įtaką bendram srautinio apdorojimo veikimui \cite{falt2011task}. Pavyzdžiui "Apache Samza" naudoja "Apache YARN" resursų valdymo sistemą, kuri turi planavimo posistemę, kuri skirsto resursus \cite{noghabi2017samza} 
+    \item Plečiamumas (angl. scalability) - apibrėžia daug apdorojimo branduolių turinčios sistemos gebėjimą apdoroti didėjanti kiekį užduočių ir galimybę didinti pačią sistemą kad susidoroti su didėjančių kiekiu duomenų \cite{bondi2000characteristics}. Srautinio apdorojimo varikliai turi užtikrinti srautinio apdorojimo sistemų plečiamumą \cite{stonebraker20058}.    
+    \item Išskirstytas skaičiavimas (angl. Distributed computation) - tarpusavyje nesusiję skaičiavimo elementai turi naudotojam atrodyti kaip viena darni sistemą \cite{tanenbaum2007distributed}. Srautinio apdorojimo varikliai turi užtikrinti darbų paskirstymą ir skaičiavimo įrenginių koordinacija, kad daug duomenų būtų apdorojami vienu metu \cite{zhao2017taxonomy}.
+\end{itemize}
+Srautinio apdorojimo sistemos turi viena pagrindinį elementą - srauto procesorių (angl. stream processor), kuris apibrėžia sistemos elementus, aprašo kaip šie sistemos elementai sujungti ir pateikia nustatymus elementams \cite{zhao2017taxonomy}. Pavyzdžiui "Apache Storm" šis elementas vadinimas "topology", kuris yra užrašomas Java kalba naudojant "Apache Storm" pateiktą biblioteką \cite{iqbal2015big}.
+\subsubsection{Duomenų priėmimas}
+Į srautinio apdorojimo sistemą duomenis patenka per šaltinius, kurie šiuos duomenis perduoda tolimesniems elementams. Dažniausiai duomenis perduodami į sistemą naudojant žinučių eiles (angl. message queues), nes jos turi buferi, kas leidžia mažinti skirtumus tarp duomenų gavimo ir duomenų apdorojimo greičių, ir žinučių eilių brokeriai gali atfiltruoti duomenis ir nukreipti juos į tinkamus šaltinius \cite{kamburugamuve2016survey}. Tačiau šaltiniai turi turėti galimybę rinkti išsaugotus ir priimti ateinančius naujus duomenis \cite{stonebraker20058}, todėl nors ir šaltiniai dažniausiai priima srautinius duomenis, jie turi taip pat gebėti naudoti duomenis iš talpyklų \cite{zhao2017taxonomy}. 
+\subsection{Srautinio apdorojimo sistemų matavimas}
 
-\section{Srautinio apdorojimo sistemų matavimas}
+
+\subsection{Srautinio apdorojimo sistemų derinimas}
+
+\section{Srautinio apdorojimo sistemų duomenų pobūdis ir apkrovos}
 
 \section{Skatinamojo mokymosi algoritmai}
 
