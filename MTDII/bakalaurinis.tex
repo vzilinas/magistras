@@ -58,6 +58,14 @@ Skatinamasis mokymasis yra vienas iš mašininio mokymosi tipų. Šis mokymasis 
 
 Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carl, Q-learning, Deep Q Network ir kiti), tad šiame darbe jie bus apžvelgti ir vienas iš jų bus pasirinktas ir pritaikytas išsikeltam uždaviniui. Algoritmas bus pasirinktas pagal tai, kuris yra tinkamiausias srautinių apdorojimų sistemų balansavimui.
 
+Šio darbo tikslas: parengti literatūros apžvalgą, kurioje būtų suformuluota darbe numatoma spręsti problema.
+
+Uždaviniai:
+\begin{enumerate}
+    \item Išnagrinėti kaip mokslinėje literatūroje matuojamos srautinio apdorojimo sistemos.
+    \item Kokius skatinamojo mokymosi algoritmus naudoja kiti autoriai ir kokius rezultatus gauna. 
+\end{enumerate}
+
 \section{Srautinio apdorojimo sistemų matavimas ir derinimas}
 \subsection{Srautinio apdorojimo sistemos}
 Srautinis duomenų apdorojimas (angl. stream processing) – terminas naudojamas apibrėžti sistemas sudarytas iš skaičiavimo elementų (angl. modules) galinčių skaičiuoti lygiagrečiai ir kurios bendrauja kanalais. Tokios sistemų elementai dažniausiai skirstomi į tris klases: šaltinius (angl. sources) kurie paduoda duomenis į sistemą, filtrus (angl. filters) kurie atlieka tam tikrus vienetinius (angl. atomic) skaičiavimus ir nuotakus (angl. sink) kurie perduoda duomenis iš sistemų \cite{stephens1997survey}. 
@@ -84,12 +92,29 @@ Duomenų vykdymas gali būti išskaidytas į tris komponentus \cite{zhao2017taxo
 Srautinio apdorojimo sistemos turi viena pagrindinį elementą - srauto procesorių (angl. stream processor), kuris apibrėžia sistemos elementus, aprašo kaip šie sistemos elementai sujungti ir pateikia nustatymus elementams \cite{zhao2017taxonomy}. Pavyzdžiui "Apache Storm" šis elementas vadinimas "topology", kuris yra užrašomas Java kalba naudojant "Apache Storm" pateiktą biblioteką \cite{iqbal2015big}.
 \subsubsection{Duomenų priėmimas}
 Į srautinio apdorojimo sistemą duomenis patenka per šaltinius, kurie šiuos duomenis perduoda tolimesniems elementams. Dažniausiai duomenis perduodami į sistemą naudojant žinučių eiles (angl. message queues), nes jos turi buferi, kas leidžia mažinti skirtumus tarp duomenų gavimo ir duomenų apdorojimo greičių, ir žinučių eilių brokeriai gali atfiltruoti duomenis ir nukreipti juos į tinkamus šaltinius \cite{kamburugamuve2016survey}. Tačiau šaltiniai turi turėti galimybę rinkti išsaugotus ir priimti ateinančius naujus duomenis \cite{stonebraker20058}, todėl nors ir šaltiniai dažniausiai priima srautinius duomenis, jie turi taip pat gebėti naudoti duomenis iš talpyklų \cite{zhao2017taxonomy}. 
+
 \subsection{Srautinio apdorojimo sistemų matavimas}
+Svarbiausias srautinio apdorojimo sistemų reikalavimas - duomenų apdorojimas ir rezultatų grąžinimas turi būti be atsilikimo - didelių apimčių srautiniai duomenys turi būti apdorojami taip pat greitai kaip ateiną \cite{stonebraker20058}. 
+
+\subsubsection{Srautinio apdorojimo sistemų metrikos}
+Kitų autorių naudojamos metrikos:
+\begin{itemize}
+    \item Pralaidumas (angl. Throughput) - per tam tikrą laiko tarpą apdorojamų įvykių kiekis. Kuo didesnis pralaidumas tuo greitaveiką didesnė. 
+    \item Gaišaties laikas (angl. Latency) - laiko intervalas tarp apdorojimo pradžios ir apdorojimo pabaigos. Kuo jis mažesnis tuo greitaveiką didesnė.
+\end{itemize}
+
+\cite{stonebraker20058} minima, jog srautinio apdorojimo sistemos naudotojas turi išbandyti savo sistemą su tiksliniu darbo krūviu ir išmatuoti pralaidumą ir gaišaties laiką. \cite{Karimov2018BenchmarkingDS} lyginą srautinio apdorojimo variklius ir matavimui naudoja gaišaties laiką, kurį išskaido į įvykio gaišaties laiką (angl. event-time latency) - laiko intervalas nuo įvykio laiko iki rezultato gavimo iš srautinio apdorojimo sistemos ir apdorojimo gaišaties laiką (angl. processing-time latency) - laiko intervalas nuo duomens patekimo į srautinio apdorojimo sistemą iki rezultato grąžinimo. Šį skaidymą autoriai daro, nes vertinant sistemas dažnai ignoruojamas įvykio laikas ir gaunamas daug mažesnis gaišaties laikas negu jis iš tikro yra. Taip pat autoriai išskiria darnų pralaidumą (angl. sustainable throughput) - didžiausia apkrova įvykių, kurią sistema gali apdoroti be pastoviai augančio įvykio gaišaties laiko, todėl savo eksperimentuose autoriai užtikrina kad duomenų generavimo greitis atitiktų sistemos darnų pralaidumą. Tam kad sužinoti darnų pralaidumą sistemos autoriai pradeda leisti labai didelį srautą duomenų ir mažina iki kol sistemos apdorojimas palaiko generavimo greičius. Visus gaišaties laiko rezultatus autoriai pateikia maksimalaus pralaidumo apdorojimo ir 90\% pralaidumo apdorojimo vidurkiu, minimumu, maksimumu, kvartiliais (90, 95, 99). \cite{hirzel2014catalog} autoriai nagrinėja srautiniam apdorojimui galimas optimizacijas ir matavimui naudoja normalizuotą pralaidumą (naudojamas vienetas kaip vidurkis), nes tai leidžia lengviau palyginti santykinę greitaveiką. Taip pat \cite{hirzel2014catalog} pastebi, kad nors ir yra daug metrikų, kuriomis galima matuoti optimizaciją: pralaidumas, gaišaties laikas, paslaugos kokybė (angl. quality of service), energijos ir tinklo panaudojimas, tačiau pagerinus pralaidumą pagerėja ir visos kitos metrikos.
+
+\subsubsection{Srautinio apdorojimo sistemos pobūdis}
+
+Srautinio apdorojimo sistemos gali turėti labai skirtingą elementų išsidėstymą ir nuo to priklauso jų greitaveiką. \cite{Karimov2018BenchmarkingDS} matavimui naudojo du filtrus - agregavimo, kuris skaičiavo visus pirkimus ir jungimo (angl. join) kuris skaičiavo susijusius duomenis iš abiejų duomenų srautų.    
+
+\subsubsection{Srautinio apdorojimo sistemų matavimo duomenys}
+
+Vertinant sistemų greitaveiką reikia atsižvelgti ir į testavimui naudojamus duomenis. \cite{Karimov2018BenchmarkingDS} naudoja žaidimų kūrimo įmonės Rovio duomenis ir naudoja du duomenų srautus - pirkimo srautas kur siunčiami kortežai (angl. tuples) susidarantys iš nupirktos valiutos kiekio, laiko ir naudotojo kuris nupirko ir reklamų srautas kuris siunčia nagrinėja valiutos pirkimo siūlymus tam tikru laiku. Generuojami duomenis naudojant normalizuotą paskirstymą ant raktinio lauko.    
 
 
 \subsection{Srautinio apdorojimo sistemų derinimas}
-
-\section{Srautinio apdorojimo sistemų duomenų pobūdis ir apkrovos}
 
 \section{Skatinamojo mokymosi algoritmai}
 
