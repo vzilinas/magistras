@@ -140,9 +140,47 @@ Vertinant sistemų greitaveiką reikia atsižvelgti ir į testavimui naudojamus 
 Šiam vertinimui naudojami duomenys simuliuojantys reklamas. Autoriai naudoja savo duomenų generatorių.
 
 \subsection{Srautinio apdorojimo sistemų derinimas}
-\cite{zhang2020heron} - čia derinimas L-HERON
-\section{Skatinamojo mokymosi algoritmai}
+Sistemų greitaveika yra tiesiogiai susijusi su konfigūravimo parametrais, kurie valdo tokius aspektus kaip atminties valdymas, gijų skaičius, planavimas, resursų valdymas \cite{lu2019speedup}. Taip pat yra išnagrinėta, jog neteisingi nustatymai turi nuostolingus efektus ant sistemos greitaveikos ir stabilumo \cite{herodotou2011starfish}. 
 
+\cite{herodotou2020survey} išskiria 3 pagrindinius automatinio derinimo iššūkius:
+\begin{enumerate}
+    \item Didelė ir sudėtinga parametrų erdvė - "Apache Spark" ir "Apache Storm" turi virš 150 konfigūruojamų parametrų \cite{Bilal2017Towards, petridis2016spark}. Taip pat kai kurios nustatymų reikšmės, kurios tinka vienam uždaviniu, gali turėti neigiamos įtakos kitam \cite{herodotou2011starfish, Pooyan2016Uncertainty}.
+    \item Sistemų mastas ir sudėtingumas - Sistemų administratoriai turi gebėti konfigūruoti didelius kiekius skaičiavimo mazgų, kurie gali skirtis CPU, atmintimi, tinklo tipais \cite{herodotou2020survey}.
+    \item Pradinių duomenų statistikos trūkumas - įvedimo duomenys srautinėse apdorojimo sistemose yra realus srautai, kurie stipriai varijuoja savo apimtimi \cite{Dayarathna2018Recent}.
+\end{enumerate}  
+
+\cite{Trotter2017Into} nagrinėjantis tinkamos konfigūracijos radimą naudojant genetinius algoritmus "Apache Storm" srautinio apdorojimo sistemoms nustatė, jog lygiagretumo laipsnis labiausiai daro įtaką srautinio apdorojimo sistemų greitaveikai. 
+"Apache Heron" yra srautinio apdorojimo variklis, kuris sukurtas pagal "Apache Storm" su patobulinimais \cite{twitterHeron} pateikia naują būdą kontroliuoti srautą - priešslėgis (angl. backpressure), kuris leidžia filtrui sulėtinti prieš jį einantį elementą, kas leidžia sumažinti gaišaties laiką ir taip pat gali būti naudojamas kaip greitaveikos praradimo indikatorius \cite{bansal2018trevor}.
+Taip pat \cite{bansal2018trevor} nagrinėja "Apache Heron" automatinį konfigūravimą naudojant iš anksto aprašytas taisykles. 
+
+
+\section{Skatinamojo mokymosi algoritmai}
+\cite{herodotou2020survey} aprašo skirtingus sprendimus automatiniam konfigūravimui ir išskiria šiuos mašininio mokymosi privalumus:
+\begin{itemize}
+    \item Nebūtina suprasti sistemos, užduočių ir duomenų, kadangi naudojamas juodos dėžės (angl. black-box) principas.
+    \item Mašininio mokymosi modelis pats save tobulina, kuo daugiau gauna duomenų. 
+\end{itemize}
+Šio straipsnio autoriai išskiria mašininio mokymosi iššūkius : 
+\begin{itemize}
+    \item Parametrų parinkimas - kadangi konfigūruojamų parametrų kiekis yra didelis \cite{Bilal2017Towards, petridis2016spark} ne visi iš jų stipriai daro įtaką greitaveikai, todėl pirma išsirinkti aktualiausius parametrus resursų valdymo, užduočių planavimo ir duomenų valdymo. Tam dažnai naudojama eksperto pagalba \cite{wang2016novel}, gidai arba eksperimentavimo pagalba. Tačiau galima ir naudoti mašininio mokymosi algoritmą, kad nustatyti koreliacija tarp parametrų ir greitaveikos \cite{vaquero2018autotuning, yang2012statistics}
+    \item Mašininio mokymosi modelio pasirinkimas - kadangi yra nemažai skirtingų mašininio mokymosi metodų kurie tinka derinimo uždaviniui.
+\end{itemize} 
+Taip pat pateikiami pavyzdžiai paketinio apdorojimo ir srautinio apdorojimo derinimo naudojant mašininį mokymąsi straipsniai (\ref{ml-in-stream} lentelėje pateikiami tik išrinkti srautinio apdorojimo pavyzdžiai).
+
+\begin{table}[H]
+    \begin{tabular}{|l|p{0.42\textwidth}|p{0.25\textwidth}|}
+    \hline
+    Būdas    & Įvesties savybės                                                                    & Mašininio mokymosi metodai                 \\ \hline
+    Zacheilas et al. \cite{zacheilas2015elastic}  & Rinkinys kelių konfigūracijos parametrų                                             & Gaussian Processes                         \\ \hline
+    Li et al. \cite{li2016performance}         & Atminties dydžiai ir branduolių ir gijų kiekis skirtingose stadijose                & Support Vector Regression                  \\ \hline
+    Trotter et al. \cite{Trotter2017Into}  & Darbinių procesų kiekis, vykdytojų kiekis                                           & Genetic Algorithm, Bayesian Optimization   \\ \hline
+    Trotter et al. \cite{trotter2019forecasting} & Vykdytojai, šaltinių ir filtrų lygiagretumas, acker lygiagretumas                   & Genetic Algorithm, Support Vector Machines \\ \hline
+    OrientStream \cite{wang2017automating}    & Įvairios duomenų, plano, filtrų ir klasterio lygio savybės                       & Ensemble/Incremental ML                    \\ \hline
+    Vaquero et al. \cite{vaquero2018autotuning} & Parametrai ir metrikos parinkti faktorinės analizės (angl. factor analysis) pagalba & Reinforcement Learning                     \\ \hline
+    \end{tabular}
+    \caption{Srautinių sistemų derinimo naudojant mašininį mokymąsi pavyzdžiai}
+    \label{ml-in-stream}
+    \end{table}
 \printbibliography[heading=bibintoc] 
 
 \end{document}
