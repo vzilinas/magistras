@@ -74,8 +74,8 @@ Tikslas: parengti literatūros apžvalgą, kurioje būtų suformuluota darbe num
 
 Uždaviniai:
 \begin{enumerate}
-    \item Išnagrinėti kaip mokslinėje literatūroje matuojamos srautinio apdorojimo sistemos ir pasirinkti matavimą, kuris bus naudojamas magistro darbe.
-    \item Išnagrinėti kokius skatinamojo mokymosi algoritmus naudoja kiti autoriai, kokius rezultatus gauna ir pasirinkti algoritmą magistro darbui. 
+    \item Išnagrinėti kaip mokslinėje literatūroje matuojamos srautinio apdorojimo sistemos.
+    \item Kokius skatinamojo mokymosi algoritmus naudoja kiti autoriai ir kokius rezultatus gauna. 
 \end{enumerate}
 
 \section{Srautinio apdorojimo sistemų matavimas ir derinimas}
@@ -190,14 +190,14 @@ Taip pat \cite{bansal2018trevor} nagrinėja "Apache Heron" automatinį konfigūr
 Taip pat pateikiami pavyzdžiai paketinio apdorojimo ir srautinio apdorojimo derinimo naudojant mašininį mokymąsi straipsniai (\ref{ml-in-stream} lentelėje pateikiami tik išrinkti srautinio apdorojimo pavyzdžiai).
 
 \begin{table}[H]
-    \begin{tabular}{|l|p{0.40\textwidth}|p{0.20\textwidth}|}
+    \begin{tabular}{|l|p{0.42\textwidth}|p{0.25\textwidth}|}
     \hline
-    Šaltinis                                           & Įvesties savybės                                                                    & Mašininio mokymosi metodai                 \\ \hline
+    Būdas                                           & Įvesties savybės                                                                    & Mašininio mokymosi metodai                 \\ \hline
     Zacheilas et al. \cite{zacheilas2015elastic}    & Rinkinys kelių konfigūracijos parametrų                                             & Gaussian Processes                         \\ \hline
     Li et al. \cite{li2016performance}              & Atminties dydžiai ir branduolių ir gijų kiekis skirtingose stadijose                & Support Vector Regression                  \\ \hline
     Trotter et al. \cite{Trotter2017Into}           & Darbinių procesų kiekis, vykdytojų kiekis                                           & Genetic Algorithm, Bayesian Optimization   \\ \hline
     Trotter et al. \cite{trotter2019forecasting}    & Vykdytojai, šaltinių ir filtrų lygiagretumas, acker lygiagretumas                   & Genetic Algorithm, Support Vector Machines \\ \hline
-    OrientStream \cite{wang2017automating}          & Įvairios duomenų, plano, filtrų ir klasterio lygio savybės                          & Ensemble/ Incremental ML                    \\ \hline
+    OrientStream \cite{wang2017automating}          & Įvairios duomenų, plano, filtrų ir klasterio lygio savybės                          & Ensemble/Incremental ML                    \\ \hline
     Vaquero et al. \cite{vaquero2018autotuning}     & Parametrai ir metrikos parinkti faktorinės analizės (angl. factor analysis) pagalba & Reinforcement Learning                     \\ \hline
     \end{tabular}
     \caption{Srautinių sistemų derinimo naudojant mašininį mokymąsi pavyzdžiai \cite{herodotou2020survey}}
@@ -205,13 +205,7 @@ Taip pat pateikiami pavyzdžiai paketinio apdorojimo ir srautinio apdorojimo der
     \end{table}
 
 
-\section{Rezultatai}
-
-\begin{enumerate}
-    \item Išnagrinėjus literatūrą magistro darbui pasirinktos sistemos: WordCount ir Reklamos analizės sistema. Testavimui bus naudojami \cite{Chintapalli2016Benchmarking} duomenų generatorius ir WordCount sistemos duomenų generatorius. Kad įvertinti greitaveiką buvo pasirinkta naudoti gaišaties laiką.
-    \item Išnagrinėjus skatinamojo mokymosi algoritmus ir kitų autorių gautus rezultatus... 
-\end{enumerate}
-
+    \section{Rezultatai}
 \printbibliography[heading=bibintoc] 
 
 \end{document}
