@@ -209,14 +209,13 @@ Taip pat pateikiami pavyzdžiai paketinio apdorojimo ir srautinio apdorojimo der
 
 \subsection{Skatinamais mokymasis srautiniam apdorojimui}
 
-\cite{vaquero2018autotuning}...
+\cite{vaquero2018autotuning} nagrinėja srautinių sistemų derinimą naudojant skatinamąjį mokymąsi. Autoriai pirmą pasirenka Lasso path analysis algoritmą, kurio pagalba atlieka parametrų atranka, kad išrinktų svarbiausius parametrus pasirinktos metrikos valdymui. Konfigūracijos valdymui pasirinktas modifikuotas REINFORCE algoritmas. Atliktas eksperimentas su "Apache Spark" ir sumažino gaišaties laiką 60-70\%.
 
-\cite{ni2019generalizable}...
-
+\cite{ni2019generalizable} nagrinėja resursų valdymo problemą srautinio apdorojimo sistemose ir siūlo sprendimą naudojanti skatinamąjį mokymą, kuris daro optimizacijas pagal srautinės apdorojimo sistemos grafus. Eksperimentas atliekamas naudojant REINFORCE \cite{williams1992simple} algoritmą su Adam optimizacijos funkcija \cite{kingma2014adam} ir naudojama savo parašytą srautinio apdorojimo variklį. 
 
 \cite{Li2018Model} nagrinėja planavimo problemos (apkrovos paskirstymas darbiniams elementams) sprendimą naudojant skatinamąjį mokymąsi. Autoriai siūlo naudoti Actor−Critic {lillicrap2015continuous} metodą naudojant Deep Q Learning  \cite{mnih2015human} tinklą kaip Actor ir Gilųjį neuroninį tinklą kaip Critic. Autorių rezultatai rodo 45\% greitaveikos padidėjimą palyginus su integruotą "Apache Storm" planavimo posistemę. 
 
-\cite{Russo2019Reinforcement}...
+\cite{Russo2019Reinforcement} nagrinėja srautinių sistemų dislokavimą naudojant skatinamąjį mokymą. Sprendžiama problema dislokavimo valdymo su skirtingų skaičiavimo mazgų. Naudojamas Q Learning algoritmas su įvairioms modifikacijom (kombinuojama su tiksliais modeliais). Autoriai matuoja dislokavimo tikslumą ir konvergavimo greitį. 
 
 \begin{table}[H]
     \begin{tabular}{|l|l|}
