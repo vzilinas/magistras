@@ -114,7 +114,7 @@ Pagrindinės kitų autorių naudojamos metrikos:
     \item Pralaidumas (angl. Throughput) - per tam tikrą laiko tarpą apdorojamų įvykių kiekis. \\todo
     \item Vėlinimas (angl. Latency) - laiko intervalas nuo apdorojimo arba įvykio pradžios iki apdorojimo pabaigos. Kuo jis mažesnis tuo greitaveiką didesnė.
 \end{itemize}
-Vėlinimas ir pralaidumas dažniausiai nekoreliuoja - sistemos kurios apdoroja srautus paketais turi didesnį pralaidumą, tačiau laikas per kurį renkamas paketas duomenų paveikia laiką kada duomenis patenka į apdorojimo sistemą \cite{Karimov2018BenchmarkingDS}. \par
+Vėlinimas ir pralaidumas dažniausiai nepriklauso vienas nuo kito - sistemos, apdorojančios srautus paketais, turi didesnį pralaidumą, tačiau atsiranda papildomas vėlinimas, kai laukiama duomenų paketo apdorojimo pradžios \cite{Karimov2018BenchmarkingDS}. \par
 
 \cite{stonebraker20058} straipsnyje minima, jog srautinio apdorojimo sistemos naudotojas turi išbandyti savo sistemą su tiksliniu darbo krūviu ir išmatuoti pralaidumą ir vėlinimą. \cite{Karimov2018BenchmarkingDS} lyginą srautinio apdorojimo variklius ir matavimui naudoja vėlinimą, kurį išskaido į įvykio vėlinimą (angl. event-time latency) - laiko intervalas nuo įvykio laiko iki rezultato gavimo iš srautinio apdorojimo sistemos ir apdorojimo vėlinimą (angl. processing-time latency) - laiko intervalas nuo duomens patekimo į srautinio apdorojimo sistemą iki rezultato grąžinimo. Šį skaidymą autoriai daro, nes vertinant sistemas dažnai ignoruojamas įvykio laikas ir gaunamas daug mažesnis vėlinimas negu jis iš tikro yra. Taip pat autoriai išskiria darnų pralaidumą (angl. sustainable throughput) - didžiausia apkrova įvykių, kurią sistema gali apdoroti be pastoviai augančio įvykio vėlinimo, todėl savo eksperimentuose autoriai užtikrina kad duomenų generavimo greitis atitiktų sistemos darnų pralaidumą. Tam kad sužinoti darnų pralaidumą sistemos autoriai pradeda leisti labai didelį srautą duomenų ir mažina iki kol sistemos apdorojimas palaiko generavimo greičius. Visus vėlinimo rezultatus autoriai pateikia maksimalaus pralaidumo apdorojimo ir 90\% pralaidumo apdorojimo vidurkiu, minimumu, maksimumu, kvantiliais (90, 95, 99). \cite{hirzel2014catalog} autoriai nagrinėja srautiniam apdorojimui galimas optimizacijas ir matavimui naudoja normalizuotą pralaidumą (naudojamas vienetas kaip vidurkis), nes tai leidžia lengviau palyginti santykinę greitaveiką. Taip pat \cite{hirzel2014catalog} pastebi, kad nors ir yra daug metrikų, kuriomis galima matuoti optimizaciją: pralaidumas, vėlinimas, paslaugos kokybė (angl. quality of service), energijos ir tinklo panaudojimas, tačiau pagerinus pralaidumą pagerėja ir visos kitos metrikos. \cite{Qian2016Benchmarking} srautinių apdorojimo sistemų matavimui naudoja pralaidumą (skaičiuojamą baitais per sekundę) ir vėlinimą, kaip vidurkį nuo duomens patekimo į sistemą iki apdorojimo pabaigos. Taip pat kadangi autoriai lyginą srautinio apdorojimo variklius jie įveda metriką gedimo toleravimo (angl. fault tolerance) vertinimui, kuriam autoriai išjungia tam tikrą kiekį elementų ir matuoja pralaidumą ir vėlinimą. \cite{zhang2020heron} palyginimui naudoja sistemos įvykdymo vėlinimą (angl. system completion latency), kuris parodo vidutinį laiko tarpą per kurį kortežas nukeliauja nuo šaltinio iki sistemos galutinio taško. Autoriai skaičiavo vidutinį laiką 5 sekundes intervalais. Taip pat autoriai naudojo matavimui CPU apkrovą kiekvienos instancijos (angl. instance), CPU apkrovą kiekvieno darbinio mazgo (angl. worker node) ir apkrovą tarp instancijų/tarp mazgų, kadangi jų užduotis buvo patobulinti esamą planavimo posistemę.  \cite{dhalion} matuoja pralaidumą per minutę. \cite{vaquero2018autotuning} tyria labai panašią problemą - srautinių apdorojimo sistemų balansavimą taikant skatinamąjį mokymą ir matavimui naudoja 99 kvantilį vėlinimo. \cite{Chintapalli2016Benchmarking} naudoja vėlinimą srautinio apdorojimo variklių vertinimui.
 
@@ -158,8 +158,7 @@ Straipsniai (\cite{Qian2016Benchmarking, huang2010hibench, dhalion}) naudojo Wor
 \subsubsection{Srautinio apdorojimo sistemų matavimo duomenys}
 
 Vertinant sistemų greitaveiką reikia atsižvelgti ir į testavimui naudojamus duomenis. \cite{Karimov2018BenchmarkingDS} naudoja žaidimų kūrimo įmonės Rovio duomenis ir naudoja du duomenų srautus - pirkimo srautas kur siunčiami kortežai (angl. tuples) susidarantys iš nupirktos valiutos kiekio, laiko ir naudotojo kuris nupirko ir reklamų srautas kuris siunčia nagrinėja valiutos pirkimo siūlymus tam tikru laiku. Generuojami duomenis naudojant normalizuotą paskirstymą ant raktinio lauko. \cite{Qian2016Benchmarking} naudoja tekstinius duomenis iš AOL paieškos variklio ir apdoroja juos pagal pasirinktus uždavinius. \cite{zhang2020heron} matavimui naudoja šaltinių generuojamą tekstą, kadangi lyginamas tas pats srautinio apdorojimo variklis tik su pakeista planavimo posisteme ir naudoja iš anksto sugeneruotą tekstą patalpintą į tekstinį dokumentą. \cite{Chintapalli2016Benchmarking} aprašo sistemą kuri daro skirtingų srautinio apdorojimo variklių palyginimus. Šiam vertinimui naudojami duomenys simuliuojantys reklamas. Autoriai naudoja savo duomenų generatorių.
-
-Kadangi ankstesniam skyriui pasirinkta Reklamos analizė, todėl bus naudojama autorių pateiktas duomenų generatorius, o pasirinkta WordCount sistema pati generuoja duomenis.
+Magistro darbe bus naudojami \cite{Chintapalli2016Benchmarking} naudojamas duomenų generatorius ir Reklamos analizės sistema. O WordCount srautinės apdorojimo sistemos tyrimui bus naudojami WordCount šaltinio generuojami duomenys.
 
 \subsection{Srautinio apdorojimo sistemų derinimas}
 Sistemų greitaveika yra tiesiogiai susijusi su konfigūravimo parametrais, kurie valdo tokius aspektus kaip atminties valdymas, gijų skaičius, planavimas, resursų valdymas \cite{lu2019speedup}. Taip pat yra išnagrinėta, jog neteisingi nustatymai turi nuostolingus efektus ant sistemos greitaveikos ir stabilumo \cite{herodotou2011starfish}. 
@@ -230,13 +229,24 @@ Taip pat pateikiami pavyzdžiai paketinio apdorojimo ir srautinio apdorojimo der
     \label{ml-in-stream}
 \end{table}
 
-Magistro darbui bus pasirinktas Deep Q Learning ir Actor-Critic atsižvelgus į šio algoritmo naujumą ir jo tinkamumą nagrinėti pastovaus valdymo uždavinį \cite{Silver2014Deterministic}. Atsižvelgus į \cite{vaquero2018autotuning, herodotou2020survey} bus atliekamas bandymas su sumažinta konfigūruojamų elementų aibę naudojant parametrų parinkimą ir su nekeistą elementų aibę.
 
-\section{Rezultatai}
+\section{Rezultatai ir Išvados}
 
+\subsection{Rezultatai}
 \begin{enumerate}
-    \item Išnagrinėjus literatūrą magistro darbui pasirinktos sistemos: WordCount ir Reklamos analizės sistema. Testavimui bus naudojami \cite{Chintapalli2016Benchmarking} duomenų generatorius ir WordCount sistemos duomenų generatorius. Kad įvertinti greitaveiką buvo pasirinkta naudoti vėlinimą.
-    \item Išnagrinėjus skatinamojo mokymosi algoritmus ir kitų autorių gautus rezultatus, pasirinktas Deep Q Learning ir Actor-Critic algoritmai ir taip pat nagrinėjamas skirtumas tarp visos ir sumažintos konfigūruojamų elementų aibės.
+    \item Išnagrinėta mokslinė literatūra aprašanti srautinio apdorojimo problemas ir parengtos rekomendacijos magistro darbe srautinių sistemų pobūdžiui, eksperimento duomenims ir vertinamoms metrikoms.
+    \item Išnagrinėta mokslinė literatūra aprašanti skatinamųjų algoritmų panaudojimą srautinio apdorojimo srityje ir pasirinktas algoritmas, kurį ketinama naudoti magistro darbe.  
+\end{enumerate}
+
+\subsection{Išvados}
+\begin{enumerate}
+    \item Išnagrinėjus literatūrą magistro darbe ketinama naudoti:
+        \begin{itemize}
+            \item Reklamos analizės sistema, kadangi tai yra priimtas vertinimo standartas srautinio apdorojimo sistemoms ir WordCount sistema, kadangi tai ji neturi pašalinių elementų ir yra naudojama kituose moksliniuose darbuose.
+            \item Reklamos analizės sistemos bandymui naudoti \cite{Chintapalli2016Benchmarking} duomenų generatorius, kuris yra pateikiamas su vertinimu, o WordCount sistema naudos savo šaltinį kaip duomenų generavimo elementą.
+            \item Sprendimams palyginti naudoti vėlinimą, kadangi \cite{Chintapalli2016Benchmarking} naudoja tai kaip pagrindini vertinimo kriterijų lyginant srautinio apdorojimo variklius ir kiti autoriai naudoja savo eksperimentuose.  
+        \end{itemize}
+    \item Magistro darbui ketinama pasirinkti Deep Q Learning ir Actor-Critic atsižvelgus į šio algoritmo naujumą ir jo tinkamumą nagrinėti pastovaus valdymo uždavinį \cite{Silver2014Deterministic}. Taip pat atsižvelgus į \cite{vaquero2018autotuning, herodotou2020survey} rezultatus ketinama atlikti bandymus su sumažinta konfigūruojamų elementų aibe naudojant parametrų parinkimą, atlikti bandymus su nekeista elementų aibę ir palyginti rezultatus.
 \end{enumerate}
 
 \printbibliography[heading=bibintoc] 
