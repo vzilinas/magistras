@@ -40,7 +40,9 @@
 \cleardoublepage\pagenumbering{arabic}
 \setcounter{page}{2}
 
-\section{Įvadas}
+\tableofcontents
+
+\sectionnonum{Įvadas}
 
 Šio darbo tikslas – apžvelgti susijusius literatūros šaltinius, pateikti jų santraukas ir panaudoti šią informacija suformuluoti problemą, kuri bus nagrinėjama sekančiame darbe. 
 
@@ -69,7 +71,7 @@ Numatomi magistro darbo uždaviniai:
 \end{enumerate}
 
 
-\subsection{Šio darbo tikslas ir uždaviniai}
+\subsection*{Šio darbo tikslas ir uždaviniai}
 Tikslas: parengti literatūros apžvalgą, kurioje būtų suformuluota darbe numatoma spręsti problema.
 
 Uždaviniai:
@@ -120,6 +122,7 @@ Vėlinimas ir pralaidumas dažniausiai nepriklauso vienas nuo kito – sistemos,
 
 \begin{table}[H]
     \centering
+    \caption{Metrikos naudojamos tiriant srautinio apdorojimo sistemų greitaveiką}
     \begin{tabular}{|l|l|l|}
     \hline
     Šaltinis                 & Vėlinimas                        & Pralaidumas                    \\ \hline
@@ -132,7 +135,6 @@ Vėlinimas ir pralaidumas dažniausiai nepriklauso vienas nuo kito – sistemos,
     \cite{vaquero2018autotuning} & Taip                         & Ne                             \\ \hline
     \cite{Chintapalli2016Benchmarking} & Taip                   & Ne                             \\ \hline
     \end{tabular}
-    \caption{Metrikos naudojamos tiriant srautinio apdorojimo sistemų greitaveiką}
 \label{metrikos}
 \end{table}
 
@@ -175,7 +177,7 @@ Taip pat \cite{bansal2018trevor} nagrinėja „Apache Heron“ automatinį konfi
 
 \section{Mašininis mokymasis}
 
-\subsection{Mašininis mokymasis srautinių sistemų derinimui}
+\subsection{Mašininis mokymasis srautinio apdorojimo sistemų derinimui}
 
 \cite{herodotou2020survey} aprašo skirtingus sprendimus automatiniam konfigūravimui ir išskiria šiuos mašininio mokymosi privalumus:
 \begin{itemize}
@@ -190,6 +192,8 @@ Taip pat \cite{bansal2018trevor} nagrinėja „Apache Heron“ automatinį konfi
 Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant mašininį mokymąsi straipsnius (\ref{ml-in-stream} lentelėje pateikiami tik išrinkti srautinio apdorojimo pavyzdžiai).
 
 \begin{table}[H]
+    \centering
+    \caption{Srautinių sistemų derinimo naudojant mašininį mokymąsi pavyzdžiai \cite{herodotou2020survey}}
     \begin{tabular}{|l|p{0.40\textwidth}|p{0.20\textwidth}|}
     \hline
     Šaltinis                                        & Įvesties savybės                                                                    & Mašininio mokymosi metodai                 \\ \hline
@@ -200,11 +204,10 @@ Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant
     OrientStream \cite{wang2017automating}          & Įvairios duomenų, plano, filtrų ir klasterio lygio savybės                          & Ensemble/ Incremental ML                    \\ \hline
     Vaquero et al. \cite{vaquero2018autotuning}     & Parametrai ir metrikos parinkti faktorinės analizės (angl. factor analysis) pagalba & Reinforcement Learning                     \\ \hline
     \end{tabular}
-    \caption{Srautinių sistemų derinimo naudojant mašininį mokymąsi pavyzdžiai \cite{herodotou2020survey}}
     \label{ml-in-stream}
 \end{table}
 
-\subsection{Skatinamais mokymasis srautiniam apdorojimui}
+\subsection{Skatinamasis mokymasis srautiniam apdorojimui}
 
 \cite{vaquero2018autotuning} nagrinėja srautinių sistemų derinimą naudojant skatinamąjį mokymąsi. Autoriai pradžioje pasirenka Lasso path analysis algoritmą, kurio pagalba atlieka parametrų atranka, kad išrinktų svarbiausius parametrus pasirinktos metrikos valdymui. Konfigūracijos valdymui pasirinktas modifikuotas REINFORCE algoritmas. Atliktas eksperimentas su „Apache Spark“, kuris rodo 60–70\% sumažintą vėlinimą.
 
@@ -215,6 +218,8 @@ Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant
 \cite{Russo2019Reinforcement} nagrinėja srautinių sistemų dislokavimą naudojant skatinamąjį mokymą. Sprendžiama problema dislokavimo valdymo su skirtingais skaičiavimo mazgų tipais. Naudojamas Q Learning algoritmas su įvairioms modifikacijom (kombinuojama su tiksliais modeliais). Autoriai matuoja dislokavimo tikslumą ir konvergavimo greitį. 
 
 \begin{table}[H]
+    \centering
+    \caption{Skatinamojo mokymosi naudojimas}
     \begin{tabular}{|l|l|}
     \hline
     Šaltinis                         & Skatinamojo mokymosi algoritmas    \\ \hline
@@ -223,28 +228,20 @@ Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant
     \cite{Li2018Model}               & Deep Q Learning \cite{mnih2015human} ir Actor−Critic \cite{lillicrap2015continuous} \\ \hline
     \cite{Russo2019Reinforcement}    & Q–learning \cite{mnih2015human} su papildomomis funkcijomis \\ \hline
     \end{tabular}
-    \caption{Skatinamojo mokymosi naudojimas}
     \label{ml-in-stream}
 \end{table}
 
 
-\section{Rezultatai ir Išvados}
+\sectionnonum{Išvados}
 
-\subsection{Rezultatai}
 \begin{enumerate}
-    \item Išnagrinėta mokslinė literatūra aprašanti su srautiniu apdorojimu susijusių problemų sprendimus ir parengtos rekomendacijos magistro darbo eksperimento srautinių sistemų pobūdžiui, eksperimento duomenims ir vertinamoms metrikoms.
-    \item Išnagrinėta mokslinė literatūra aprašanti skatinamųjų algoritmų panaudojimą srautinio apdorojimo srityje ir pasirinktas algoritmas, kurį ketinama naudoti magistro darbe.  
-\end{enumerate}
-
-\subsection{Išvados}
-\begin{enumerate}
-    \item Išnagrinėjus literatūrą magistro darbe ketinama naudoti:
+    \item Išnagrinėjus literatūrą nustatyta, kad:
         \begin{itemize}
-            \item Reklamos analizės sistemą, kadangi ji yra sukurta ir naudojama kaip vertinimo standartas srautinio apdorojimo varikliams ir WordCount sistemą, kadangi ji neturi pašalinių elementų, kurie gali sukurti trukdžius ir yra naudojama kitų autorių moksliniuose darbuose.
-            \item \cite{Chintapalli2016Benchmarking} duomenų generatorių Reklamos analizės sistemos bandymui, kuris yra pateikiamas kartu su srautinio apdorojimo variklių vertinimu ir WordCount šaltinio duomenų generatorių WordCount eksperimentams.
-            \item Vėlinimą sprendimų greitaveikos lyginimui, kadangi \cite{Chintapalli2016Benchmarking} naudoja vėlinimą srautinio apdorojimo variklių vertinimui bei kiti autoriai naudoja vėlinimą siūlomų sprendimų greitaveikos įrodymui.  
+            \item matavimui tinka Reklamos analizės sistema, kadangi ji yra sukurta ir naudojama kaip vertinimo standartas srautinio apdorojimo varikliams, ir WordCount sistema, kadangi ji neturi pašalinių elementų, kurie gali sukurti trukdžius ir yra naudojama kitų autorių moksliniuose darbuose.
+            \item duomenų generavimui tinka naudoti \cite{Chintapalli2016Benchmarking} duomenų generatorių Reklamos analizės sistemos bandymui, kuris yra pateikiamas kartu su srautinio apdorojimo variklių vertinimu ir WordCount šaltinio duomenų generatorių WordCount eksperimentams.
+            \item sprendimų greitaveikos vertinimui tinka naudoti vėlinimą, kadangi \cite{Chintapalli2016Benchmarking} naudoja vėlinimą srautinio apdorojimo variklių vertinimui bei kiti autoriai naudoja vėlinimą siūlomų sprendimų greitaveikos įrodymui.  
         \end{itemize}
-    \item Magistro darbui ketinama pasirinkti Deep Q Learning ir Actor–Critic skatinamojo mokymosi algoritmus atsižvelgus į jų naujumą ir tinkamumą nagrinėti pastovaus valdymo uždavinius \cite{Silver2014Deterministic}. Taip pat atsižvelgus į \cite{vaquero2018autotuning, herodotou2020survey} rezultatus ketinama atlikti bandymus su sumažinta konfigūruojamų elementų aibe naudojant parametrų parinkimą, atlikti bandymus su nekeista elementų aibę ir palyginti rezultatus.
+    \item Deep Q Learning ir Actor–Critic algoritmai yra tinkami skatinamojo mokymosi algoritmai srautinio apdorojimo sistemų derinimui, atsižvelgus į jų naujumą ir tinkamumą nagrinėti pastovaus valdymo uždavinius \cite{Silver2014Deterministic}. Taip pat atsižvelgus į \cite{vaquero2018autotuning, herodotou2020survey} rezultatus ketinama atlikti bandymus su sumažinta konfigūruojamų elementų aibe naudojant parametrų parinkimą, atlikti bandymus su nekeista elementų aibę ir palyginti rezultatus.
 \end{enumerate}
 
 \printbibliography[heading=bibintoc] 
