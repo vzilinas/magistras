@@ -80,20 +80,47 @@ Uždaviniai:
 
 \section{Srautinio apdorojimo sistemų balansavimo algoritmas}
 Šiame skyriuje aptariamas algoritmas, kuris bus naudojamas srautinių sistemų balansavimui. 
-DIAGRAMA
+\begin{figure}[H]
+    \includegraphics[width=15cm]{img/BalansavimoDiagrama.pdf}
+    \caption{Pagrindiniai algoritmo elementai ir jų tarpusavio ryšiai}
+    \label{balansavimo_sistema}
+\end{figure} 
 
 \subsection{Tikslas}
-Algoritmo tikslas savarankiškai reguliuoti srautinio apdorojimo sistemos konfiguracijos parametrus siekiant palaikyti sistemą stablią ir optimaliai naudojančia resursus. paveiksliuke pavazduota sistema yra integruojama į srautinio apdorojimo sistemos platformą, bei turėti informaciją apie esamus aplinkos naudojamus ir turimus resursus.   
+Algoritmo tikslas savarankiškai reguliuoti srautinio apdorojimo sistemos konfiguracijos parametrus siekiant palaikyti sistemą stablią ir optimaliai naudojančia resursus. \ref{balansavimo_sistema} pav. pavazduota sistema yra integruojama į srautinio apdorojimo sistemos platformą iš kurios ji gauna reikiamą informacija apie srautinio apdorojimo sistemos metrikas ir resursus, bei turėti informaciją apie esamus aplinkos naudojamus ir turimus resursus. Balansavimo algoritmas eksperimente bus implementuojamas kaip posistemė, kuri gauna metrikas iš srautinio apdorojimo sistemos platformos ir operacinės sistemos, o atnaujintą konfiguraciją pateikia į srautinio apdorojimo platformą per komandų įvedimo eilutę.
 
 \subsection{Įeiga}
-Balansavim
-\sub
+Kad mašinio mokymosi posistemė galėtų daryti sprendimus, jai paduodami šie duomenys:
+\begin{itemize}
+    \item Srautinio apdorojimo sistemos naudojami resursai ir metrikos – procesoriaus apkrova, operatyviosios atminties apkrova, priešslėgis (angl. backpressure), srautinio apdorojimo sistemos įeigos komponento atsilikimas nuo duomenų srauto.
+    \item Aplinkos naudojami resursai – procesoriaus apkrova, operatyviosios atminties apkrova.
+    \item Srautinio apdorojimo sistemos pradinė konfiguracija - komponentų lygiagretumo parametrai, konteinerių parametrai, konfiguracijos elementai ir jų reikšmės.
+    \item Konfiguruojami parametrai ir jų reikšmių ribos.
+    \item Mašinio mokymosi algoritmo konfiguracija - sprendimų priemimo periodiškumas.
+    \item Buvusio ciklo pradiniai duomenys ir priimti sprendimai.
+\end{itemize}
+
+\subsection{Eiga}
+
+Sistema naudojanti mašininį mokymąsi veikia pastoviai vienodo periodo ciklais (\ref{veikimas} pav.). 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{img/AlgoritmoVeikimas.pdf}
+    \caption{Algortimo veikimas}
+    \label{veikimas}
+\end{figure} 
+Tarpas tarp ciklų apibrežiamas leidžiant balansavimo sistemai ir yra skirtas srautinio apdorojimo sistemai atsinaujinti su naujais konfiguracijos parametrais bei kad surinkti duomenys būtų pakankamai svarūs pateikti į mašininį mokymosi algoritmą.
+
+\subsection{Algoritmo rezultatas}
+Mašinio mokymosi posistemė, atlikusi skaičiavimus, gražiną naują konfiguracijos parametrų rinkinį, kuris yra veliau pateikiamas į srautinio apdorojimo sistemų platformą. Po srautinės apdorojimo sistemos pradedamas naujas ciklas sistemos stebėjimo ir naujų konfiguracijos parametrų kurimo, kuris taip pat atsižvelgia į metrikų skirtumo ir konfiguracijos pakeitimo rezultatus iš  ankstesnių ciklų.
+
+\subsection{Algoritmui tikrinti naudojami skatinamaojo mokymosi algortimai}
 
 \section{Alternatyvus sprendimai}
 
 \subsection{Standartinė konfiguracija}
 
-\subsection{Balansavimas naudojant Adapted REINFORCE algoritmą}
+\subsection{Balansavimas naudojant REINFORCE algoritmą}
 
 \sectionnonum{Išvados}
 
