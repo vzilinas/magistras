@@ -139,7 +139,12 @@ Taip pat pagal MTDII literatūros analizę tyrimai bus atliekami su Reklamų ana
 Kadangi šios abi sistemos turi savo duomenų generavimo komponentus todėl jos bus naudojamos kaip tyrimo duomenis. Reklamų analizės sistema taip pat turi ir posisteme, kuri apskaičiuoją vėlinimą ir saugo jį tekstiniame įrašę, o WordCount sistemai įvertinti bus naudojama pačios Heron platformos įrašai siekiant kuo mažiau daryti įtakos rezultatams.
 
 \subsection{Standartinė konfiguracija}
-
+Sukurto sprendimo rezultatai bus lyginami su standartine konfiguracija tik su pakeistu skaičiavimo komponentų lygiagretumu atsižvelgiant į įrangos skaičiavimo gijų kiekį. Šiuo rezultatu bus tikrinama, ar Apache Heron pats negali taip pat arba geriau susitvarkyti su įeinančiu duomenų kiekiu nedidinant vėlinimo. Standartinės konfiguracijos naudojami balansavimo sprendimai \cite{twitterHeron}:
+\begin{itemize}
+    \item Srautinės apdorojimo sistemos priešslėgis (angl. backpressure) – kai pastebimas jog tam tikras skaičiavimo kompoenentas nespėja susidoroti su ateinančiu duomenu kiekiu ir praneša prieš tai einantiems skaičiavimo komponentams lėtinti duomenų patekimo greiiti. Heron yra implementuotas šaltinio priešslėgis, kuris veikia kaip buferis ant kiekvienos jungties tarp komonentų ir kai buferis prisipildo iki tam tikro taško įjungiamas priešslėgio režimas, kuris sulėtina srautinio apdorojimo sistemos greiti iki lėčiausio skaičiavimo komponento greičio. 
+    \item Šiukšių surinktuvo (angl. garbage collector) optimizacija - kai srautinio apdorojimo sistema gaudavo dideli kiekį duomenų vienu metu ir užsipildydavo visa turima sistemos atmintis, kiekvieną karta gaunant nauja įraša buvo paleidžiamas šiukšlių surinktuvas, kuris naudoja daug resursų. Kad išspręsti šią problemą Heron periodiškai tikrina srautinio apdorojimo sistemos atminties talpą ir patenkančių duomenų dydį ir jeigu duomenų dydis pasidaro didesnis nei talpa tai duomenų paėmimo greitis sumažinamas per pusę ir taip kartojama kol pasiekiamas stabilus greitis. 
+    \item Resursų rezervacija - kiekvienas konteineris (komponentų rinkinys) turi jam priskrita resursų kiekį ir prieš palaiedžiant srautinio apdorojimo sistema Heron rezervuoja reikiamus resursus ir jeigu komponentai bando pasiekti daugiau resursu negu jiems rezervuota yra lėtinama sistema taip užtikrinant stabilumą \cite{fu2015streaming}.  
+\end{itemize}
 \subsection{Balansavimas naudojant REINFORCE algoritmą}
 
 \sectionnonum{Išvados}
