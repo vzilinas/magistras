@@ -114,7 +114,11 @@ Tarpas tarp ciklų apibrežiamas leidžiant balansavimo sistemai ir yra skirtas 
 \subsection{Algoritmo rezultatas}
 Mašinio mokymosi posistemė, atlikusi skaičiavimus, gražiną naują konfiguracijos parametrų rinkinį, kuris yra veliau pateikiamas į srautinio apdorojimo sistemų platformą. Po srautinės apdorojimo sistemos pradedamas naujas ciklas sistemos stebėjimo ir naujų konfiguracijos parametrų kurimo, kuris taip pat atsižvelgia į metrikų skirtumo ir konfiguracijos pakeitimo rezultatus iš  ankstesnių ciklų.
 
-\subsection{Algoritmui tikrinti naudojami skatinamaojo mokymosi algortimai}
+\subsection{Algoritmui tikrinti naudojami skatinamojo mokymosi algoritmai}
+Šiame skyriuje bus aprašomi skatinamojo mokymosi algoritmai, kurie bus naudojami eksperimentui. Šie algoritmai pasirinkti pagal MTD II literatūros analizę, tačiau pats balansavimo algoritmas yra nepriklausomas nuo naudojamo skatinamojo mokysimosi algortimų ir gali būti įgyvendintas naudojant kitus algoritmus.
+\subsection{Deep Q Network}
+
+\subsection{Actor-Critic}
 
 \section{Alternatyvus sprendimai}
 Siekiant užtikrinti sprendimo validumą ir efektyvumą bus atliekamas eksperimentas ir rezultatai bus lyginamį su alternatyviais sprendimais.
@@ -146,6 +150,13 @@ Sukurto sprendimo rezultatai bus lyginami su standartine konfiguracija tik su pa
     \item Resursų rezervacija - kiekvienas konteineris (komponentų rinkinys) turi jam priskrita resursų kiekį ir prieš palaiedžiant srautinio apdorojimo sistema Heron rezervuoja reikiamus resursus ir jeigu komponentai bando pasiekti daugiau resursu negu jiems rezervuota yra lėtinama sistema taip užtikrinant stabilumą \cite{fu2015streaming}.  
 \end{itemize}
 \subsection{Balansavimas naudojant REINFORCE algoritmą}
+Sukurtas sprendimas naudojantis Deep Q network ir Actor-Critic taip pat bus lyginamas su \cite{vaquero2018autotuning} aprašytų REINFORCE algortimu. Staripsnis nagrinėja automatinį balansavimą srautinio apdorojimo sistemų Apache Spark platformoje. Straipsnyje nagrinėjamas sprendimas susidaro iš trijų sistemų:
+\begin{enumerate}
+    \item Sistema, kurioje uš anksto sugeneruoti konfiguracijų deriniai leidžiami srautinio apdorojimo sistemose ir surenkamos metrikos bei konfiguracijos įverčiai. Gauti duomenis analyzuojami naudojant Factor Analysis + k-means ir gaunamas sąrašas pagrindinių metrikų bei konfiguracijos elementai darantys daugiausiai įtakos greitaveikai. Ši sistema naudojama vieną kartą prieš leidžiant sekančią sistemą. 
+    \item Sistema, kurioje surinktos metrikos ir konfiguracijos elementai yra leidžiami iš naujo ir naudojant Lasso path analizę konfiguracijos elementų sąrašas surušiuojamas pagal įtaką greitaveikai. Tai daroma siekiant statistiškai užtikrinti, jog pasirinkti konfiguracijos elementai yra įtakingiausi. Ši sistema naudojama vieną kartą prieš leidžiant sekančią sistemą.
+    \item Pagrindinė mašininio mokymosi sistema, naudojanti REINFORCE algoritmą, kuri naudodamas surikiuotų konfiguracijos elementų sąrašą ir pagrindinių metrikų sąraša periodiškai atnaujina konfiguraciją. Ši sistema paleidžiama tuo pačiu metu kaip ir srautinio apdorojimo sistema ir veikia visą laiką, kol paleistas ekspermientas.
+\end{enumerate}  
+Eksperimentinis sprendimas buvo sukonfiguruotas kas 5 minutes atnaujinti vieną konfiguracijos elementą. Autoriams pavyko pasiekti 70\% sumažinta vėlinimmą po 50 minučių ir mokymas pilnai konvergavo po 11 valandų. Magistro darbe bus naudojamas supaprastintas eksperimentas: bus implementuojamas REINFORCE algoritmas ir lyginamas su Deep Q Network ir Actor Critic algoritmais.
 
 \sectionnonum{Išvados}
 
