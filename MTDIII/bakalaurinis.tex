@@ -110,21 +110,37 @@ Sistema naudojanti mašininį mokymąsi veikia pastoviai vienodo periodo ciklais
     \label{veikimas}
 \end{figure} 
 Tarpas tarp ciklų apibrežiamas leidžiant balansavimo sistemai ir yra skirtas srautinio apdorojimo sistemai atsinaujinti su naujais konfiguracijos parametrais bei kad surinkti duomenys būtų pakankamai svarūs pateikti į mašininį mokymosi algoritmą.
+Tarp ciklų taip pat yra renkamos metrikos apie būseną, kurie bus veliau paduodami mašininio mokymosi algoritmui.
 
 \subsection{Algoritmo rezultatas}
 Mašinio mokymosi posistemė, atlikusi skaičiavimus, gražiną naują konfiguracijos parametrų rinkinį, kuris yra veliau pateikiamas į srautinio apdorojimo sistemų platformą. Po srautinės apdorojimo sistemos pradedamas naujas ciklas sistemos stebėjimo ir naujų konfiguracijos parametrų kurimo, kuris taip pat atsižvelgia į metrikų skirtumo ir konfiguracijos pakeitimo rezultatus iš  ankstesnių ciklų.
 
 \subsection{Algoritmui tikrinti naudojami skatinamojo mokymosi algoritmai}
-Šiame skyriuje bus aprašomi skatinamojo mokymosi algoritmai, kurie bus naudojami eksperimentui. Šie algoritmai pasirinkti pagal MTD II literatūros analizę, tačiau pats balansavimo algoritmas yra nepriklausomas nuo naudojamo skatinamojo mokysimosi algortimų ir gali būti įgyvendintas naudojant kitus algoritmus.
+Šiame skyriuje bus aprašomi skatinamojo mokymosi algoritmai, kurie bus naudojami eksperimentui. Šie algoritmai pasirinkti pagal MTD II literatūros analizę, tačiau pats balansavimo algoritmas yra nepriklausomas nuo naudojamo skatinamojo mokysimosi algortimų ir gali būti įgyvendintas naudojant kitus algoritmus. Pasirinkti algortimai skyriasi veiksmo erdve – Deep Q Network atlieka skaičiavimus su diskrečia veiksmu erdve, o Soft Actor Critic su tęstinę veiksmų erdve. 
 
 \subsection{Skatinamasis mašininis mokymasis}
 Skatinamasis mokymasis yra algoritmais priklausantys mašininio mokymosi algoritmų grupei. Mašininis mokymasi algoritmai - algoritmai, kurie kuria matematinius modelius paremtus mokymosi duomenimis ir darinčius sprendimus, kurie nėra suprogramuoti \cite{bishoppattern}. Mašininis mokymasis neseniai išpopuliarėjo dėko poreiko dirbti su dideliais kiekiais nerušiuotų ir nestrukturizuotų duomenų ir dėl namų kopiuterių galios padidėjimo iki lygio, kuris leidžia spręsti mašininio mokymosi skaičiavimus \cite{whypopular}.   
 
 Standartiniame skatinamojo mašininio mokymosi algoritme agentas (angl. agent) yra prijungtas prie aplinkos (angl. environment) per stebėjimus(angl. perception) ir veiksmus(angl. action). Kiekvieną žingsnį agentas atlieką veiksmą ir to veiksmo vertė yra perduodama agentui per skatinamąjį signalą. Agentas turi rinktis veiksmus, kurie per ilgą laiko tarpą didins veiksmo įverčius. Tai pasiekiamą per tam tikrą laiko tarpą systematiškai atliekant bandymus ir klystant, su papildoma algoritmu pagalba siekiant papdidinti efektyvumą ir sprendimų stabilumą \cite{reinf}.     
 
-\subsection{Deep Q Network}
+\subsection{Deep Q Network algoritmas}
+Deep Q Network yra Q Learning implementacija naudojant giliuosius neuroninius tinklus. Q Learning - skatinamojo mokymosi algortimas, kuris bet kokiam baigtiniam Markovo pasirinkimo procesui randa optimalius sprendimus maximizuojančius galutinio rezultato gavimą per bet kokį kiekį žingsnių pradedant nuo esamos būsenos \cite{melo2001convergence}. 
+Q Learning naudoja Q funkciją, kurios įeigą yra būsenos ir veiksmo kombinacija, o rezultatas yra atlygio apromiksimacija. Pradžioje visos Q reikšmės yra 0 ir algoritmas atlikdamas veiksmus pildo lentelę atnaujintaumis reikšmėmis. Tačiau, kai veiksmų ir būsenų pasidaro per daug Q Learning algortimo nebeužtenka ir tenka naudoti giliuosius neuroninius tinklus.  
 
-\subsection{Soft Actor Critic}
+Deep Q Network skyriasi nuo Q Learning tuo, kad vietoj būsenos ir veiksmų į jį paduodama būseną ir jis gražina Q reikšmę visų įmanomų veiksmų. Taip pat Deep Q Network naudoja patirties pakartojimą (angl. expirience replay) - vietoj to, kad kurti sprendimą pagal paskutinį veiksmą yra paduodamas rinkinys atsitiktinių veiksmų pagal kurį algoritmas gali efektyviau mokytis. 
+
+Deep Q Network algoritmo veikimas\cite{handson}:
+\begin{enumerate}
+    \item Perduoti aplinkos būseną į Deep Q Network, kuris gražins visus įmanomus veiksmus būsenai.
+    \item Pasirinkti veiksmą naudojant \(\epsilon\)-greedy strategiją, kuriuo metu pasirenkamas atsitiktinis veiksmas arba pasirenkamas veiksmas turintis didžiausia Q reikšmę.
+    \item Įvykdomas veiksmas ir pereinama į naują būseną. Šis perėjimas išsaugomas kaip patirties pakartojimo kortežas susidarantis iš būsenos, veiksmo, atlygio ir naujos būsenos.
+    \item Pasirenkamas atsitiktinis rinkints perėjimų iš patirties paraktojimo kortežų rinkinio ir apskaičiuojamas nuostolis (angl. loss). \[Loss=(r + \gamma max_{a'} Q(s',a';\theta') - Q(s,a;\theta))^2\]
+    \item Atlikti gradiento nusileidimą su tikrais tinklo parametrais siekiant sumažinti nuostolį.
+    \item Po kiekvienos iteracijos, perkelti tikrojo tinklo svorius į pasirinkto tinklo svorius.
+    \item Visi žingsniai kartojami iki nustatytos pabaigos.
+\end{enumerate}
+\subsection{Soft Actor Critic algortimas}
+Soft Actor Critic skiriasi nuo kitų skatinamojo mokymosi algoritmų tuo kad jis bando ne tik pasiekti didžiausią bendrą atlygį, tačiau ir didinti strategijos entropiją. Entropijos didinimas reiškia, kad Soft Actor Critic algoritmas yra labiau linkęs į tyrinėjimą (angl. exploration) nei kiti algoritmai, ko pasekoje užtikrinama, kad algoritmas nesirinks visada tokio pačio veiksmo. 
 
 \section{Alternatyvus sprendimai}
 Siekiant užtikrinti sprendimo validumą ir efektyvumą bus atliekamas eksperimentas ir rezultatai bus lyginamį su alternatyviais sprendimais.
