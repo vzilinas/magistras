@@ -12,8 +12,9 @@
 \usepackage{listings}
 \usepackage{subfig}
 \usepackage{wrapfig}
-
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{enumitem}
+\usepackage{longtable}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \setenumerate{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
@@ -74,17 +75,99 @@ Antroje magistro darbo dalyje atlikta literatūros analizė, sudarytas balansavi
     \item Apibrėžti eksperimento eigą ir altenatyvius sprendimus, kurių rezultatai bus naudojami algortimo įvertinimui. 
 \end{enumerate}
 
-\section{Srautinės architektūros sistemos, valdomos grįžtamuuoju ryšiu, modelis}
+\section{Srautinės architektūros sistemos, valdomos grįžtamuoju ryšiu, modelis}
+\subsection{Modelis}
 
 
+\subsection{Keičiami konfiguracijos parametrai}
 
-\section{Optimizavimo algoritmas}
+Norint koreguoti konfiguracijos parametrus reikia siųsti atnaujinimo komandą į Heron komandinės eilutė įrankį (toliau Heron CLI). Peteikus konfiguracijos parametrus Heron platformą perkrauna srautinio apdorojimo sistema su naujais parametrais. 
+Vienas iš pagrindinių srautinės apdorojimo sistemos konfiguracijos parametrų yra skaičiavimo komponentų lygiagretumas nurodantis kiek paleidžiama tam tikro komponento instancijų. Taip pat tai yra vienintelis keičiamas konfiguracijos elementas, kuris priklauso nuo srautinio apdorojimo sistemos.
+
+
+Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo metu pateikti \ref{param-table} lentelėje:
+
+\begin{longtable}{|p{0.59\linewidth}|p{0.41\linewidth}|}
+    \caption{Keičiami konfiguracijos parametrai}
+    \label{param-table}\\
+    \hline
+    \rowcolor[HTML]{C0C0C0} 
+    Parametras                                              & Paaiškinimas                                                                                 \\ \hline
+    \endfirsthead
+    %
+    \endhead
+    %
+    component-parallelism=[skaičiavimo komponento pavadinimas]            & Tam tikro skaičiavimo komponento lygiagretumas                                 \\ \hline
+    heron.instance.tuning.expected.bolt.read.queue.size                   & Numatomas skaitomos eilės dydis Bolt tipo komponentuose                        \\ \hline
+    heron.instance.tuning.expected.bolt.write.queue.size                  & Numatomas rašomos eilės dydis Bolt tipo komponentuose                          \\ \hline
+    heron.instance.tuning.expected.spout.read.queue.size                  & Numatomas skaitomos eilės dydis Spout tipo komponentuose                       \\ \hline
+    heron.instance.tuning.expected.spout.write.queue.size                 & Numatomas rašomos eilės dydis Spout tipo komponentuose                         \\ \hline
+    heron.instance.set.data.tuple.capacity                                & Didžiausias kiekis kortežų sugrupuottu vienoje žinutėje                        \\ \hline
+    heron.instance.ack.batch.time.ms                                      & Didžiausias laikas Spout tipo komponentui atlikti ACK                          \\ \hline
+    heron.instance.emit.batch.time.ms                                     & Didžiausias laikas Spout tipo komponentui išsiųsti gautą kortežą               \\ \hline
+    heron.instance.emit.batch.size.bytes                                  & Didžiausias partijos dydis Spout tipo komponentui išsiųsti gautą kortežą       \\ \hline
+    heron.instance.execute.batch.time.ms                                  & Didžiausias laikas Bolt tipo komponentui apdoroti gautą kortežą                \\ \hline
+    heron.instance.execute.batch.size.bytes                               & Didžiausias partijos dydis Bolt tipo komponentui apdoroti gautą kortežą        \\ \hline
+    heron.instance.internal.bolt.read.queue.capacity                      & Skaitomos eilės dydis Bolt komponentams                                        \\ \hline
+    heron.instance.internal.bolt.write.queue.capacity                     & Rašomos eilės dydis Bolt komponentams                                          \\ \hline
+    heron.instance.internal.spout.read.queue.capacity                     & Skaitomos eilės dydis Spout komponentams                                       \\ \hline
+    heron.instance.internal.spout.write.queue.capacity                    & Rašomos eilės dydis Spout komponentams                                         \\ \hline
+    heron.api.config.topology\_container\_max\_ram\_hint                  & Daugiausiai operatyvios atminties kiekio konteineriui išskyrimo užuomina       \\ \hline
+    heron.api.config.topology\_container\_max\_cpu\_hint                  & Daugiausiai procesoriaus pajegumo konteineriui išskyrimo užuomina              \\ \hline
+    heron.api.config.topology\_container\_max\_disk\_hint                 & Daugiausiai kietojo disko atminties kiekio konteineriui  išskyrimo užuomina    \\ \hline
+    heron.api.config.topology\_container\_padding\_percentage             & Užuominų galimą paklaidą                                                       \\ \hline
+\end{longtable}
+
+\subsection{Naudojamos metrikos}
+
+
+\subsection{Balansavimo tikslas}
+
+
+\section{Balansavimo algoritmas}
 
 
 \section{Eksperimento tyrimo planas}
 
+\subsection{Tyrimo tikslas}
+
+Šio tyrimo tikslas - įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algortimo validumą. Tam reikia atlikti bandymus su eksperimentine sistema naudojančią aprašytą optimizavimo algoritmą, su eksperimentine sistema naudojančia REINFORCE algoritmą ir su aplinka naudojančią standartinę konfiguracija be jokių pakeitimų. Gautus bandymo duomenis palyginti ir nustatyti, ar pasiūlytas sprendimas tinką srautinio apdorojimo sistemų balansavimui.
+
+\subsection{Eksperimentinė sistema}
 
 
+Pridėti čia tikslia diagrama su komponentais
+
+\begin{enumerate}
+    \item Čia bus posistemės aprašymas
+\end{enumerate}
+
+
+\subsection{Planuojamų eksperimentų apimtis}
+
+Magistro darba eksperimentai bus atliekami su keturiais skirtigais sprendimais:
+\begin{itemize}
+    \item Srautinio apdorojimo sistemos veikimas su standartine konfiguracija.
+    \item Srautinio apdorojimos sistemos veikimas balansuojant ją naudojant sukurtą eksperimentinį sprendimą pagal apibrėžtą balansavimo algoritma naudojant:
+    \begin{itemize}
+        \item REINFORCE algortimą skatinamojo mokymosi posistemėje.
+        \item Deep Q Network algoritmą skatinamojo mokymosi posistemėje.
+        \item Soft Actor Critic algortimą skatinamojo mokymosi posistemėje.
+    \end{itemize}
+\end{itemize}
+
+Kiekvienas sprendimas bus testuojamas su dviem srautinio apdorojimo sistemų implementacijomis:
+\begin{itemize}
+    \item Reklamų analizės srautinio apdorojimo sistema.
+    \item WordCount srautinio apdorojimo sistema.
+\end{itemize}
+
+Reklamų analizės sistema rezultatus talpina tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam specifiniam kampanijos langui iki kol jis yra įrašomas į Redis duombazę. WordCount sistemos rezultatai bus skaitomi tiesiai iš Heron platformos naudojant Heron API ir saugomi į failą tokiu pačiu formatu kaip ir reklamų analizės sistema, naudojant absoliutų vėlinimą gauta iš Heron API. 
+
+Eksperimentai su visomis sistemomis bus vykdomi po 10 valandų, kadangi \cite{vaquero2018autotuning} straipsnio autoriai nustatė, kad jų balanasavimo algoritmas konverguoja po maždaug 11 valandų. 
+Gauti rezultatai iš failo bus skaitomi pasirašyta Python programa, kuri apdoroja duomenis į dvi grupes: visų sprendimų vėlinimą ir visų sprendimų vėlinimo 99-tą percentilę ir sugeneruoja linijinas diagramas, kiekvienai vėlinimo grupei pagal sprendimą.
+
+Taigi iš viso magistro darbe planuojama atlikti 8 eksperimentus, kurių bendra trukmė - 80 valandų.
 
 \section{Srautinio apdorojimo sistemų balansavimo algoritmas}
 Šiame skyriuje aptariamas algoritmas, kuris bus naudojamas srautinių sistemų balansavimui. 
@@ -105,7 +188,6 @@ Kad mašinio mokymosi posistemė galėtų daryti sprendimus, jai paduodami šie 
     \item Srautinio apdorojimo sistemos pradinė konfiguracija – komponentų lygiagretumo parametrai, konteinerių parametrai, konfiguracijos elementai ir jų reikšmės.
     \item Konfiguruojami parametrai ir jų reikšmių ribos.
     \item Mašinio mokymosi algoritmo konfiguracija – sprendimų priemimo periodiškumas.
-    \item Buvusio ciklo pradiniai duomenys ir priimti sprendimai.
 \end{itemize}
 
 \subsection{Eiga}
