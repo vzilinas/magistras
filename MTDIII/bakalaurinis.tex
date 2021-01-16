@@ -119,7 +119,33 @@ Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo met
 \end{longtable}
 
 \subsection{Naudojamos metrikos}
+Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais skirtingais būdais: darant užklausą į Heron API, skaitant iš tekstinio failo, kurį pildo Heron platformą, sukurti savo metrikų skaitymo priedą ir pateikti jį į Heron platformą prieš ją paleidžiant. Visos metrikos yra saugomos srautinio apdorojimo sistemos kiekvienam skaičiavimo komponentui. 
 
+\ref{metrics-table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API. Šios metrikos ir bus teikiamos į mašininio mokymosi algortimą apibūdinti aplinkai.
+
+\begin{longtable}{|p{0.5\linewidth}|p{0.5\linewidth}|}
+    \caption{Naudojamų metrikos}
+    \label{metrics-table}\\
+    \hline
+    \rowcolor[HTML]{C0C0C0} 
+    Metrikos pavadinimas                                  & Paaiškinimas            \\ \hline
+    \endfirsthead
+    %
+    \endhead
+    %
+    \_\_emit-count                                        & Išsiųstų kortežų kiekis                    \\ \hline
+    \_\_execute-count                                     & Apdorotų kortežų kiekis Bolt komponentuose \\ \hline
+    \_\_fail-count                                        & Amount of time fail was called on a tuple  \\ \hline
+    \_\_ack-count                                         & Amount of time ack was called on a tuple   \\ \hline
+    \_\_complete-latency                                  & Vidutinė trukmė Spout komponentui nuo kortežo išsiųntimo iki FAIL arba ACK komandos \\ \hline
+    \_\_execute-latency                                   & Vidutinė trukmė Bolt komponentui apdoroti kortežą                                          \\ \hline
+    \_\_process-latency                                   & Vidutinė trukmė Bolt komponentui nuo kortežo apdorojimo pradžios iki kito komponento ACK arba FAIL komandos \\ \hline
+    \_\_jvm-process-cpu-load                              & JVM apkrova procesoriui     \\ \hline
+    \_\_jvm-memory-used-mb                                & JVM išnaudota operatyvi atmintis       \\ \hline
+    \_\_jvm-memory-mb-total                               & JVM turima operatyvi atmintis    \\ \hline
+    \_\_jvm-gc-collection-time-ms                         & JWM šiušklių surinkimo trukmė     \\ \hline
+    \_\_time\_spent\_back\_pressure\_by\_compid           & Kiek laiko komponentui buvo įjungtas priešslėgio režimas  \\ \hline
+\end{longtable}
 
 \subsection{Balansavimo tikslas}
 
