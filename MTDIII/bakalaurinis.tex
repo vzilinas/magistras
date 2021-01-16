@@ -205,28 +205,6 @@ Tarp ciklų taip pat yra renkamos metrikos apie būseną, kurie bus veliau paduo
 \subsection{Algoritmo rezultatas}
 Mašinio mokymosi posistemė, atlikusi skaičiavimus, gražiną naują konfiguracijos parametrų rinkinį, kuris yra veliau pateikiamas į srautinio apdorojimo sistemų platformą. Po srautinės apdorojimo sistemos pradedamas naujas ciklas sistemos stebėjimo ir naujų konfiguracijos parametrų kurimo, kuris taip pat atsižvelgia į metrikų skirtumo ir konfiguracijos pakeitimo rezultatus iš  ankstesnių ciklų.
 
-\section{Alternatyvus sprendimai}
-Siekiant užtikrinti sprendimo validumą ir efektyvumą bus atliekamas eksperimentas ir rezultatai bus lyginamį su alternatyviais sprendimais.
-
-\subsection{Rezultatų surinkimas}
-
-Pagal literatūros analizę atlikta MTDII matoma, kad dauguma autorių renkasi vertinti tik pagal vieną metriką ir dažniau matavimui naudojamas vėlinimas (angl. latency). Taip pat \cite{vaquero2018autotuning}, naudojantis skatinamąjį mokymą, matavimui naudoja vėlinimą ir \cite{Chintapalli2016Benchmarking} straipsnis, kuris siūlo srautinio apdorojimo sistemų vertinimo sprendimą, naudoja vėlinimą. Todėl eksperimente rezultatai bus vertinami naudojant vėlinimą.   
-
-\begin{figure}[H]
-    \includegraphics[width=15cm]{img/yahoo.pdf}
-    \caption{Reklamų analizės sistema \cite{Chintapalli2016Benchmarking}}
-    \label{yahoo}
-\end{figure} 
-
-\begin{figure}[H]
-    \includegraphics[width=15cm]{img/wordcount.pdf}
-    \caption{WordCount sistemos pavyzdys}
-    \label{wordcount}
-\end{figure} 
-
-Taip pat pagal MTDII literatūros analizę tyrimai bus atliekami su Reklamų analizės sistema (\ref{yahoo} pav.), kadangi ši sistema sukurta srautinių apdorojimo variklių vertinimui ir su WordCount srautinio apdorojimo sistemą (\ref{wordcount} pav.), kuri neturi pašalinių elementų sistemoje, kadangi Reklamų analizės sistema naudoja „Apache Kafka“, „Redis“ vertinimui.
-Kadangi šios abi sistemos turi savo duomenų generavimo komponentus todėl jos bus naudojamos kaip tyrimo duomenis. Reklamų analizės sistema taip pat turi ir posisteme, kuri apskaičiuoją vėlinimą ir saugo jį tekstiniame įrašę, o WordCount sistemai įvertinti bus naudojama pačios Heron platformos įrašai siekiant kuo mažiau daryti įtakos rezultatams.
-
 \sectionnonum{Išvados}
 
 \printbibliography[heading=bibintoc] 
