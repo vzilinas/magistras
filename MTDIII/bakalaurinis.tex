@@ -85,11 +85,11 @@ Norint koreguoti konfiguracijos parametrus reikia siųsti atnaujinimo komandą �
 Vienas iš pagrindinių srautinės apdorojimo sistemos konfiguracijos parametrų yra skaičiavimo komponentų lygiagretumas nurodantis kiek paleidžiama tam tikro komponento instancijų. Taip pat tai yra vienintelis keičiamas konfiguracijos elementas, kuris priklauso nuo srautinio apdorojimo sistemos.
 
 
-Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo metu pateikti \ref{param-table} lentelėje:
+Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo metu pateikti \ref{param–table} lentelėje:
 
 \begin{longtable}{|p{0.59\linewidth}|p{0.41\linewidth}|}
     \caption{Keičiami konfiguracijos parametrai}
-    \label{param-table}\\
+    \label{param–table}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
     Parametras                                              & Paaiškinimas                                                                                 \\ \hline
@@ -97,7 +97,7 @@ Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo met
     %
     \endhead
     %
-    component-parallelism=[skaičiavimo komponento pavadinimas]            & Tam tikro skaičiavimo komponento lygiagretumas                                 \\ \hline
+    component–parallelism=[skaičiavimo komponento pavadinimas]            & Tam tikro skaičiavimo komponento lygiagretumas                                 \\ \hline
     heron.instance.tuning.expected.bolt.read.queue.size                   & Numatomas skaitomos eilės dydis Bolt tipo komponentuose                        \\ \hline
     heron.instance.tuning.expected.bolt.write.queue.size                  & Numatomas rašomos eilės dydis Bolt tipo komponentuose                          \\ \hline
     heron.instance.tuning.expected.spout.read.queue.size                  & Numatomas skaitomos eilės dydis Spout tipo komponentuose                       \\ \hline
@@ -121,11 +121,11 @@ Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo met
 \subsection{Naudojamos metrikos}
 Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais skirtingais būdais: darant užklausą į Heron API, skaitant iš tekstinio failo, kurį pildo Heron platformą, sukurti savo metrikų skaitymo priedą ir pateikti jį į Heron platformą prieš ją paleidžiant. Visos metrikos yra saugomos srautinio apdorojimo sistemos kiekvienam skaičiavimo komponentui. 
 
-\ref{metrics-table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API. Šios metrikos ir bus teikiamos į mašininio mokymosi algortimą apibūdinti aplinkai.
+\ref{metrics–table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API. Šios metrikos ir bus teikiamos į mašininio mokymosi algortimą apibūdinti aplinkai.
 
 \begin{longtable}{|p{0.5\linewidth}|p{0.5\linewidth}|}
     \caption{Naudojamų metrikos}
-    \label{metrics-table}\\
+    \label{metrics–table}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
     Metrikos pavadinimas                                  & Paaiškinimas            \\ \hline
@@ -133,41 +133,114 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
     %
     \endhead
     %
-    \_\_emit-count                                        & Išsiųstų kortežų kiekis                    \\ \hline
-    \_\_execute-count                                     & Apdorotų kortežų kiekis Bolt komponentuose \\ \hline
-    \_\_fail-count                                        & Amount of time fail was called on a tuple  \\ \hline
-    \_\_ack-count                                         & Amount of time ack was called on a tuple   \\ \hline
-    \_\_complete-latency                                  & Vidutinė trukmė Spout komponentui nuo kortežo išsiųntimo iki FAIL arba ACK komandos \\ \hline
-    \_\_execute-latency                                   & Vidutinė trukmė Bolt komponentui apdoroti kortežą                                          \\ \hline
-    \_\_process-latency                                   & Vidutinė trukmė Bolt komponentui nuo kortežo apdorojimo pradžios iki kito komponento ACK arba FAIL komandos \\ \hline
-    \_\_jvm-process-cpu-load                              & JVM apkrova procesoriui     \\ \hline
-    \_\_jvm-memory-used-mb                                & JVM išnaudota operatyvi atmintis       \\ \hline
-    \_\_jvm-memory-mb-total                               & JVM turima operatyvi atmintis    \\ \hline
-    \_\_jvm-gc-collection-time-ms                         & JWM šiušklių surinkimo trukmė     \\ \hline
+    \_\_emit–count                                        & Išsiųstų kortežų kiekis                    \\ \hline
+    \_\_execute–count                                     & Apdorotų kortežų kiekis Bolt komponentuose \\ \hline
+    \_\_complete–latency                                  & Vidutinė trukmė Spout komponentui nuo kortežo išsiųntimo iki FAIL arba ACK komandos \\ \hline
+    \_\_execute–latency                                   & Vidutinė trukmė Bolt komponentui apdoroti kortežą                                          \\ \hline
+    \_\_process–latency                                   & Vidutinė trukmė Bolt komponentui nuo kortežo apdorojimo pradžios iki kito komponento ACK arba FAIL komandos \\ \hline
+    \_\_jvm–process–cpu–load                              & JVM apkrova procesoriui     \\ \hline
+    \_\_jvm–memory–used–mb                                & JVM išnaudota operatyvi atmintis       \\ \hline
+    \_\_jvm–memory–mb–total                               & JVM turima operatyvi atmintis    \\ \hline
+    \_\_jvm–gc–collection–time–ms                         & JWM šiušklių surinkimo trukmė     \\ \hline
     \_\_time\_spent\_back\_pressure\_by\_compid           & Kiek laiko komponentui buvo įjungtas priešslėgio režimas  \\ \hline
 \end{longtable}
 
-\subsection{Balansavimo tikslas}
+\subsection{Balansavimo tikslo funkcija}
 
 
 \section{Balansavimo algoritmas}
 
+\subsection{Srautinės architektūros sistemos konfiguracijos valdymo algoritmas}
+
+Algoritmo tikslas – pagal esamą būseną ir esamą konfiguraciją apskaičiuoti naują konfiguraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algortimo pagrindas yra pasirinktas skatinamojo mašinio mokymosi algortimas.
+
+Kad algortimas galėtų apskaičiuoti naują konfiguraciją, jam yra paduodami šie duomenys:
+\begin{itemize}
+    \item Srautinio apdorojimo sistemos metrikos (\ref{metrics–table} lentelė)
+    \item Aplinkos naudojami resursai – procesoriaus apkrova procentais, operatyviosios atminties apkrova procentais.
+    \item Srautinio apdorojimo sistemos pradinė konfiguracija (\ref{param–table} letntelė).
+    \item Konfiguruojamų parametrų sąrašas ir jų galimos reikšmės, aprašytos intervalu (pavyzdžiui \([512,4096]\)) arba tiksliais variantais (pavyzdžiui \([512, 1024, 2048, 4096]\)).
+\end{itemize}
+Duomenis, kurie paduodami balansavimo algoritmui yra renkami pastoviai, neatsižvelgiant į pačio algoritmo viekimą.
+
+Balansavimo algortimas veikia ciklais, visą srautinės apdorojimo sistemos veikimo laiką ir tarpas tarp ciklų turi būti pakankamai ilgas srautinio apdorojimo sistemai atsinaujinti su naujais konfiguracijos parametrais bei, kad surinktų duomenų kiekis būtų pakankamai svarūs pateikti mašininio mokymosi algoritmui. Balansavimo algoritmas, atlikęs skaičiavimus, gražina naują konfiguracijos parametrų rinkinį ir laukia naujo ciklo pradžios. 
+
+
+
+Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network ir Soft Actor Critic turi bendrus veikimo bruožus:
+\begin{itemize}
+    \item Jie yra model–free tipo skatinamojo mokymosi algoritmai – tai yra jie daro sprendimus pagal tai ką išmoko veikimo metu ir negeneruoja bendro modelio. Tai aktualu mūsų atveju kadangi balansavimo algortimas turi galėti prisitaikyti prie kintačių duomenų kiekio ir greičio bei kintačios aplinkos.
+    \item Jie yra off–policy tipo – jie mokosi atliekant skirtingus veiksmus nebūtinai tuos kurie buvo atlikti su dabartine strategija.
+\end{itemize} 
+
+Tačiau šie algoritmai buvo pasirinkti nes turi esmini skirtumą – Deep Q Network galimų veiksmų aibę priima kaip rinkinį, o Soft Actor Critic kaip intervalą, todėl naudojant šiuos tinklus konfiguruojamų parametrų sąrašas yra skirtingas. 
+
+\subsection{Srautinio duomenų apdorojimo aplinkos apibrėžimas balansavimui}
+
+Balansavimui atlikti reikalingas tikslus apibrėžimas srautinio apdorojimo aplinkos, šis apibrėžimas susidaro iš: dabartinės srautinio apdorojimo sistemos būsenos, galimų veiksmų aibės ir žingsnio funkcijos, kuri atlieka veiksmą ir apskaičiuoja atpilda.
+
+Srautinio apdorojimo sistemos dabartinė būsena – srautinio apdorojimo sistemos metrikos patalpintos masyvę.
+
+Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – kadangi Deep Q Network reikalauja diskrečių reikšmių, o Soft Actor Critic testinių reikšmių aibės, jos bus skirtingai paduodamos į balansavimo algoritmą, tačiau reikšmių ribos vienodos.
+\begin{longtable}{|p{0.59\linewidth}|p{0.4\linewidth}|}
+    \caption{Galimų veiksmų aibė}
+    \label{param–table}\\
+    \hline
+    \rowcolor[HTML]{C0C0C0} 
+    Parametras     & Naturaliųjų reikšmių aibė       \\ \hline
+    \endfirsthead
+    %
+    \endhead
+    %
+    component–parallelism=[skaičiavimo komponento pavadinimas]& \([1;20] * \text{Komponentų kiekis}\)\\ \hline
+    heron.instance.tuning.expected.bolt.read.queue.size       & \([2;20]\) \\ \hline
+    heron.instance.tuning.expected.bolt.write.queue.size      & \([2;20]\) \\ \hline
+    heron.instance.tuning.expected.spout.read.queue.size      & \([128;512]\) \\ \hline
+    heron.instance.tuning.expected.spout.write.queue.size     & \([2;20]\) \\ \hline
+    heron.instance.set.data.tuple.capacity                    & \([64;512]\) \\ \hline
+    heron.instance.ack.batch.time.ms                          & \([64;512]\) \\ \hline
+    heron.instance.emit.batch.time.ms                         & \([8;128]\) \\ \hline
+    heron.instance.emit.batch.size.bytes                      & \([8192;65536]\) \\ \hline
+    heron.instance.execute.batch.time.ms                      & \([8;128]\) \\ \hline
+    heron.instance.execute.batch.size.bytes                   & \([8192;65536]\) \\ \hline
+    heron.instance.internal.bolt.read.queue.capacity          & \([64;512]\) \\ \hline
+    heron.instance.internal.bolt.write.queue.capacity         & \([64;512]\) \\ \hline
+    heron.instance.internal.spout.read.queue.capacity         & \([512;4096]\) \\ \hline
+    heron.instance.internal.spout.write.queue.capacity        & \([64;512]\) \\ \hline
+    heron.api.config.topology\_container\_max\_ram\_hint      & \([256;2048]\) \\ \hline
+    heron.api.config.topology\_container\_max\_cpu\_hint      & \([20;80]\) \\ \hline
+    heron.api.config.topology\_container\_max\_disk\_hint     & \([8192;65536]\) \\ \hline
+    heron.api.config.topology\_container\_padding\_percentage & \([0;20]\) \\ \hline
+\end{longtable}
+
+Srautinio apdorojimo sistemos balansavimo žingsnio funkcija:
+\begin{itemize}
+ \item Atliekamas veiksmas -  naujos konfiguracijos įkelimas ir nustatyto laiko laukimas, kad srautinio apdorojimo sistema pasiektų apkrovą.
+ \item Atpildas - skaitinė reikšmė apskaičiuotą naudojant normalizuotas metrikas su koeficientais ir \ref{formula} formulė.
+\end{itemize}
+\begin{equation}
+    \label{formula}
+    \begin{gathered}
+    \text{Atpildas} = \text{„emit-count“ } + \text{ „execute-count“ } – \text{ „complete-latency“ } – \\ 
+        \text{ „execute-latency“ } –  \text{ „process-latency“ } – \: (100 \: – \text{ „jvm-process-cpu-load“ })\: – \\
+        (|\text{ „jvm-memory-mb-total“ } - \text{ „jvm-memory-used-mb“ }|) \: – \\
+    \text{ „jvm-gc-collection-time-ms“ } –\text{ „time\_spent\_back\_pressure\_by\_compid“ } 
+    \end{gathered}
+\end{equation}
 
 \section{Eksperimento tyrimo planas}
 
 \subsection{Tyrimo tikslas}
 
-Šio tyrimo tikslas - įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algortimo validumą. Tam reikia atlikti bandymus su eksperimentine sistema naudojančią aprašytą optimizavimo algoritmą, su eksperimentine sistema naudojančia REINFORCE algoritmą ir su aplinka naudojančią standartinę konfiguracija be jokių pakeitimų. Gautus bandymo duomenis palyginti ir nustatyti, ar pasiūlytas sprendimas tinką srautinio apdorojimo sistemų balansavimui.
+Šio tyrimo tikslas – įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algortimo validumą. Tam reikia atlikti bandymus su eksperimentine sistema naudojančią aprašytą optimizavimo algoritmą, su eksperimentine sistema naudojančia REINFORCE algoritmą ir su aplinka naudojančią standartinę konfiguracija be jokių pakeitimų. Gautus bandymo duomenis palyginti ir nustatyti, ar pasiūlytas sprendimas tinką srautinio apdorojimo sistemų balansavimui.
 
 \subsection{Eksperimentinė sistema}
-
 
 Pridėti čia tikslia diagrama su komponentais
 
 \begin{enumerate}
-    \item Čia bus posistemės aprašymas
+    \item Čia bus posistemių aprašymas
 \end{enumerate}
-
 
 \subsection{Planuojamų eksperimentų apimtis}
 
@@ -191,45 +264,10 @@ Kiekvienas sprendimas bus testuojamas su dviem srautinio apdorojimo sistemų imp
 Reklamų analizės sistema rezultatus talpina tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam specifiniam kampanijos langui iki kol jis yra įrašomas į Redis duombazę. WordCount sistemos rezultatai bus skaitomi tiesiai iš Heron platformos naudojant Heron API ir saugomi į failą tokiu pačiu formatu kaip ir reklamų analizės sistema, naudojant absoliutų vėlinimą gauta iš Heron API. 
 
 Eksperimentai su visomis sistemomis bus vykdomi po 10 valandų, kadangi \cite{vaquero2018autotuning} straipsnio autoriai nustatė, kad jų balanasavimo algoritmas konverguoja po maždaug 11 valandų. 
-Gauti rezultatai iš failo bus skaitomi pasirašyta Python programa, kuri apdoroja duomenis į dvi grupes: visų sprendimų vėlinimą ir visų sprendimų vėlinimo 99-tą percentilę ir sugeneruoja linijinas diagramas, kiekvienai vėlinimo grupei pagal sprendimą.
+Gauti rezultatai iš failo bus skaitomi pasirašyta Python programa, kuri apdoroja duomenis į dvi grupes: visų sprendimų vėlinimą ir visų sprendimų vėlinimo 99–tą percentilę ir sugeneruoja linijinas diagramas, kiekvienai vėlinimo grupei pagal sprendimą.
 
-Taigi iš viso magistro darbe planuojama atlikti 8 eksperimentus, kurių bendra trukmė - 80 valandų.
+Taigi iš viso magistro darbe planuojama atlikti 8 eksperimentus, kurių bendra trukmė – 80 valandų.
 
-\section{Srautinio apdorojimo sistemų balansavimo algoritmas}
-Šiame skyriuje aptariamas algoritmas, kuris bus naudojamas srautinių sistemų balansavimui. 
-\begin{figure}[H]
-    \includegraphics[width=15cm]{img/BalansavimoDiagrama.pdf}
-    \caption{Pagrindiniai algoritmo elementai ir jų tarpusavio ryšiai}
-    \label{balansavimo_sistema}
-\end{figure} 
-
-\subsection{Tikslas}
-Algoritmo tikslas savarankiškai reguliuoti srautinio apdorojimo sistemos konfiguracijos parametrus siekiant palaikyti sistemą stablią ir optimaliai naudojančia resursus. \ref{balansavimo_sistema} pav. pavazduota sistema yra integruojama į srautinio apdorojimo sistemos platformą iš kurios ji gauna reikiamą informacija apie srautinio apdorojimo sistemos metrikas ir resursus, bei turėti informaciją apie esamus aplinkos naudojamus ir turimus resursus. Balansavimo algoritmas eksperimente bus implementuojamas kaip posistemė, kuri gauna metrikas iš srautinio apdorojimo sistemos platformos ir operacinės sistemos, o atnaujintą konfiguraciją pateikia į srautinio apdorojimo platformą per komandų įvedimo eilutę.
-
-\subsection{Įeiga}
-Kad mašinio mokymosi posistemė galėtų daryti sprendimus, jai paduodami šie duomenys:
-\begin{itemize}
-    \item Srautinio apdorojimo sistemos naudojami resursai ir metrikos – procesoriaus apkrova, operatyviosios atminties apkrova, priešslėgis (angl. backpressure), srautinio apdorojimo sistemos įeigos komponento atsilikimas nuo duomenų srauto.
-    \item Aplinkos naudojami resursai – procesoriaus apkrova, operatyviosios atminties apkrova.
-    \item Srautinio apdorojimo sistemos pradinė konfiguracija – komponentų lygiagretumo parametrai, konteinerių parametrai, konfiguracijos elementai ir jų reikšmės.
-    \item Konfiguruojami parametrai ir jų reikšmių ribos.
-    \item Mašinio mokymosi algoritmo konfiguracija – sprendimų priemimo periodiškumas.
-\end{itemize}
-
-\subsection{Eiga}
-
-Sistema naudojanti mašininį mokymąsi veikia pastoviai vienodo periodo ciklais (\ref{veikimas} pav.). 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=10cm]{img/AlgoritmoVeikimas.pdf}
-    \caption{Algortimo veikimas}
-    \label{veikimas}
-\end{figure} 
-Tarpas tarp ciklų apibrežiamas leidžiant balansavimo sistemai ir yra skirtas srautinio apdorojimo sistemai atsinaujinti su naujais konfiguracijos parametrais bei kad surinkti duomenys būtų pakankamai svarūs pateikti į mašininį mokymosi algoritmą.
-Tarp ciklų taip pat yra renkamos metrikos apie būseną, kurie bus veliau paduodami mašininio mokymosi algoritmui.
-
-\subsection{Algoritmo rezultatas}
-Mašinio mokymosi posistemė, atlikusi skaičiavimus, gražiną naują konfiguracijos parametrų rinkinį, kuris yra veliau pateikiamas į srautinio apdorojimo sistemų platformą. Po srautinės apdorojimo sistemos pradedamas naujas ciklas sistemos stebėjimo ir naujų konfiguracijos parametrų kurimo, kuris taip pat atsižvelgia į metrikų skirtumo ir konfiguracijos pakeitimo rezultatus iš  ankstesnių ciklų.
 
 \sectionnonum{Išvados}
 
