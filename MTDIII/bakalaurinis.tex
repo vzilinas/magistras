@@ -124,7 +124,7 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
 \ref{metrics–table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API. Šios metrikos ir bus teikiamos į mašininio mokymosi algortimą apibūdinti aplinkai.
 
 \begin{longtable}{|p{0.5\linewidth}|p{0.5\linewidth}|}
-    \caption{Naudojamų metrikos}
+    \caption{Naudojamos metrikos}
     \label{metrics–table}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
@@ -157,7 +157,6 @@ Algoritmo tikslas – pagal esamą būseną ir esamą konfiguraciją apskaičiuo
 Kad algortimas galėtų apskaičiuoti naują konfiguraciją, jam yra paduodami šie duomenys:
 \begin{itemize}
     \item Srautinio apdorojimo sistemos metrikos (\ref{metrics–table} lentelė)
-    \item Aplinkos naudojami resursai – procesoriaus apkrova procentais, operatyviosios atminties apkrova procentais.
     \item Srautinio apdorojimo sistemos pradinė konfiguracija (\ref{param–table} letntelė).
     \item Konfiguruojamų parametrų sąrašas ir jų galimos reikšmės, aprašytos intervalu (pavyzdžiui \([512,4096]\)) arba tiksliais variantais (pavyzdžiui \([512, 1024, 2048, 4096]\)).
 \end{itemize}
@@ -173,7 +172,7 @@ Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network
     \item Jie yra off–policy tipo – jie mokosi atliekant skirtingus veiksmus nebūtinai tuos kurie buvo atlikti su dabartine strategija.
 \end{itemize} 
 
-Tačiau šie algoritmai buvo pasirinkti nes turi esmini skirtumą – Deep Q Network galimų veiksmų aibę priima kaip rinkinį, o Soft Actor Critic kaip intervalą, todėl naudojant šiuos tinklus konfiguruojamų parametrų sąrašas yra skirtingas. 
+Šie algoritmai buvo pasirinkti, nes turi skirtumą veiksmų aibės apibrėžime – Deep Q Network galimų veiksmų aibę priima kaip rinkinį, o Soft Actor Critic kaip intervalą, todėl naudojant šiuos tinklus konfiguruojamų parametrų sąrašas yra skirtingas. 
 
 \subsection{Srautinio duomenų apdorojimo aplinkos apibrėžimas balansavimui}
 
@@ -227,6 +226,9 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija:
     \text{ „jvm-gc-collection-time-ms“ } –\text{ „time\_spent\_back\_pressure\_by\_compid“ } 
     \end{gathered}
 \end{equation}
+\subsection{Balansavimo algortimo apmokymas}
+
+Balansavimo algoritmo mokymasis vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistema bus paleidžiams ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmo pasirinkimui, iš pradžiu, apibrėžta ciklų kiekį konfiguracija bus pasirenkama atsitiktinai ir renkami rezultatai. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Soft Actor Critic algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atpildo ir naujos būsenos. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigurojamas mokymosi metu pasirenkamos aibės dydis. 
 
 \section{Eksperimento tyrimo planas}
 
