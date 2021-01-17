@@ -103,7 +103,6 @@ Visi kiti konfiguravimo parametrai, kurie taip pat bus keičiami balansavimo met
     heron.instance.tuning.expected.spout.read.queue.size                  & Numatomas skaitomos eilės dydis Spout tipo komponentuose                       \\ \hline
     heron.instance.tuning.expected.spout.write.queue.size                 & Numatomas rašomos eilės dydis Spout tipo komponentuose                         \\ \hline
     heron.instance.set.data.tuple.capacity                                & Didžiausias kiekis kortežų sugrupuottu vienoje žinutėje                        \\ \hline
-    heron.instance.ack.batch.time.ms                                      & Didžiausias laikas Spout tipo komponentui atlikti ACK                          \\ \hline
     heron.instance.emit.batch.time.ms                                     & Didžiausias laikas Spout tipo komponentui išsiųsti gautą kortežą               \\ \hline
     heron.instance.emit.batch.size.bytes                                  & Didžiausias partijos dydis Spout tipo komponentui išsiųsti gautą kortežą       \\ \hline
     heron.instance.execute.batch.time.ms                                  & Didžiausias laikas Bolt tipo komponentui apdoroti gautą kortežą                \\ \hline
@@ -123,7 +122,7 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
 
 \ref{metrics–table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API. Šios metrikos ir bus teikiamos į mašininio mokymosi algortimą apibūdinti aplinkai.
 
-\begin{longtable}{|p{0.5\linewidth}|p{0.5\linewidth}|}
+\begin{longtable}{|p{0.5\linewidth}|p{0.4\linewidth}|}
     \caption{Naudojamos metrikos}
     \label{metrics–table}\\
     \hline
@@ -133,20 +132,39 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
     %
     \endhead
     %
-    \_\_emit–count                                        & Išsiųstų kortežų kiekis                    \\ \hline
-    \_\_execute–count                                     & Apdorotų kortežų kiekis Bolt komponentuose \\ \hline
-    \_\_complete–latency                                  & Vidutinė trukmė Spout komponentui nuo kortežo išsiųntimo iki FAIL arba ACK komandos \\ \hline
-    \_\_execute–latency                                   & Vidutinė trukmė Bolt komponentui apdoroti kortežą                                          \\ \hline
-    \_\_process–latency                                   & Vidutinė trukmė Bolt komponentui nuo kortežo apdorojimo pradžios iki kito komponento ACK arba FAIL komandos \\ \hline
-    \_\_jvm–process–cpu–load                              & JVM apkrova procesoriui     \\ \hline
-    \_\_jvm–memory–used–mb                                & JVM išnaudota operatyvi atmintis       \\ \hline
-    \_\_jvm–memory–mb–total                               & JVM turima operatyvi atmintis    \\ \hline
-    \_\_jvm–gc–collection–time–ms                         & JWM šiušklių surinkimo trukmė     \\ \hline
-    \_\_time\_spent\_back\_pressure\_by\_compid           & Kiek laiko komponentui buvo įjungtas priešslėgio režimas  \\ \hline
+    \_\_emit–count (toliau išsiųstas kiekis)                           & Išsiųstų kortežų kiekis                    \\ \hline
+    \_\_execute–count  (toliau apdorotas kiekis)                       & Apdorotų kortežų kiekis Bolt komponentuose \\ \hline
+    \_\_execute–latency  (toliau vidutinis apdorojimo vėlinimas)       & Vidutinė trukmė Bolt komponentui apdoroti kortežą                                          \\ \hline
+    \_\_jvm–process–cpu–load  (toliau procesoriaus apkrova)            & JVM apkrova procesoriui     \\ \hline
+    \_\_jvm–memory–used–mb    (toliau naudojamas RAM)                  & JVM naudojama operatyvi atmintis       \\ \hline
+    \_\_jvm–memory–mb–total     (toliau išskirtas RAM kiekis)          & JVM turima operatyvi atmintis    \\ \hline
+    \_\_jvm–gc–collection–time–ms  (toliau vidutinė GC trukme)         & JWM šiušklių surinkimo trukmė     \\ \hline
+    \_\_time\_spent\_back\_pressure\_by\_compid  (toliau bendra priešslėgio trukmė)  & Kiek laiko komponentui buvo įjungtas priešslėgio režimas  \\ \hline
 \end{longtable}
 
-\subsection{Balansavimo tikslo funkcija}
+\subsection{Tikslo funkcija}
 
+Srautinio apdorojimo sistemos valdymo tikslas pasiekti didžiausią greitaveiką, keičiant konfiguraciją. Šiame tyrime greitaveiką matuojama vėlinimu, tačiau tuo pačiu turi būti palaikomas sistemos stabilumas ir duomenų pralaidumas. Todėl pasirinkti konfiguracijos elementai su koeficientais, kurie nurodo tam tikros metrikos svarbą pasiekti greitaveikai. 
+
+\begin{longtable}{|p{0.55\linewidth}|p{0.15\linewidth}|p{0.2\linewidth}|}
+    \caption{Metrikų tikslai}
+    \label{goal-table}\\
+    \hline
+    \rowcolor[HTML]{C0C0C0} 
+    Metrika                         & Koeficientas & Tikslas          \\ \hline
+    \endfirsthead
+    %
+    \endhead
+    %
+    Išsiųstas kiekis                & 2 & \(\infty\)  \\ \hline
+    Apdorotas kiekis                & 2 & \(\infty\) \\ \hline
+    Vidutinis apdorojimo vėlinimas  & 3 & 0    \\ \hline
+    Naudojamas RAM                  & 1 & Išskirtas RAM - Naudojamas RAM = 0      \\ \hline
+    Vidutinė GC trukme              & 1 & 0    \\ \hline
+    Bendra priešslėgio trukmė       & 2 & 0    \\ \hline
+\end{longtable}
+
+\ref{goal-table} lentelėje pateiktos metrikos, šių metrikų svarumo koeficientas ir jų tikslas. Metrikų koeficientas pasirinktas pagal tai kad optimizuojama greitaveikai. 
 
 \section{Balansavimo algoritmas}
 
@@ -197,7 +215,6 @@ Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – kadangi Dee
     heron.instance.tuning.expected.spout.read.queue.size      & \([128;512]\) \\ \hline
     heron.instance.tuning.expected.spout.write.queue.size     & \([2;20]\) \\ \hline
     heron.instance.set.data.tuple.capacity                    & \([64;512]\) \\ \hline
-    heron.instance.ack.batch.time.ms                          & \([64;512]\) \\ \hline
     heron.instance.emit.batch.time.ms                         & \([8;128]\) \\ \hline
     heron.instance.emit.batch.size.bytes                      & \([8192;65536]\) \\ \hline
     heron.instance.execute.batch.time.ms                      & \([8;128]\) \\ \hline
@@ -215,18 +232,17 @@ Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – kadangi Dee
 Srautinio apdorojimo sistemos balansavimo žingsnio funkcija:
 \begin{itemize}
  \item Atliekamas veiksmas -  naujos konfiguracijos įkelimas ir nustatyto laiko laukimas, kad srautinio apdorojimo sistema pasiektų apkrovą.
- \item Atpildas - skaitinė reikšmė apskaičiuotą naudojant normalizuotas metrikas su koeficientais ir \ref{formula} formulė.
+ \item Atpildas - skaitinė reikšmė apskaičiuotą naudojant normalizuotas metrikas (apibrėžtas \ref{metrics–table} pav.) su koeficientais ir \ref{formula} formulė.
 \end{itemize}
 \begin{equation}
     \label{formula}
     \begin{gathered}
-    \text{Atpildas} = \text{„emit-count“ } + \text{ „execute-count“ } – \text{ „complete-latency“ } – \\ 
-        \text{ „execute-latency“ } –  \text{ „process-latency“ } – \: (100 \: – \text{ „jvm-process-cpu-load“ })\: – \\
-        (|\text{ „jvm-memory-mb-total“ } - \text{ „jvm-memory-used-mb“ }|) \: – \\
-    \text{ „jvm-gc-collection-time-ms“ } –\text{ „time\_spent\_back\_pressure\_by\_compid“ } 
+    \text{Atpildas} = 2*\text{Išsiųstas kiekis } + 2*\text{Apdorotas kiekis }  – \\ 
+        3*\text{Vidutinis apdorojimo vėlinimas } – \text{ Naudojamas RAM }  – \\
+          \text{Vidutinė GC trukme } – \:2*\text{Bendra priešslėgio trukmė} 
     \end{gathered}
 \end{equation}
-\subsection{Balansavimo algortimo apmokymas}
+\subsection{Balansavimo algoritmo apmokymas}
 
 Balansavimo algoritmo mokymasis vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistema bus paleidžiams ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmo pasirinkimui, iš pradžiu, apibrėžta ciklų kiekį konfiguracija bus pasirenkama atsitiktinai ir renkami rezultatai. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Soft Actor Critic algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atpildo ir naujos būsenos. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigurojamas mokymosi metu pasirenkamos aibės dydis. 
 
