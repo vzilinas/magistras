@@ -69,7 +69,7 @@ Magistro darbo uždaviniai:
     \item Sukurti eksperimentinį sprendimą su pasirinktu algoritmu ir atlikti eksperimentus.
     \item Palyginti eksperimento rezultatus su alternatyvomis – „Heron“ su standartine konfigūracija bei „Heron“ balansavimas pritaikius REINFORCE algoritmą. 
 \end{enumerate}
-Antroje magistro darbo dalyje atlikta literatūros analizė, sudarytas balansavimo modelis ir parinkti skatinamojo mokymosi algoritmai, o šiame mokslo tyriamajame darbe – trečio magistro darbo dalyje – siekta tikslo: apibrėžti darbo metodą ir sukurti bei pagrįsti algoritmą, kuris bus naudojamas eksperimentui. Ir įgyvendinti šie uždaviniai:
+Antroje magistro darbo dalyje atlikta literatūros analizė, sudarytas balansavimo modelis ir parinkti skatinamojo mokymosi algoritmai, o šiame mokslo tiriamajame darbe – trečio magistro darbo dalyje – siekta tikslo: apibrėžti darbo metodą ir sukurti bei pagrįsti algoritmą, kuris bus naudojamas eksperimentui. Ir įgyvendinti šie uždaviniai:
 \begin{enumerate}
     \item Sukurti srautinio apdorojimo sistemų modelį balansuojama skatinamojo mokymosi algoritmais.
     \item Apibrėžti eksperimento eigą ir reikalavimus eksperimentinei sistemai, kurios rezultatai bus naudojami įvertinti sukurtą modelį. 
@@ -77,45 +77,45 @@ Antroje magistro darbo dalyje atlikta literatūros analizė, sudarytas balansavi
 
 \section{Srautinės duomenų apdrojimo sistemos, valdomos mašininiu mokymusi, modelis}
 
-Tyrime nagrinėjamas srautinės sistemos, balanasuojamos mašininių mokymų, modelis (\ref{dataflow} pav.) susidaro iš trijų pagrindinių elementų: srautinio duomenų apdorojimo sistemos, srautinio duomenų apdorojimo platformos ir valdymo sistemos. 
+Tyrime nagrinėjamas srautinės sistemos, balansuojamos mašininių mokymų, modelis (\ref{dataflow} pav.) susidaro iš trijų pagrindinių elementų: srautinio duomenų apdorojimo sistemos, srautinio duomenų apdorojimo platformos ir valdymo sistemos. 
 \subsection{Modelis}
 \begin{figure}[H]
     \includegraphics[width=15cm]{img/DataFlow.pdf}
-    \caption{Srautinės aprodojimo sistemos modelis}
+    \caption{Srautinės apdorojimo sistemos modelis}
     \label{dataflow}
 \end{figure} 
-Srautinės duomenų apdorojimo sistemos modėlį sudaro šie elementai:
+Srautinės duomenų apdorojimo sistemos modelį sudaro šie elementai:
 \begin{itemize}
-    \item Duomenų srautas - duomenys patenkantys į srautinio apdorojimo sistemą nepertraukiamu srautu, iš anksto nežinomu greičiu ir nekontroliuojamu kiekiu.
-    \item Srautinis duomenų apdorojimos - srautinio duomenų apdorojimo sistemą, atliekanti skaičiavimus su duomenim ateinančiu iš Duomenų srauto. Tyrime naudojama Heron srautinio apdorojimo sistemos pasižymį individualiais skaičiavimo komponentais, kurie skaičiuoja kiekvieną patenkantį duomenį ir yra pararšyti užtikrinant lygiagretumą kiekvienam komponentui.
-    \item Rezultatų srautas - duomenys apdoroti srautinio duomenų apdorojimo ir perduoti iš paskutinio skaičiavimo komponento į kitas sistemas.
+    \item Duomenų srautas – duomenys patenkantys į srautinio apdorojimo sistemą nepertraukiamu srautu, iš anksto nežinomu greičiu ir nekontroliuojamu kiekiu.
+    \item Srautinis duomenų apdorojimas – srautinio duomenų apdorojimo sistemą, atliekanti skaičiavimus su duomenimis ateinančiais iš Duomenų srauto. Tyrime naudojama Heron srautinio apdorojimo sistemos pasižymį individualiais skaičiavimo komponentais, kurie skaičiuoja kiekvieną patenkantį duomenį ir yra parašyti užtikrinant lygiagretumą kiekvienam komponentui.
+    \item Rezultatų srautas – duomenys apdoroti srautinio duomenų apdorojimo ir perduoti iš paskutinio skaičiavimo komponento į kitas sistemas.
 \end{itemize}
 Srautinio apdorojimo sistemų platforma turi šiuos elementus:
 \begin{itemize}
     \item Srautini duomenų apdorojimą.
-    \item Sistemos būsenos stebėjimą - srautinio apdorojimo platformos sistema renkanti srautinio apdorojimo sistemų veikimo metrikas ir šias metrikas atskleidžianti į išorę. Tyrime naudojama Heron platforma metrikas pateikia kiekvienam skaičiavimo komponetui individualiai per HTTP protokolą arba į naudotojo pateiktą metrikų surinkimo sistemą.
-    \item Būsenos duomenys - tai metrikos vaizduojančios kiekvienos srautinio apdorojimo sistemos skaičiavimo komponentų pagrindinius veikimo rodiklius, tokius kaip vėlinimas, pralaidumas, apkrovos ir t.t.
-    \item Konfiguracijos parametrai - tai konfiguracijos rinkinys kurį apibrežia srautinio apdorojimo platforma. Šie konfiguracijos paramentrai apibrežia ir bendrą sistemos veikimą ir yra parametrų skirtų individualiems skaičiavimo komponentams. Tyrime naudojama Heron platforma apibrežia ir valdo visus konfiguracijos parametrus.
-    \item Sistemos valdymas - konfiguracijos parametrų pateikimas į srautinio apdorojimo plattformą. Šie konfiguracijos parametrai nurodo srautinės apdorojimo sistemos ir jos skaičiavimo komponentų veikimą. Tyrime naudojama Heron platformą leidžia pateikti konfiguracijos parametrus per komandine eilutę. Pateikus konfiguracija platforma sustabdo srautinę apdorojimo sistemą, atnaujina jos konfiguraciją ir paleidžia sistemą iš naujo. Kai sistema sustabdoma, tai pat nustojama ir skaityti duomenis iš duomenų srauto, o paleidus duomenis pradedami skaityti toliau.
+    \item Sistemos būsenos stebėjimą – srautinio apdorojimo platformos sistema renkanti srautinio apdorojimo sistemų veikimo metrikas ir šias metrikas atskleidžianti į išorę. Tyrime naudojama Heron platforma metrikas pateikia kiekvienam skaičiavimo komponentui  individualiai per HTTP protokolą arba į naudotojo pateiktą metrikų surinkimo sistemą.
+    \item Būsenos duomenys – tai metrikos vaizduojančios kiekvienos srautinio apdorojimo sistemos skaičiavimo komponentų pagrindinius veikimo rodiklius, tokius kaip vėlinimas, pralaidumas, apkrovos ir t.t.
+    \item Konfigūracijos parametrai – tai konfigūracijos rinkinys kurį apibrėžia srautinio apdorojimo platforma. Šie konfigūracijos parametrai apibrėžia ir bendrą sistemos veikimą ir yra parametrų skirtų individualiems skaičiavimo komponentams. Tyrime naudojama Heron platforma apibrėžia ir valdo visus konfigūracijos parametrus.
+    \item Sistemos valdymas – konfigūracijos parametrų pateikimas į srautinio apdorojimo platformą. Šie konfigūracijos parametrai nurodo srautinės apdorojimo sistemos ir jos skaičiavimo komponentų veikimą. Tyrime naudojama Heron platformą leidžia pateikti konfigūracijos parametrus per komandine eilutę. Pateikus konfigūracija platforma sustabdo srautinę apdorojimo sistemą, atnaujina jos konfigūraciją ir paleidžia sistemą iš naujo. Kai sistema sustabdoma, tai pat nustojama ir skaityti duomenis iš duomenų srauto, o paleidus duomenis pradedami skaityti toliau.
 \end{itemize}
 Srautinio apdorojimo sistemos valdymo elementai susidaro iš:
 \begin{itemize}
-    \item Būsenos duomenų rinkimo - tai sistema renkanti duomenis apie srautinės apdorojimo sistemos būseną iš srautinės apdorojimo platformos. Ši sistema atsakinga už aktualių metriku surinkimą, kurios naudojamos suformuoti vaizdą apie srautinės sistemos būseną.
-    \item Mašininio mokymosi - sistema, kurį gauna srautinės apdorojimo sistemos būsenos duomenis ir pagal tai apskaičiuoja naujas konfiguracijos parametrų reikšmes. Tyrime naudojamas skatinamasis mašininis mokymasis, kuris pastoviai bando pagerinti sistemos būseną atnaujinant konfiguracijos ir mokosi iš padarytų sprendimų.
-    \item Konfiguracijos keitimo - sistema priimanti atnaujintus konfiguracijos parametrus ir pateikianti juos į srautinio apdorojimo platformą. 
+    \item Būsenos duomenų rinkimo – tai sistema renkanti duomenis apie srautinės apdorojimo sistemos būseną iš srautinės apdorojimo platformos. Ši sistema atsakinga už aktualių metrikų surinkimą, kurios naudojamos suformuoti vaizdą apie srautinės sistemos būseną.
+    \item Mašininio mokymosi – sistema, kurį gauna srautinės apdorojimo sistemos būsenos duomenis ir pagal tai apskaičiuoja naujas konfigūracijos parametrų reikšmes. Tyrime naudojamas skatinamasis mašininis mokymasis, kuris pastoviai bando pagerinti sistemos būseną atnaujinant konfigūracijos ir mokosi iš padarytų sprendimų.
+    \item Konfigūracijos keitimo – sistema priimanti atnaujintus konfigūracijos parametrus ir pateikianti juos į srautinio apdorojimo platformą. 
 \end{itemize}
 
-Visumoje \ref{dataflow} paveikslėlis apibrežia duomenų judėjimą reikalinga srautinio duomenų apdorojimo sistemos valdymui. Srautinio apdorojimo sistema yra pagrindinis elementas atsakingas už patį duomenų apdorojimą ir veikia nepriklausomai nuo kitų elementų modelyje. Srautinio apdorojimo platforma talpina ir palaiko srautinio apdorojimo sistemas, taip pat suteikia prieiga gauti informaciją apie srautinio apdorojimo sistemų būsena bei suteikia galimybę valdyti srautinio apdorojimo sistemas. Srautinio apdorojimo sistemų valdymo elementai atsakingi už srautinės apdorojimo sistemos konfiguracijos keitimą pagal surinktus būsenos duomenis.
+Visumoje \ref{dataflow} paveikslėlis apibrėžia duomenų judėjimą reikalinga srautinio duomenų apdorojimo sistemos valdymui. Srautinio apdorojimo sistema yra pagrindinis elementas atsakingas už patį duomenų apdorojimą ir veikia nepriklausomai nuo kitų elementų modelyje. Srautinio apdorojimo platforma talpina ir palaiko srautinio apdorojimo sistemas, taip pat suteikia prieiga gauti informaciją apie srautinio apdorojimo sistemų būsena bei suteikia galimybę valdyti srautinio apdorojimo sistemas. Srautinio apdorojimo sistemų valdymo elementai atsakingi už srautinės apdorojimo sistemos konfigūracijos keitimą pagal surinktus būsenos duomenis.
 
-\subsection{Keičiami konfiguracijos parametrai}
+\subsection{Keičiami konfigūracijos parametrai}
 
-Norint koreguoti konfiguracijos parametrus reikia siųsti atnaujinimo komandą į Heron komandinės eilutė įrankį (toliau Heron CLI). Peteikus konfiguracijos parametrus Heron platformą perkrauna srautinio apdorojimo sistema su naujais parametrais. 
-Vienas iš pagrindinių srautinės apdorojimo sistemos konfiguracijos parametrų yra skaičiavimo komponentų lygiagretumas nurodantis kiek paleidžiama tam tikro komponento instancijų. Taip pat tai yra vienintelis keičiamas konfiguracijos elementas, kuris priklauso nuo srautinio apdorojimo sistemos.
+Norint koreguoti konfigūracijos parametrus reikia siųsti atnaujinimo komandą į Heron komandinės eilutė įrankį (toliau Heron CLI). Peteikus konfigūracijos parametrus Heron platformą perkrauna srautinio apdorojimo sistema su naujais parametrais. 
+Vienas iš pagrindinių srautinės apdorojimo sistemos konfigūracijos parametrų yra skaičiavimo komponentų lygiagretumas nurodantis kiek paleidžiama tam tikro komponento instancijų. Taip pat tai yra vienintelis keičiamas konfigūracijos elementas, kuris priklauso nuo srautinio apdorojimo sistemos.
 
-Visi kiti konfiguravimo parametrai\cite{configDocument},  kurie taip pat yra keičiami balansavimo metu pateikti \ref{param–table} lentelėje:
+Visi kiti konfigūravimo parametrai\cite{configDocument}, kurie taip pat yra keičiami balansavimo metu pateikti \ref{param–table} lentelėje:
 
 \begin{longtable}{|p{0.59\linewidth}|p{0.41\linewidth}|}
-    \caption{Keičiami konfiguracijos parametrai}
+    \caption{Keičiami konfigūracijos parametrai}
     \label{param–table}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
@@ -129,7 +129,7 @@ Visi kiti konfiguravimo parametrai\cite{configDocument},  kurie taip pat yra kei
     heron.instance.tuning.expected.bolt.write.queue.size                  & Numatomas rašomos eilės dydis Bolt tipo komponentuose                          \\ \hline
     heron.instance.tuning.expected.spout.read.queue.size                  & Numatomas skaitomos eilės dydis Spout tipo komponentuose                       \\ \hline
     heron.instance.tuning.expected.spout.write.queue.size                 & Numatomas rašomos eilės dydis Spout tipo komponentuose                         \\ \hline
-    heron.instance.set.data.tuple.capacity                                & Didžiausias kiekis kortežų sugrupuottu vienoje žinutėje                        \\ \hline
+    heron.instance.set.data.tuple.capacity                                & Didžiausias kiekis kortežų sugrupuotu vienoje žinutėje                        \\ \hline
     heron.instance.emit.batch.time.ms                                     & Didžiausias laikas Spout tipo komponentui išsiųsti gautą kortežą               \\ \hline
     heron.instance.emit.batch.size.bytes                                  & Didžiausias partijos dydis Spout tipo komponentui išsiųsti gautą kortežą       \\ \hline
     heron.instance.execute.batch.time.ms                                  & Didžiausias laikas Bolt tipo komponentui apdoroti gautą kortežą                \\ \hline
@@ -139,15 +139,15 @@ Visi kiti konfiguravimo parametrai\cite{configDocument},  kurie taip pat yra kei
     heron.instance.internal.spout.read.queue.capacity                     & Skaitomos eilės dydis Spout komponentams                                       \\ \hline
     heron.instance.internal.spout.write.queue.capacity                    & Rašomos eilės dydis Spout komponentams                                         \\ \hline
     heron.api.config.topology\_container\_max\_ram\_hint                  & Daugiausiai operatyvios atminties kiekio konteineriui išskyrimo užuomina       \\ \hline
-    heron.api.config.topology\_container\_max\_cpu\_hint                  & Daugiausiai procesoriaus pajegumo konteineriui išskyrimo užuomina              \\ \hline
-    heron.api.config.topology\_container\_max\_disk\_hint                 & Daugiausiai kietojo disko atminties kiekio konteineriui  išskyrimo užuomina    \\ \hline
+    heron.api.config.topology\_container\_max\_cpu\_hint                  & Daugiausiai procesoriaus pajėgumo konteineriui išskyrimo užuomina              \\ \hline
+    heron.api.config.topology\_container\_max\_disk\_hint                 & Daugiausiai kietojo disko atminties kiekio konteineriui išskyrimo užuomina    \\ \hline
     heron.api.config.topology\_container\_padding\_percentage             & Užuominų galimą paklaidą                                                       \\ \hline
 \end{longtable}
 
 \subsection{Naudojamos metrikos}
 Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais skirtingais būdais: darant užklausą į Heron API, skaitant iš tekstinio failo, kurį pildo Heron platformą, sukurti savo metrikų skaitymo priedą ir pateikti jį į Heron platformą prieš ją paleidžiant. Visos metrikos yra saugomos srautinio apdorojimo sistemos kiekvienam skaičiavimo komponentui. 
 
-\ref{metrics–table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API \cite{heronTracker}. Šios metrikos ir bus teikiamos į mašininio mokymosi algortimą apibūdinti aplinkai.
+\ref{metrics–table} lentelėje aprašytos metrikos yra standartinės visiems Heron srautinio apdorojimo sistemos komponentams ir gražinamos iš Heron per Heron API \cite{heronTracker}. Šios metrikos ir bus teikiamos į mašininio mokymosi algoritmą apibūdinti aplinkai.
 
 \begin{longtable}{|p{0.5\linewidth}|p{0.4\linewidth}|}
     \caption{Naudojamos metrikos}
@@ -171,11 +171,11 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
 
 \subsection{Tikslo funkcija}
 
-Srautinio apdorojimo sistemos valdymo tikslas pasiekti didžiausią greitaveiką, keičiant konfiguraciją. Šiame tyrime greitaveiką matuojama vėlinimu, tačiau tuo pačiu turi būti palaikomas sistemos stabilumas ir duomenų pralaidumas. Todėl pasirinkti konfiguracijos elementai su koeficientais, kurie nurodo tam tikros metrikos svarbą pasiekti greitaveikai. 
+Srautinio apdorojimo sistemos valdymo tikslas pasiekti didžiausią greitaveiką, keičiant konfigūraciją. Šiame tyrime greitaveiką matuojama vėlinimu, tačiau tuo pačiu turi būti palaikomas sistemos stabilumas ir duomenų pralaidumas. Todėl pasirinkti konfigūracijos elementai su koeficientais, kurie nurodo tam tikros metrikos svarbą pasiekti greitaveikai. 
 
 \begin{longtable}{|p{0.55\linewidth}|p{0.15\linewidth}|p{0.2\linewidth}|}
     \caption{Metrikų tikslai}
-    \label{goal-table}\\
+    \label{goal–table}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
     Metrika                         & Koeficientas & Tikslas          \\ \hline
@@ -186,44 +186,44 @@ Srautinio apdorojimo sistemos valdymo tikslas pasiekti didžiausią greitaveiką
     Išsiųstas kiekis                & 2 & \(\infty\)  \\ \hline
     Apdorotas kiekis                & 2 & \(\infty\) \\ \hline
     Vidutinis apdorojimo vėlinimas  & 3 & 0    \\ \hline
-    Naudojamas RAM                  & 1 & Išskirtas RAM - Naudojamas RAM = 0      \\ \hline
+    Naudojamas RAM                  & 1 & Išskirtas RAM – Naudojamas RAM = 0      \\ \hline
     Vidutinė GC trukme              & 1 & 0    \\ \hline
     Bendra priešslėgio trukmė       & 2 & 0    \\ \hline
 \end{longtable}
 
-\ref{goal-table} lentelėje pateiktos metrikos, šių metrikų svarumo koeficientas ir jų tikslas. Metrikų koeficientas pasirinktas pagal tai kad optimizuojama greitaveikai. 
+\ref{goal–table} lentelėje pateiktos metrikos, šių metrikų svarumo koeficientas ir jų tikslas. Metrikų koeficientas pasirinktas pagal tai kad optimizuojama greitaveikai. 
 
 \section{Balansavimo algoritmas}
 
-\subsection{Srautinės architektūros sistemos konfiguracijos valdymo algoritmas}
+\subsection{Srautinės architektūros sistemos konfigūracijos valdymo algoritmas}
 
-Algoritmo tikslas – pagal esamą būseną ir esamą konfiguraciją apskaičiuoti naują konfiguraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algortimo pagrindas yra pasirinktas skatinamojo mašinio mokymosi algortimas.
+Algoritmo tikslas – pagal esamą būseną ir esamą konfigūraciją apskaičiuoti naują konfigūraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algoritmo pagrindas yra pasirinktas skatinamojo mašininio mokymosi algoritmas.
 
-Kad algortimas galėtų apskaičiuoti naują konfiguraciją, jam yra paduodami šie duomenys:
+Kad algoritmas galėtų apskaičiuoti naują konfigūraciją, jam yra paduodami šie duomenys:
 \begin{itemize}
     \item Srautinio apdorojimo sistemos metrikos (\ref{metrics–table} lentelė)
-    \item Srautinio apdorojimo sistemos pradinė konfiguracija (\ref{param–table} letntelė).
-    \item Konfiguruojamų parametrų sąrašas ir jų galimos reikšmės, aprašytos intervalu (pavyzdžiui \([512,4096]\)) arba tiksliais variantais (pavyzdžiui \([512, 1024, 2048, 4096]\)).
+    \item Srautinio apdorojimo sistemos pradinė konfigūracija (\ref{param–table} lentelė).
+    \item Konfigūruojamų parametrų sąrašas ir jų galimos reikšmės, aprašytos intervalu (pavyzdžiui \([512,4096]\)) arba tiksliais variantais (pavyzdžiui \([512, 1024, 2048, 4096]\)).
 \end{itemize}
-Duomenis, kurie paduodami balansavimo algoritmui yra renkami pastoviai, neatsižvelgiant į pačio algoritmo viekimą.
+Duomenis, kurie paduodami balansavimo algoritmui yra renkami pastoviai, neatsižvelgiant į pačio algoritmo veikimą.
 
-Balansavimo algortimas veikia ciklais, visą srautinės apdorojimo sistemos veikimo laiką ir tarpas tarp ciklų turi būti pakankamai ilgas srautinio apdorojimo sistemai atsinaujinti su naujais konfiguracijos parametrais bei, kad surinktų duomenų kiekis būtų pakankamai svarūs pateikti mašininio mokymosi algoritmui. Balansavimo algoritmas, atlikęs skaičiavimus, gražina naują konfiguracijos parametrų rinkinį ir laukia naujo ciklo pradžios. 
+Balansavimo algoritmas veikia ciklais, visą srautinės apdorojimo sistemos veikimo laiką ir tarpas tarp ciklų turi būti pakankamai ilgas srautinio apdorojimo sistemai atsinaujinti su naujais konfigūracijos parametrais bei, kad surinktų duomenų kiekis būtų pakankamai svarūs pateikti mašininio mokymosi algoritmui. Balansavimo algoritmas, atlikęs skaičiavimus, gražina naują konfigūracijos parametrų rinkinį ir laukia naujo ciklo pradžios. 
 
 
 
 Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network \cite{fan2020theoretical} ir Soft Actor Critic \cite{haarnoja2019soft} turi bendrus veikimo bruožus:
 \begin{itemize}
-    \item Jie yra model–free tipo skatinamojo mokymosi algoritmai – tai yra jie daro sprendimus pagal tai ką išmoko veikimo metu ir negeneruoja bendro modelio. Tai aktualu mūsų atveju kadangi balansavimo algortimas turi galėti prisitaikyti prie kintačių duomenų kiekio ir greičio bei kintačios aplinkos.
+    \item Jie yra model–free tipo skatinamojo mokymosi algoritmai – tai yra jie daro sprendimus pagal tai ką išmoko veikimo metu ir negeneruoja bendro modelio. Tai aktualu mūsų atveju kadangi balansavimo algoritmas turi galėti prisitaikyti prie kintančių duomenų kiekio ir greičio bei kintančios aplinkos.
     \item Jie yra off–policy tipo – jie mokosi atliekant skirtingus veiksmus nebūtinai tuos kurie buvo atlikti su dabartine strategija.
 \end{itemize} 
 
-Šie algoritmai buvo pasirinkti, nes turi skirtumą veiksmų aibės apibrėžime – Deep Q Network galimų veiksmų aibę priima kaip rinkinį, o Soft Actor Critic kaip intervalą, todėl naudojant šiuos tinklus konfiguruojamų parametrų sąrašas yra skirtingas. 
+Šie algoritmai buvo pasirinkti, nes turi skirtumą veiksmų aibės apibrėžime – Deep Q Network galimų veiksmų aibę priima kaip rinkinį, o Soft Actor Critic kaip intervalą, todėl naudojant šiuos tinklus konfigūruojamų parametrų sąrašas yra skirtingas. 
 
 \subsection{Srautinio duomenų apdorojimo aplinkos apibrėžimas balansavimui}
 
-Balansavimui atlikti reikalingas tikslus apibrėžimas srautinio apdorojimo aplinkos, šis apibrėžimas susidaro iš: dabartinės srautinio apdorojimo sistemos būsenos, galimų veiksmų aibės ir žingsnio funkcijos, kuri atlieka veiksmą ir apskaičiuoja atpilda.
+Balansavimui atlikti reikalingas tikslus apibrėžimas srautinio apdorojimo aplinkos, šis apibrėžimas susidaro iš: dabartinės srautinio apdorojimo sistemos būsenos, galimų veiksmų aibės ir žingsnio funkcijos, kuri atlieka veiksmą ir apskaičiuoja atpildą.
 
-Srautinio apdorojimo sistemos dabartinė būsena – srautinio apdorojimo sistemos metrikos patalpintos masyvę.
+Srautinio apdorojimo sistemos dabartinė būsena – srautinio apdorojimo sistemos metrikos patalpintos masyve.
 
 Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – kadangi Deep Q Network reikalauja diskrečių reikšmių, o Soft Actor Critic testinių reikšmių aibės, jos bus skirtingai paduodamos į balansavimo algoritmą, tačiau reikšmių ribos vienodos.
 \begin{longtable}{|p{0.59\linewidth}|p{0.4\linewidth}|}
@@ -258,8 +258,8 @@ Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – kadangi Dee
 
 Srautinio apdorojimo sistemos balansavimo žingsnio funkcija:
 \begin{itemize}
- \item Atliekamas veiksmas -  naujos konfiguracijos įkelimas ir nustatyto laiko laukimas, kad srautinio apdorojimo sistema pasiektų apkrovą.
- \item Atpildas - skaitinė reikšmė apskaičiuotą naudojant normalizuotas metrikas (apibrėžtas \ref{metrics–table} pav.) su koeficientais ir \ref{formula} formulė.
+ \item Atliekamas veiksmas – naujos konfigūracijos įkėlimas ir nustatyto laiko laukimas, kad srautinio apdorojimo sistema pasiektų apkrovą.
+ \item Atpildas – skaitinė reikšmė apskaičiuotą naudojant normalizuotas metrikas (apibrėžtas \ref{metrics–table} pav.) su koeficientais ir \ref{formula} formulė.
 \end{itemize}
 \begin{equation}
     \label{formula}
@@ -271,13 +271,13 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija:
 \end{equation}
 \subsection{Balansavimo algoritmo apmokymas}
 
-Balansavimo algoritmo mokymasis vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistema bus paleidžiams ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmo pasirinkimui, iš pradžiu, apibrėžta ciklų kiekį konfiguracija bus pasirenkama atsitiktinai ir renkami rezultatai. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Soft Actor Critic algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atpildo ir naujos būsenos. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigurojamas mokymosi metu pasirenkamos aibės dydis. 
+Balansavimo algoritmo mokymasis vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistema bus paleidžiamas ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmo pasirinkimui, algoritmo veikimo pradžioje konfigūracija bus pasirenkama atsitiktinai apibrėžta ciklų kiekį ir renkami rezultatai mokymuisi. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Soft Actor Critic algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsitiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atpildo ir naujos būsenos. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigūruojamas mokymosi metu pasirenkamos aibės dydis. 
 
 \section{Eksperimento tyrimo planas}
 
 \subsection{Tyrimo tikslas}
 
-Šio tyrimo tikslas – įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algortimo validumą. Tam reikia atlikti bandymus su eksperimentine sistema naudojančią aprašytą optimizavimo algoritmą, su eksperimentine sistema naudojančia REINFORCE algoritmą ir su aplinka naudojančią standartinę konfiguracija be jokių pakeitimų. Gautus bandymo duomenis palyginti ir nustatyti, ar pasiūlytas sprendimas tinką srautinio apdorojimo sistemų balansavimui.
+Šio tyrimo tikslas – įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algoritmo validumą. Tam reikia atlikti bandymus su eksperimentine sistema naudojančią aprašytą optimizavimo algoritmą, su eksperimentine sistema naudojančia REINFORCE algoritmą ir su aplinka naudojančią standartinę konfigūracija be jokių pakeitimų. Gautus bandymo duomenis palyginti ir nustatyti, ar pasiūlytas sprendimas tinką srautinio apdorojimo sistemų balansavimui.
 
 \subsection{Eksperimentinė sistema}
 
@@ -291,9 +291,9 @@ Eksperimentui atlikti reikia paruošti Heron aplinka ir sukurti reikiamus elemen
 
 Sistemos, kurios reikalingos ekeperimetui:
 \begin{enumerate}
-    \item Skatinamojo mašininio mokymosi sistema. Kadangi bus atlikti bandymai su dviem skatinamojo mokymosi algoritmais: Deep Q Network ir Soft Actor Critc, bus parašyti du mašininio mokymosi agentai naudojant Python su PyTorch biblioteka. Taip pat bus suskurta aplinka aprašanti srautinio apdorojimo sistemos konfiguraciją. 
+    \item Skatinamojo mašininio mokymosi sistema. Kadangi bus atlikti bandymai su dviem skatinamojo mokymosi algoritmais: Deep Q Network ir Soft Actor Critc, bus parašyti du mašininio mokymosi agentai naudojant Python su PyTorch biblioteka. Taip pat bus suskurta aplinka aprašanti srautinio apdorojimo sistemos konfigūraciją. 
     \item Metrikų surinkimo sistema parašyta su Python naudojanti HTTP, kad gauti duomenis iš Heron API.
-    \item Konfiguracijos atnaujinimo sistema parašyta su Python, kuri per Heron CLI pateikia atnaujinta konfiguraciją.
+    \item Konfigūracijos atnaujinimo sistema parašyta su Python, kuri per Heron CLI pateikia atnaujintą konfigūraciją.
     \item Reklamų srautinio apdorojimo sistema parašyta su JAVA, gaunanti duomenis iš Kafka žinučių eilės ir sauganti rezultatus Redis duomenų bazėje.
     \item WordCount srautinio apdorojimo sistema parašyta su JAVA, pati generuojanti duomenis ir nesauganti duomenis į išorę. 
     \item WordCount rezultatų sistema parašyta su Python skaitanti vėlinimo metrikas iš Heron API ir sauganti rezultatus tekstiniame faile.
@@ -304,13 +304,13 @@ Sistemos, kurios reikalingos ekeperimetui:
 
 Kompiuterinės įrangos su kuria bus atliekamas eksperimentas parametrai:
 \begin{itemize}
-    \item Procesorius: Intel Core i7-5930k (6 branduoliai/12 gijų)
+    \item Procesorius: Intel Core i7–5930k (6 branduoliai/12 gijų)
     \item Operatyvi atmintis: 64 GB (2666 MHz)
     \item Vaizdo plokštė: Nvidia GTX 1080Ti
     \item Operacinė sistema: Windows 10 Education
 \end{itemize}
 
-Kadangi Heron nepalaiko Windows sistemos visi tyrimai ir visos reikiamos posistemės leidžiamos naudojant Windows Subsystem Linux (toliau WSL) su Ubuntu 18.04. WSL yra suderinamumo sluoksnis naudojantis Linux branduolį per Hyper-V, kieno pagalba galima leisti programas skirtas Linux be emuliacijos ir taip neprarasti greitaveikos.
+Kadangi Heron nepalaiko Windows sistemos visi tyrimai ir visos reikiamos posistemės leidžiamos naudojant Windows Subsystem Linux (toliau WSL) su Ubuntu 18.04. WSL yra suderinamumo sluoksnis naudojantis Linux branduolį per Hyper–V, kieno pagalba galima leisti programas skirtas Linux be emuliacijos ir taip neprarasti greitaveikos.
 
 Pagrindinės programinės įrangos versijos:
 \begin{itemize}
@@ -322,14 +322,14 @@ Pagrindinės programinės įrangos versijos:
 \end{itemize}
 \subsection{Planuojamų eksperimentų apimtis}
 
-Magistro darba eksperimentai bus atliekami su keturiais skirtigais sprendimais:
+Magistro darbe eksperimentai bus atliekami su keturiais skirtingais sprendimais:
 \begin{itemize}
-    \item Srautinio apdorojimo sistemos veikimas su standartine konfiguracija.
-    \item Srautinio apdorojimos sistemos veikimas balansuojant ją naudojant sukurtą eksperimentinį sprendimą pagal apibrėžtą balansavimo algoritma naudojant:
+    \item Srautinio apdorojimo sistemos veikimas su standartine konfigūracija.
+    \item Srautinio apdorojimo sistemos veikimas balansuojant ją naudojant sukurtą eksperimentinį sprendimą pagal apibrėžtą balansavimo algoritmą naudojant:
     \begin{itemize}
-        \item REINFORCE algortimą skatinamojo mokymosi posistemėje.
+        \item REINFORCE algoritmą skatinamojo mokymosi posistemėje.
         \item Deep Q Network algoritmą skatinamojo mokymosi posistemėje.
-        \item Soft Actor Critic algortimą skatinamojo mokymosi posistemėje.
+        \item Soft Actor Critic algoritmą skatinamojo mokymosi posistemėje.
     \end{itemize}
 \end{itemize}
 
@@ -341,8 +341,8 @@ Kiekvienas sprendimas bus testuojamas su dviem srautinio apdorojimo sistemų imp
 
 Reklamų analizės sistema rezultatus talpina tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam specifiniam kampanijos langui iki kol jis yra įrašomas į Redis duombazę. WordCount sistemos rezultatai bus skaitomi tiesiai iš Heron platformos naudojant Heron API ir saugomi į failą tokiu pačiu formatu kaip ir reklamų analizės sistema, naudojant absoliutų vėlinimą gauta iš Heron API. 
 
-Eksperimentai su visomis sistemomis bus vykdomi po 10 valandų, kadangi \cite{vaquero2018autotuning} straipsnio autoriai nustatė, kad jų balanasavimo algoritmas konverguoja po maždaug 11 valandų. 
-Gauti rezultatai iš failo bus skaitomi pasirašyta Python programa, kuri apdoroja duomenis į dvi grupes: visų sprendimų vėlinimą ir visų sprendimų vėlinimo 99–tą percentilę ir sugeneruoja linijinas diagramas, kiekvienai vėlinimo grupei pagal sprendimą.
+Eksperimentai su visomis sistemomis bus vykdomi po 10 valandų, kadangi \cite{vaquero2018autotuning} straipsnio autoriai nustatė, kad jų balansavimo algoritmas konverguoja po maždaug 11 valandų. 
+Gauti rezultatai iš failo bus skaitomi pasirašyta Python programa, kuri apdoroja duomenis į dvi grupes: visų sprendimų vėlinimą ir visų sprendimų vėlinimo 99–tą percentilę ir sugeneruoja linijines diagramas, kiekvienai vėlinimo grupei pagal sprendimą.
 
 Taigi iš viso magistro darbe planuojama atlikti 8 eksperimentus, kurių bendra trukmė – 80 valandų.
 
@@ -351,8 +351,8 @@ Taigi iš viso magistro darbe planuojama atlikti 8 eksperimentus, kurių bendra 
 
 \subsection*{Rezultatai}
 \begin{enumerate}
-    \item Sukurtas srautinio apdorojimo sistemos valdymo modelis naudojantis skatinamajį mašininį mokymasį algoritmą. 
-    \item Apibrėžti tyrimui naudojami balansavimo algoritmai. Susieti srautinio apdorojimo metrikos su algoritmo įeitimis. Susieti konfiguracijos parametrais ir algoritmų galimų veiksmų aibė.
+    \item Sukurtas srautinio apdorojimo sistemos valdymo modelis naudojantis skatinamojo mašininio mokymosi algoritmą. 
+    \item Apibrėžti tyrimui naudojami balansavimo algoritmai. Susieti srautinio apdorojimo metrikos su algoritmo įeitimis. Susieti konfigūracijos parametrais ir algoritmų galimų veiksmų aibė.
     \item Aprašyti eksperimentai ir reikalavimai eksperimentinei sistemai, kuri įgyvendina sukurtą modelį.
 \end{enumerate}
 \subsection*{Išvados}
