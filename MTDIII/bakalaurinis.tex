@@ -69,10 +69,10 @@ Magistro darbo uždaviniai:
     \item Sukurti eksperimentinį sprendimą su pasirinktu algoritmu ir atlikti eksperimentus.
     \item Palyginti eksperimento rezultatus su alternatyvomis – „Heron“ su standartine konfigūracija bei „Heron“ balansavimas pritaikius REINFORCE algoritmą. 
 \end{enumerate}
-Antroje magistro darbo dalyje atlikta literatūros analizė, sudarytas balansavimo modelis ir parinkti skatinamojo mokymosi algoritmai, o šiame mokslo tyriamajame darbe – trečio magistro darbo dalyje – siekta tikslo : apibrėžti darbo metodą ir sukurti bei pagrįsti algoritmą, kuris bus naudojamas eksperimentui. Ir įgyvendinti šie uždaviniai:
+Antroje magistro darbo dalyje atlikta literatūros analizė, sudarytas balansavimo modelis ir parinkti skatinamojo mokymosi algoritmai, o šiame mokslo tyriamajame darbe – trečio magistro darbo dalyje – siekta tikslo: apibrėžti darbo metodą ir sukurti bei pagrįsti algoritmą, kuris bus naudojamas eksperimentui. Ir įgyvendinti šie uždaviniai:
 \begin{enumerate}
-    \item Apibrėžti algoritmą srautinio apdorojimo sistemų balansavimui naudojanti Deep Q Network ir Soft Actor Critic skatinamojo mokymosi algoritmus.
-    \item Apibrėžti eksperimento eigą ir altenatyvius sprendimus, kurių rezultatai bus naudojami algortimo įvertinimui. 
+    \item Sukurti srautinio apdorojimo sistemų modelį balansuojama skatinamojo mokymosi algoritmais.
+    \item Apibrėžti eksperimento eigą ir reikalavimus eksperimentinei sistemai, kurios rezultatai bus naudojami įvertinti sukurtą modelį. 
 \end{enumerate}
 
 \section{Srautinės duomenų apdrojimo sistemos, valdomos mašininiu mokymusi, modelis}
@@ -351,15 +351,12 @@ Taigi iš viso magistro darbe planuojama atlikti 8 eksperimentus, kurių bendra 
 
 \subsection*{Rezultatai}
 \begin{enumerate}
-    \item Apibrėžtas srautinio apdorojimo sistemos valdymo modelis, naudojanat skatinamajį mašininį mokymasį. 
-    \item Apibrėžtas balansavimo algoritmas, jo įeitis ir rezultatai.
-    \item Aprašyta eksperimento eiga ir reikalavimai eksperimentinei sistemai.
+    \item Sukurtas srautinio apdorojimo sistemos valdymo modelis naudojantis skatinamajį mašininį mokymasį algoritmą. 
+    \item Apibrėžti tyrimui naudojami balansavimo algoritmai. Susieti srautinio apdorojimo metrikos su algoritmo įeitimis. Susieti konfiguracijos parametrais ir algoritmų galimų veiksmų aibė.
+    \item Aprašyti eksperimentai ir reikalavimai eksperimentinei sistemai, kuri įgyvendina sukurtą modelį.
 \end{enumerate}
 \subsection*{Išvados}
-\begin{enumerate}
-    \item Apibrėžtas modelis yra įgyvendinamas ir modelio naudojamo algoritmo validumą įmanoma patikrinti atlikus eksperimentus ir palyginus rezultatus.
-    \item Apibrėžus eksperimentine sistema matome, jog eksperimentas yra validus, įgyvendinamas ir atlikus eksperimentą rezultatus galima surinkti bei įvertinti.
-\end{enumerate}
+    Apibrėžtas srautinio apdorojimo sistemos balansuojamos skatinamuoju mašininiu mokymu modelis yra įgyvendinamas naudojant skatinamojo mokymosi algoritmus Deep Q Network ir Soft Actor Critic. Sukurto modelio validumą ir efektyvumą įmanoma patikrinti apibrėžta eksperimentine sistema.
 \printbibliography[heading=bibintoc] 
 
 \end{document}
