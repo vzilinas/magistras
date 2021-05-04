@@ -29,11 +29,12 @@
         }
     ],
     "spellright.language": [
-        // "en",
-        // "lt"
+        "en",
+        "lt"
     ],
     "spellright.documentTypes": [
         "markdown",
-        "plaintext"
+        "plaintext",
+        "latex"
     ],
 }
