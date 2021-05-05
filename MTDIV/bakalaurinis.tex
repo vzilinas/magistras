@@ -67,7 +67,7 @@ Vienas iš naujausių būdų balansuoti srautinio apdorojimo sistemas – mašin
 Skatinamasis mokymasis yra vienas iš mašininio mokymosi tipų. Šis mokymasis skiriasi nuo kitų, nes nereikia turėti duomenų apmokymui, o programos mokosi darydamos bandymus ir klysdamos. Vienas iš pagrindinių privalumų naudojant skatinamąjį mokymąsi balansavimui – nereikia turėti išankstinių duomenų apmokymui, kas leidžia jį paprasčiau pritaikyti skirtingoms srautinio apdorojimo sistemų apkrovoms. Tačiau tokio tipo mašininis mokymasis turi ir problemų: sudėtinga aprašyti tinkamos konfigūracijos atlygio (angl. reward) funkciją ir balansą tarp tyrinėjimo ir išnaudojimo tam, kad nebūtų patiriami nuostoliai \cite{selfRegulatingStreaming}.
 
 % TODO upgrade this
-Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carlo, Q–learning, Deep Q Network ir kiti), šiame darbe jie apžvelgti, pasirinkti ir pritaikytas išsikeltam uždaviniui. 
+Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carlo, Q–learning, Deep Q Network ir kiti), šiame darbe yra apžvelgiami algoritmai, kuriuos naudojo kiti autoriai savo tyrimuose susijusiuose su srautinio apdorojimo sistemų veikimo gerinimu ir pasirenkami keli iš jų siekiant patikrinti ar skatinamasis mokymasis yra tinkamas srautinių sistemų balansavimui ir kuris skatinamojo mokymosi algoritmas pasiekia geriausius rezultatus po tam tikro kiekio apmokymo. Darbe naudojamas REINFORCE skatinamojo mokymosi algoritmas, ir Deep Q network bei Actor–Critic with Experience Replay giliojo skatinamojo mokymosi algoritmai ir bus tiriama kaip kiekvienas iš jų pasirodo su vienodu kiekiu apmokymo.
 
 Tikslas: Ištirti skatinamojo mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui. 
 
@@ -77,7 +77,7 @@ Uždaviniai:
     \item Sudaryti srautinio apdorojimo sistemų balansavimo modelį ir nustatyti valdymo metrikas ir jų siekiamas reikšmes, kurios bus naudojamos eksperimentinėje sistemoje.
     \item Parinkti srautinę apdorojimo sistemą ir skatinamojo mokymosi algoritmus eksperimentui, atsirenkant iš algoritmų ir sistemų, aprašomų literatūroje.
     \item Sukurti eksperimentinį sprendimą su pasirinkta srautinio apdorojimo sistema ir atlikti eksperimentus su skirtingais skatinamojo mokymosi algoritmais.
-    \item Palyginti eksperimento rezultatus su alternatyvomis – „Heron“ su standartine konfigūracija (??? ar reikia ->) bei „Heron“ balansavimas rankiniu būdu. 
+    \item * Gal šito iš vis nereikia *  Palyginti eksperimento rezultatus su alternatyvomis – „Heron“ su standartine konfigūracija  * ar reikia –> * bei „Heron“ balansavimas rankiniu būdu. 
 \end{enumerate}
 
 
@@ -88,9 +88,9 @@ Srautinis duomenų apdorojimas (angl. stream processing) – terminas naudojamas
 \begin{figure}[H]
     \includegraphics[width=15cm]{img/Srautinio apdorojimo sistema.pdf}
     \caption{Srautinio apdorojimo sistemos pavyzdys}
-    \label{srautinio-apdorojimo-sistema}
+    \label{srautinio–apdorojimo–sistema}
 \end{figure} 
-Srautinio apdorojimo sistemos literatūroje yra vaizduojamos orientuotais grafikais (\ref{srautinio-apdorojimo-sistema} pav.). Srautinio apdorojimo sistemos skiriasi nuo reliacinio modelio šiais aspektais \cite{babcock2002models}: 
+Srautinio apdorojimo sistemos literatūroje yra vaizduojamos orientuotais grafikais (\ref{srautinio–apdorojimo–sistema} pav.). Srautinio apdorojimo sistemos skiriasi nuo reliacinio modelio šiais aspektais \cite{babcock2002models}: 
 \begin{itemize}
     \item Duomenys į sistemą patenka tinklu, o ne iš fizinių talpyklų.
     \item Duomenų patekimo tvarka negali būti kontroliuojama.
@@ -192,7 +192,7 @@ Taip pat \cite{bansal2018trevor} nagrinėja „Apache Heron“ automatinį konfi
     \item Parametrų parinkimas – kadangi konfigūruojamų parametrų kiekis yra didelis \cite{Bilal2017Towards, petridis2016spark} ne visi iš jų vienodai daro įtaką greitaveikai, todėl pirma verta išsirinkti aktualiausius parametrus resursų valdymo, užduočių planavimo ir duomenų valdymo užduotims. Tam dažnai naudojama eksperto pagalba \cite{wang2016novel}, gidai arba eksperimentavimas. Tačiau galima naudoti mašininio mokymosi algoritmą koreliacijos nustatymui tarp parametrų ir greitaveikos \cite{vaquero2018autotuning, yang2012statistics}
     \item Mašininio mokymosi modelio pasirinkimas – kadangi yra nemažai skirtingų mašininio mokymosi metodų kurie tinka derinimo uždaviniui.
 \end{itemize} 
-Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant mašininį mokymąsi straipsnius (\ref{ml-in-stream} lentelėje pateikiami tik išrinkti srautinio apdorojimo pavyzdžiai).
+Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant mašininį mokymąsi straipsnius (\ref{ml–in–stream} lentelėje pateikiami tik išrinkti srautinio apdorojimo pavyzdžiai).
 
 \begin{table}[H]
     \centering
@@ -207,10 +207,13 @@ Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant
     OrientStream \cite{wang2017automating}          & Įvairios duomenų, plano, filtrų ir klasterio lygio savybės                          & Ensemble/ Incremental ML                    \\ \hline
     Vaquero et al. \cite{vaquero2018autotuning}     & Parametrai ir metrikos parinkti faktorinės analizės (angl. factor analysis) pagalba & Reinforcement Learning                     \\ \hline
     \end{tabular}
-    \label{ml-in-stream}
+    \label{ml–in–stream}
 \end{table}
 
-\subsection{Skatinamasis mokymasis srautinio apdorojimo veikimo gerinimui}
+\subsection{Skatinamasis mašininis mokymasis}
+Standartiniame skatinamojo mašininio mokymosi algoritme agentas (angl. agent) yra prijungtas prie aplinkos (angl. environment) per stebėjimus(angl. perception) ir veiksmus(angl. action). Kiekvieną žingsnį agentas atlieką veiksmą ir to veiksmo vertė yra perduodama agentui per skatinamąjį signalą. Agentas turi rinktis veiksmus, kurie per ilgą laiko tarpą didins veiksmo įverčius. Tai pasiekiamą per tam tikrą laiko tarpą atliekant bandymus ir klystant, su papildoma algoritmu pagalba siekiant padidinti efektyvumą ir sprendimų stabilumą \cite{reinf}.     
+
+\subsubsection{Skatinamasis mokymasis srautinio apdorojimo veikimo gerinimui}
 
 \cite{vaquero2018autotuning} nagrinėja srautinių sistemų derinimą naudojant skatinamąjį mokymąsi. Autoriai pradžioje pasirenka Lasso path analysis algoritmą, kurio pagalba atlieka parametrų atranka, kad išrinktų svarbiausius parametrus pasirinktos metrikos valdymui. Konfigūracijos valdymui pasirinktas modifikuotas REINFORCE algoritmas. Atliktas eksperimentas su „Apache Spark“, kuris rodo 60–70\% sumažintą vėlinimą.
 
@@ -231,14 +234,44 @@ Taip pat autoriai pateikia paketinio ir srautinio apdorojimo derinimą naudojant
     \cite{Li2018Model}               & Deep Q Learning \cite{mnih2015human} ir Actor−Critic \cite{lillicrap2015continuous} \\ \hline
     \cite{Russo2019Reinforcement}    & Q–learning \cite{mnih2015human} su papildomomis funkcijomis \\ \hline
     \end{tabular}
-    \label{ml-usage}
+    \label{ml–usage}
 \end{table}
 
-Šiame darbe norint patikrinti ar skatinamasis mokymasis tinka srautinio apdorojimo sistemų balansavimui naudojami keli algoritmai siekiant užtikrinti, jog rezultatai atitiktų skatinamojo mašininio mokymosi gebėjimą balansuoti, o ne pavienio algoritmo. Pasirinkti algoritmai: 
+\subsubsection{Balansavimas naudojant REINFORCE algoritmą}
+Straipsnis \cite{vaquero2018autotuning} nagrinėja automatinį balansavimą srautinio apdorojimo sistemų Apache Spark platformoje. Straipsnyje nagrinėjamas sprendimas susidaro iš trijų sistemų:
+\begin{enumerate}
+    \item Sistema, kurioje iš anksto sugeneruoti konfigūracijų deriniai leidžiami srautinio apdorojimo sistemose ir surenkamos metrikos bei konfigūracijos įverčiai. Gauti duomenis analizuojami naudojant Factor Analysis + k-means ir gaunamas sąrašas pagrindinių metrikų bei konfigūracijos elementai darantys daugiausiai įtakos greitaveikai. Ši sistema naudojama vieną kartą prieš leidžiant sekančią sistemą. 
+    \item Sistema, kurioje surinktos metrikos ir konfigūracijos elementai yra leidžiami iš naujo ir naudojant Lasso path analizę konfigūracijos elementų sąrašas surūšiuojamas pagal įtaką greitaveikai. Tai daroma siekiant statistiškai užtikrinti, jog pasirinkti konfigūracijos elementai yra įtakingiausi. Ši sistema naudojama vieną kartą prieš leidžiant sekančią sistemą.
+    \item Pagrindinė mašininio mokymosi sistema, naudojanti REINFORCE algoritmą, kuri naudodamas surikiuotų konfigūracijos elementų sąrašą ir pagrindinių metrikų sąrašą periodiškai atnaujina konfigūraciją. Ši sistema paleidžiama tuo pačiu metu kaip ir srautinio apdorojimo sistema ir veikia visą laiką, kol paleistas eksperimentas.
+\end{enumerate}  
+Eksperimentinis sprendimas buvo sukonfigūruotas kas 5 minutes atnaujinti vieną konfigūracijos elementą. Autoriams pavyko pasiekti 70\% sumažinta vėlinimą po 50 minučių ir mokymas pilnai konvergavo po 11 valandų.
+
+\subsubsection{Deep Q Network algoritmas}
+Deep Q Network yra Q Learning įgyvendinimas naudojant giliuosius neuroninius tinklus. Q Learning - skatinamojo mokymosi algoritmas, kuris bet kokiam baigtiniam Markovo pasirinkimo procesui randa optimalius sprendimus maksimizuojančius galutinio rezultato gavimą per bet kokį kiekį žingsnių pradedant nuo esamos būsenos \cite{melo2001convergence}. 
+Q Learning naudoja Q funkciją, kurios įeigą yra būsenos ir veiksmo kombinacija, o rezultatas yra atlygio aproksimacija. Pradžioje visos Q reikšmės yra 0 ir algoritmas atlikdamas veiksmus pildo lentelę atnaujintomis reikšmėmis. Tačiau, kai veiksmų ir būsenų pasidaro per daug Q Learning algoritmo nebeužtenka ir tenka naudoti giliuosius neuroninius tinklus.  
+
+Deep Q Network skiriasi nuo Q Learning tuo, kad vietoj būsenos ir veiksmų į jį paduodama būseną ir jis gražina Q reikšmę visų įmanomų veiksmų. Taip pat Deep Q Network naudoja patirties pakartojimą (angl. experience replay) - vietoj to, kad kurti sprendimą pagal paskutinį veiksmą yra paduodamas rinkinys atsitiktinių veiksmų pagal kurį algoritmas gali efektyviau mokytis. 
+
+Deep Q Network algoritmo veikimas\cite{handson}:
+\begin{enumerate}
+    \item Perduoti aplinkos būseną į Deep Q Network, kuris gražins visus įmanomus veiksmus būsenai.
+    \item Pasirinkti veiksmą naudojant \(\epsilon\)-greedy strategiją, kuriuo metu pasirenkamas atsitiktinis veiksmas arba pasirenkamas veiksmas turintis didžiausia Q reikšmę.
+    \item Įvykdomas veiksmas ir pereinama į naują būseną. Šis perėjimas išsaugomas kaip patirties pakartojimo kortežas susidarantis iš būsenos, veiksmo, atlygio ir naujos būsenos.
+    \item Pasirenkamas atsitiktinis rinkinys perėjimų iš patirties pakartojamo kortežų rinkinio ir apskaičiuojamas nuostolis (angl. loss). \[Loss=(r + \gamma max_{a'} Q(s',a';\theta') - Q(s,a;\theta))^2\]
+    \item Atlikti gradiento nusileidimą su tikrais tinklo parametrais siekiant sumažinti nuostolį.
+    \item Po kiekvienos iteracijos, perkelti tikrojo tinklo svorius į pasirinkto tinklo svorius.
+    \item Visi žingsniai kartojami iki nustatytos pabaigos.
+\end{enumerate}
+
+\subsubsection{Actor–Critic with Experience Replay}
+
+\subsubsection{Apibendrinimas}
+
+Šiame darbe norint patikrinti ar skatinamasis mokymasis tinka srautinio apdorojimo sistemų balansavimui naudojami keli algoritmai siekiant užtikrinti, jog rezultatai atitiktų skatinamojo mokymosi gebėjimą balansuoti, o ne pavienio algoritmo. Pasirinkti algoritmai: 
 \begin{itemize}
     \item REINFORCE sukonfigūruotas pagal \cite{williams1992simple} pateiktą konfigūracija.
-    \item Deep Q Network remiantis \cite{mnih2015human}
-    \item Actor-Critic with Experience Replay remiantis \cite{wang2016sample}, (-> hmm???) kadangi jam reikia mažiau duomenų nei Deep Q Network .
+    \item Deep Q Network remiantis \cite{mnih2015human}.
+    \item Actor–Critic with Experience Replay remiantis \cite{wang2016sample}, kadangi jam reikia mažiau duomenų nei Deep Q Network.
 \end{itemize}
 
 \section{Srautinės duomenų apdorojimo sistemos, valdomos mašininiu mokymusi, modelis}
@@ -276,7 +309,7 @@ Visumoje \ref{dataflow} paveikslėlis apibrėžia duomenų judėjimą srautinio 
 \subsection{Keičiami konfigūracijos parametrai}
 
 Norint koreguoti konfigūracijos parametrus reikia siųsti atnaujinimo komandą į Heron komandinės eilutės įrankį (toliau Heron CLI). Pateikus konfigūracijos parametrus Heron platformą perkrauna srautinio apdorojimo sistemą su naujais parametrais. 
-Vienas iš pagrindinių srautinės apdorojimo sistemos konfigūracijos parametrų - skaičiavimo komponentų lygiagretumas, kuris nurodo kiek paleidžiama tam tikro komponento instancijų. Taip pat tai yra vienintelis keičiamas konfigūracijos elementas, kuris priklauso nuo valdomos srautinio apdorojimo sistemos sudėties.
+Vienas iš pagrindinių srautinės apdorojimo sistemos konfigūracijos parametrų – skaičiavimo komponentų lygiagretumas, kuris nurodo kiek paleidžiama tam tikro komponento instancijų. Taip pat tai yra vienintelis keičiamas konfigūracijos elementas, kuris priklauso nuo valdomos srautinio apdorojimo sistemos sudėties.
 
 Visi kiti konfigūravimo parametrai\cite{configDocument}, kurie taip pat yra keičiami balansavimo metu pateikti \ref{param–table} lentelėje:
 
@@ -332,42 +365,25 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
 
 \subsection{Tikslo funkcija}
 
-Srautinio apdorojimo sistemos valdymo tikslas – keičiant konfigūraciją, pasiekti didžiausią greitaveiką. Šiame tyrime greitaveika matuojama vėlinimu, tačiau tuo pačiu turi būti palaikomas sistemos stabilumas ir duomenų pralaidumas. Todėl pasirinkti konfigūracijos elementai su koeficientais, kurie nurodo tam tikros metrikos svarbą pasiekti greitaveikai. 
-
-\begin{longtable}{|p{0.55\linewidth}|p{0.15\linewidth}|p{0.2\linewidth}|}
-    \caption{Metrikų tikslai}
-    \label{goal–table}\\
-    \hline
-    \rowcolor[HTML]{C0C0C0} 
-    Metrika                         & Koeficientas & Tikslas          \\ \hline
-    \endfirsthead
-    %
-    \endhead
-    %
-    Išsiųstas kiekis                & 2 & \(\infty\)  \\ \hline
-    Apdorotas kiekis                & 2 & \(\infty\) \\ \hline
-    Vidutinis apdorojimo vėlinimas  & 3 & 0    \\ \hline
-\end{longtable}
-
-\ref{goal–table} lentelėje pateiktos metrikos, šių metrikų svarumo koeficientas ir jų tikslas. Metrikų koeficientas pasirinktas pagal tai, jog visų pirma yra optimizuojama turėti kuo mažesnį vėlinimą. 
+Srautinio apdorojimo sistemos valdymo tikslas – keičiant konfigūraciją, pasiekti didžiausią greitaveiką. Šiame tyrime greitaveika matuojama vėlinimu, todėl pasirinkta tikslo funkcija – tiesiogiai imama pagal vėlinimą (\_\_execute–latency) ir duodamas teigiamas atlygis, jeigu pasiektas mažiausias vėlinimas, neigiamas – jeigu vėlinimas nėra, mažiausias, tokiu atveju kaip atlygis gražinamas skirtumas mažiausio gauto vėlinimo ir esamo vėlinimo.
 
 \section{Balansavimo algoritmas}
 
 \subsection{Srautinės architektūros sistemos konfigūracijos valdymo algoritmas}
 
-Algoritmo tikslas – pagal esamą būseną ir esamą konfigūraciją apskaičiuoti naują konfigūraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algoritmo pagrindas yra pasirinkti skatinamojo mašininio mokymosi algoritmai Deep Q Network ir Actor-Critic with Experience Replay.
+Algoritmo tikslas – pagal esamą būseną ir esamą konfigūraciją apskaičiuoti naują konfigūraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algoritmo pagrindas yra pasirinkti skatinamojo mašininio mokymosi algoritmai Deep Q Network ir Actor–Critic with Experience Replay.
 
 Kad algoritmas galėtų apskaičiuoti naują konfigūraciją, jam yra paduodami šie duomenys:
 \begin{itemize}
     \item Srautinio apdorojimo sistemos metrikos (\ref{metrics–table} lentelė)
-    \item Srautinio apdorojimo sistemos pradinė konfigūracija (\ref{param–table-pract} lentelė).
+    \item Srautinio apdorojimo sistemos pradinė konfigūracija (\ref{param–table–pract} lentelė).
     \item Konfigūruojamų parametrų sąrašas ir jų galimos reikšmės, aprašytos intervalu (pavyzdžiui \([512,4096]\)) arba tiksliais variantais (pavyzdžiui \([512, 1024, 2048, 4096]\)).
 \end{itemize}
 Duomenys, kurie paduodami balansavimo algoritmui, yra renkami pastoviai, neatsižvelgiant į pačio algoritmo veikimą.
 
 Balansavimo algoritmas veikia ciklais visą srautinės apdorojimo sistemos veikimo laiką ir tarpas tarp ciklų turi būti pakankamai ilgas srautinio apdorojimo sistemai atsinaujinti su naujais konfigūracijos parametrais bei, kad surinktų duomenų kiekis būtų pakankamai svarūs pateikti mašininio mokymosi algoritmui. Balansavimo algoritmas, atlikęs skaičiavimus, grąžina naują konfigūracijos parametrų rinkinį ir laukia naujo ciklo pradžios. 
 
-Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network \cite{fan2020theoretical} ir Actor-Critic with Experience Replay \cite{wang2016sample} turi bendrus veikimo bruožus:
+Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network \cite{fan2020theoretical} ir Actor–Critic with Experience Replay \cite{wang2016sample} turi bendrus veikimo bruožus:
 \begin{itemize}
     \item Jie yra laisvo nuo modelio (angl. model–free) tipo skatinamojo mokymosi algoritmai. Tai aktualu mūsų atveju kadangi balansavimo algoritmas turi galėti prisitaikyti prie kintančių duomenų kiekio ir greičio bei kintančios aplinkos.
     \item Jie yra be strategijos (angl. off–policy) tipo, tai reiškia, kad jie mokosi atliekant skirtingus veiksmus, nebūtinai tuos, kurie buvo pasirinkti pagal dabartinę strategiją.
@@ -377,13 +393,11 @@ Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network
 
 Balansavimui atlikti reikalingas tikslus apibrėžimas srautinio apdorojimo aplinkos, šis apibrėžimas susidaro iš: dabartinės srautinio apdorojimo sistemos būsenos, galimų veiksmų aibės ir žingsnio funkcijos, kuri atlieka veiksmą ir apskaičiuoja atlygį.
 
-Srautinio apdorojimo sistemos dabartinė būsena – srautinio apdorojimo sistemos metrikos patalpintos masyve.
-
-Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – konfigūracijos parametrai, kuriuos algoritmas gali koreguoti ir jų reikšmių aibė ir komponentų lygiagretumas. Pasirinkti algoritmai naudoja diskrečią veiksmų aibę. Todėl buvo sugeneruoti konfigūracijos parametrų rinkiniai pagal \ref{param–table-pract} pateiktas aibes.
+Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – konfigūracijos parametrai, kuriuos algoritmas gali koreguoti ir jų reikšmių aibė ir komponentų lygiagretumas. Pasirinkti algoritmai naudoja diskrečią veiksmų aibę. Todėl buvo sugeneruoti konfigūracijos parametrų rinkiniai pagal \ref{param–table–pract} pateiktas aibes.
 
 \begin{longtable}{|p{0.59\linewidth}|p{0.4\linewidth}|}
     \caption{Konfigūracijos elementų aibė}
-    \label{param–table-pract}\\
+    \label{param–table–pract}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
     Parametras     & Natūraliųjų reikšmių aibė       \\ \hline
@@ -411,15 +425,15 @@ Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – konfigūrac
     heron.api.config.topology\_container\_padding\_percentage & \([0;20]\) \\ \hline
 \end{longtable}
 
-Sujungus konfigūracijos atnaujinimą ir komponentų lygiagretumo valdymo sudarytas galimų veiksmų rinkinys (\ref{action-space} pav.).
-Pasirinkta išdalinti konfigūracijos rinkinius į 10 dalių siekiant gauti didesnius pokyčius atnaujinant konfigūracija ir taip pagreitinti modelio apmokymą. Taip pat modeliui pasirinkus veiksmą, kuris išeitų iš ribų, atliekamas 0 veiksmas - nedaryti nieko.
+Sujungus konfigūracijos atnaujinimą ir komponentų lygiagretumo valdymo sudarytas galimų veiksmų rinkinys (\ref{action–space} pav.).
+Pasirinkta išdalinti konfigūracijos rinkinius į 10 dalių siekiant gauti didesnius pokyčius atnaujinant konfigūracija ir taip pagreitinti modelio apmokymą. Taip pat modeliui pasirinkus veiksmą, kuris išeitų iš ribų, atliekamas 0 veiksmas – nedaryti nieko.
 
-\begin{longtable}{|p{0.1\linewidth}|p{0.6\linewidth}|p{0.2\linewidth}|}
+\begin{longtable}{|p{0.1\linewidth}|p{0.6\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|}
     \caption{Galimų aplinkos veiksmų aibė}
-    \label{action-space}\\
+    \label{action–space}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
-    Veiksmo numeris                 & Veiksmas & Riba         \\ \hline
+    Veiksmo numeris                 & Veiksmas & Riba      \\ \hline
     \endfirsthead
     %
     \endhead
@@ -427,24 +441,33 @@ Pasirinkta išdalinti konfigūracijos rinkinius į 10 dalių siekiant gauti dide
     0                               & Nedaryti nieko & –  \\ \hline
     1                               & Atnaujinti konfigūraciją, kurios numeris vienetų žemesnis & 0  \\ \hline
     2                               & Atnaujinti konfigūraciją, kurios numeris vienetų aukštesnis & 10 \\ \hline
-    1 + 2n                          & Atnaujinti n-tojo komponento konfigūracija, sumažinant jo lygiagretumą & 1  \\ \hline
-    2 + 2n                          & Atnaujinti n-tojo komponento konfigūracija, padidinant jo lygiagretumą & 9  \\ \hline
+    1 + 2n                          & Atnaujinti n–tojo komponento konfigūracija, sumažinant jo lygiagretumą & 1 \\ \hline
+    2 + 2n                          & Atnaujinti n–tojo komponento konfigūracija, padidinant jo lygiagretumą & 9 \\ \hline
 \end{longtable}
 
+Srautinio apdorojimo sistemos dabartinė būsena, kuri yra gražinama – apibrėžiama kaip masyvas kurio ilgis yra komponentų kiekis + 1, o masyvo elementai rodo komponento lygiagretumo skaičių ir vienas elementas rodo dabartinės konfigūracijos numerį.
 
-Srautinio apdorojimo sistemos balansavimo žingsnio funkcija:
+Skatinamojo mokymosi algoritmo veikimui reikalingas atlygis, kuris darbe naudojamos aplinkos skaičiuojamas pagal for
+formulę:
+\[ Atlygis(n) =
+\begin{cases}
+    \text{min(Vėlinimas)} – \text{ Vėlinimas}_n  & \quad \text{Vėlinimas}_n \geq \text{min(Vėlinimas)}\\
+    C – \text{ Vėlinimas}_n  & \quad \text{Vėlinimas}_n < \text{min(Vėlinimas)}
+\end{cases}
+\]
+C – konstanta apskaičiuojama per pirmą paleidimą, suapvalinus gautą vėlinimą su pradinę konfigūracija. \newline
+Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 \begin{itemize}
- \item Atliekamas veiksmas – naujos konfigūracijos įkėlimas ir nustatyto laiko laukimas, kad srautinio apdorojimo sistema pasiektų apkrovą.
- \item Atlygis – skaitinė reikšmė apskaičiuotą naudojant normalizuotas metrikas (apibrėžtas \ref{metrics–table} pav.) su koeficientais ir \ref{formula} formulę.
+ \item Įeities – atliekamo veiksmo skaičiaus, kuris nurodo aplinkai ką ji turi atlikti.
+ \item Išeities – kuri susidaro iš reikšmių kortežo:
+ \begin{itemize}
+    \item Stebėjimo būsena – srautinio apdorojimo sistemos dabartinė būsena.
+    \item Atlygio – apskaičiuojamas naudojant metrikas.
+    \item Epizodo baigtumo rodiklio – nurodo ar aplinka baigė epizodą ir turi būti paleista iš naujo.
+    \item Papildoma informacija – naudojama derinimo pagalbai, neprivaloma.
+ \end{itemize}
 \end{itemize}
-\begin{equation}
-    \label{formula}
-    \begin{gathered}
-    \text{Atlygis} = 2*\text{Išsiųstas kiekis } + 2*\text{Apdorotas kiekis }  – \\ 
-        3*\text{Vidutinis apdorojimo vėlinimas } – \text{ Naudojamas RAM }  – \\
-          \text{Vidutinė GC trukme } – \:2*\text{Bendra priešslėgio trukmė} 
-    \end{gathered}
-\end{equation}
+
 \subsection{Balansavimo algoritmo apmokymas}
 
 Balansavimo algoritmo apmokymas vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistemą bus paleidžiamas ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmų pasirinkimui, algoritmo veikimo pradžioje konfigūracija bus pasirenkama atsitiktinai apibrėžtą ciklų kiekį ir renkami rezultatai mašininio tinklo apmokymui. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Soft Actor Critic algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsitiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atlygio ir naujos būsenos rinkinių. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigūruojamas mokymosi metu pasirenkamos aibės dydis. 
@@ -470,10 +493,10 @@ Sistemos, kurios naudojamos eksperimente:
     \item Skatinamojo mašininio mokymosi sistema. Kadangi atliekami bandymai su skirtingais skatinamojo mokymosi algoritmais, kiekvienam jų sukurta atskira sistema: 
     \begin{itemize}
         \item Skatinamojo mokymosi sistema naudojanti REINFORCE algoritmą, įgyvendinta naudojant tensorflow biblioteką ir oficialiai pateiktą dokumentaciją šio algoritmo įgyvendinimui. Taip pat šio algoritmo hiperparametrai sudėti pagal pateiktus \cite{vaquero2018autotuning} straipsnyje.
-        \item Giliojo skatinamojo mokymosi sistema naudojanti Deep Q Network algoritmą, įgyvendinta naudojant tensorflow ir stable-baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
-        \item Giliojo skatinamojo mokymosi sistema naudojanti Actor-Critic with Experience Replay algoritmą, įgyvendinta naudojant tensorflow ir stable-baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
+        \item Giliojo skatinamojo mokymosi sistema naudojanti Deep Q Network algoritmą, įgyvendinta naudojant tensorflow ir stable–baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
+        \item Giliojo skatinamojo mokymosi sistema naudojanti Actor–Critic with Experience Replay algoritmą, įgyvendinta naudojant tensorflow ir stable–baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
     \end{itemize}
-    \item Skatinamojo mokymosi aplinka - aprašanti srautinio apdorojimo sistemos būseną, veiksmų aibę ir konfigūracijos žingsnį, kuris atnaujina srautinio apdorojimo sistemą, surenką būsenos duomenis ir apskaičiuoja atlygio reikšmę. 
+    \item Skatinamojo mokymosi aplinka – aprašanti srautinio apdorojimo sistemos būseną, veiksmų aibę ir konfigūracijos žingsnį, kuris atnaujina srautinio apdorojimo sistemą, surenką būsenos duomenis ir apskaičiuoja atlygio reikšmę. 
     \item Aplinkai reikalingos papildomos posistemės atlikti atnaujinimus ir surinkti duomenis:
     \begin{itemize}
         \item Metrikų surinkimo sistema parašyta Python kalba, naudojanti HTTP protokolą, būsenos duomenų surinkimui iš Heron API.
@@ -503,7 +526,7 @@ Pagrindinės programinės įrangos versijos:
     \item Python: 3.6.9
     \item Java: 8
 \end{itemize}
-\subsection{Planuojamų eksperimentų apimtis}
+\subsection{Eksperimentų apimtis}
 
 Eksperimentai atlikti su keturiais skirtingais sprendimais:
 \begin{itemize}
@@ -512,13 +535,26 @@ Eksperimentai atlikti su keturiais skirtingais sprendimais:
     \begin{itemize}
         \item REINFORCE algoritmą skatinamojo mokymosi posistemėje.
         \item Deep Q Network algoritmą skatinamojo mokymosi posistemėje.
-        \item Actor-Critic with Experience Replay algoritmą skatinamojo mokymosi posistemėje.
+        \item Actor–Critic with Experience Replay algoritmą skatinamojo mokymosi posistemėje.
     \end{itemize}
 \end{itemize}
 
 Kiekvienas skatinamojo mokymosi sprendimas yra testuojamas su Reklamų analizės srautinio apdorojimo sistema.
 
-Reklamų analizės sistema rezultatus talpina tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam specifiniam kampanijos langui iki kol jis yra įrašomas į Redis duomenų bazę. 
+Reklamų analizės sistema rezultatus talpina tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam specifiniam kampanijos langui iki kol jis yra įrašomas į Redis duomenų bazę. Pasinaudojant šiais duomenimis, kiekvieną iteracija apskaičiuojamas vėlinimo vidurkis. 
+
+Eksperimentai buvo atliekami su visais algoritmais apmokius juos 50 iteracijų, 100 iteracijų ir 250 iteracijų, tuo siekiant palyginti rezultatus tarp algoritmų ir bendra veikimą. Algoritmo efektyvumui patikrinti apmokytas modelis atlieka konfigūracijos keitimą 25 iteracijas ir matuojamas vėlinamas, kiekvieno po kiekvieno pakeitimo praėjus 3 minutėm, laikas kurio reikia srautinio apdorojimo sistemai pasileisti ir pasiekti pilną apkrovos stadiją.
+
+\subsection{Eksperimento rezultatai}
+
+Rezultatai po 50 mokymosi iteracijų:
+
+
+Rezultatai po 100 mokymosi iteracijų:
+
+
+Rezultatai po 250 mokymosi iteracijų:
+
 
 
 \sectionnonum{Rezultatai ir išvados}
