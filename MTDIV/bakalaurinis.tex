@@ -264,7 +264,7 @@ Deep Q Network algoritmo veikimas\cite{handson}:
 \end{enumerate}
 
 \subsubsection{Actor–Critic with Experience Replay}
-
+TODO
 \subsubsection{Apibendrinimas}
 
 Šiame darbe norint patikrinti ar skatinamasis mokymasis tinka srautinio apdorojimo sistemų balansavimui naudojami keli algoritmai siekiant užtikrinti, jog rezultatai atitiktų skatinamojo mokymosi gebėjimą balansuoti, o ne pavienio algoritmo. Pasirinkti algoritmai: 
@@ -469,6 +469,9 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 \end{itemize}
 
 \subsection{Balansavimo algoritmo apmokymas}
+
+ŠITĄ SKYRIŲ PATOBULINTI
+
 
 Balansavimo algoritmo apmokymas vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistemą bus paleidžiamas ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmų pasirinkimui, algoritmo veikimo pradžioje konfigūracija bus pasirenkama atsitiktinai apibrėžtą ciklų kiekį ir renkami rezultatai mašininio tinklo apmokymui. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Actor–Critic with Experience Replay algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsitiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atlygio ir naujos būsenos rinkinių. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigūruojamas mokymosi metu pasirenkamos aibės dydis. 
 
