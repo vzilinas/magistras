@@ -274,9 +274,9 @@ Deep Q Network algoritmo veikimas\cite{handson}:
     \item Actor–Critic with Experience Replay remiantis \cite{wang2016sample}, kadangi jam reikia mažiau duomenų nei Deep Q Network.
 \end{itemize}
 
-\section{Srautinės duomenų apdorojimo sistemos, valdomos mašininiu mokymusi, modelis}
+\section{Srautinės duomenų apdorojimo sistemos, valdomos skatinamuoju mokymusi, modelis}
 
-Tyrime nagrinėjamas srautinės sistemos, balansuojamos mašininių mokymų, modelis (\ref{dataflow} pav.) susidaro iš trijų pagrindinių elementų: srautinio duomenų apdorojimo sistemos, srautinio duomenų apdorojimo platformos ir valdymo sistemos. 
+Tyrime nagrinėjamas srautinės sistemos, balansuojamos skatinamuoju mokymų, modelis (\ref{dataflow} pav.) susidaro iš trijų pagrindinių elementų: srautinio duomenų apdorojimo sistemos, srautinio duomenų apdorojimo platformos ir valdymo sistemos. 
 \subsection{Modelis}
 \begin{figure}[H]
     \includegraphics[width=15cm]{img/DataFlow.pdf}
@@ -470,7 +470,7 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 
 \subsection{Balansavimo algoritmo apmokymas}
 
-Balansavimo algoritmo apmokymas vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistemą bus paleidžiamas ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmų pasirinkimui, algoritmo veikimo pradžioje konfigūracija bus pasirenkama atsitiktinai apibrėžtą ciklų kiekį ir renkami rezultatai mašininio tinklo apmokymui. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Soft Actor Critic algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsitiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atlygio ir naujos būsenos rinkinių. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigūruojamas mokymosi metu pasirenkamos aibės dydis. 
+Balansavimo algoritmo apmokymas vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistemą bus paleidžiamas ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmų pasirinkimui, algoritmo veikimo pradžioje konfigūracija bus pasirenkama atsitiktinai apibrėžtą ciklų kiekį ir renkami rezultatai mašininio tinklo apmokymui. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Actor–Critic with Experience Replay algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsitiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atlygio ir naujos būsenos rinkinių. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigūruojamas mokymosi metu pasirenkamos aibės dydis. 
 
 \section{Eksperimento tyrimo planas}
 
@@ -547,18 +547,67 @@ Eksperimentai buvo atliekami su visais algoritmais apmokius juos 50 iteracijų, 
 
 \subsection{Eksperimento rezultatai}
 
-Rezultatai po 50 mokymosi iteracijų:
+Visuose grafikuose pateikiamos 25 iteracijos per kurias algoritmas nuo pradinės konfigūracijos atliko pakeitimus, kad pasiektų kuo mažesnį vėlinimą.
+Kadangi srautinio apdorojimo sistemas paleistas Heron galima atnaujinti tik išjungus ir paleidus iš naujo, todėl kiekviena iteracija trunka virš trijų minučių, kas susidaro iš sistemos perkrovimo ir sistemos veikimo stabilizacijos.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_50.png}
+    \end{minipage}
+    \hspace{100mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_50.png}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/acer_50.png}
+    \end{minipage}
+    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 50 mokymo iteracijų}
+\end{figure}
 
-
-Rezultatai po 100 mokymosi iteracijų:
-
-
-Rezultatai po 250 mokymosi iteracijų:
-
-
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_100.png}
+    \end{minipage}
+    \hspace{100mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_100.png}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/acer_100.png}
+    \end{minipage}
+    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 100 mokymo iteracijų}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_250.png}
+    \end{minipage}
+    \hspace{100mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/dqn_250.png}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/acer_250.png}
+    \end{minipage}
+    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 250 mokymo iteracijų}
+\end{figure}
+      
 
 \sectionnonum{Rezultatai ir išvados}
+Rezultatai:
+\begin{itemize}
+    \item Sudarytas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi, modelis.
+    \item Apibrėžtas srautinio apdorojimo sistemos balansavimo algoritmas.
+    \item Sukurta eksperimentinė sistemą ir atlikti eksperimentai su REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay skatinamojo mokymosi algoritmais bei palyginti jų rezultatai.
+\end{itemize}
 
+Išvados:
+Srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi, tačiau tam reikia daug laiko apmokymui.
+Giliojo skatinamojo mokymosi algoritmai pasirodo gerai, tačiau po daugiau apmokymo negu skatinamojo mokymosi algoritmai.
 \printbibliography[heading=bibintoc] 
 
 \end{document}
