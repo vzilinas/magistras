@@ -43,11 +43,11 @@
 
 \sectionnonumnocontent{Santrauka}
 TODO
-\raktiniaizodziai{srautinis apdorojimas, mašininis mokymasis, skatinamasis mašininis mokymasis, "Heron", "Dhalion", balansavimas}   
+\raktiniaizodziai{srautinis apdorojimas, skatinamasis mokymasis, balansavimas, "Heron", REINFORCE, DQN, ACER}   
 
 \sectionnonumnocontent{Summary}
 TODO
-\keywords{stream processing, machine learning, reinforcement learning, "Heron", "Dhalion", balancing}
+\keywords{stream processing, reinforcement learning, balancing, "Heron", REINFORCE, DQN, ACER}
 
 \tableofcontents
 
@@ -477,10 +477,7 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 
 \subsection{Balansavimo algoritmo apmokymas}
 
-ŠITĄ SKYRIŲ PATOBULINTI
-
-
-Balansavimo algoritmo apmokymas vyks srautinio apdorojimo sistemos veikimo metu. Paleidus srautinę apdorojimo sistemą bus paleidžiamas ir balansavimo algoritmas. Tam, kad algoritmas turėtų pagrindą veiksmų pasirinkimui, algoritmo veikimo pradžioje konfigūracija bus pasirenkama atsitiktinai apibrėžtą ciklų kiekį ir renkami rezultatai mašininio tinklo apmokymui. Po šio ciklo algoritmas atliks sprendimus pagal patirtį. Deep Q Network ir Actor–Critic with Experience Replay algoritmai naudoja pakartojimo buferio mokymosi optimizaciją, kai algoritmas mokosi ne iš paskutinio atlikto veiksmo, o iš atsitiktinai pasirinktos aibės, kurios elementai susidaro iš veiksmo, būsenos, atlygio ir naujos būsenos rinkinių. Pakartojimo buferio aibė saugoma viso mokymosi metu ir yra konfigūruojamas mokymosi metu pasirenkamos aibės dydis. 
+Balansavimo algoritmo apmokymas yra atliekamas epizodais, kur vienas epizodas susidaro iš 25 žingsnių. Kiekvieno epizodo pradžioje srautinio apdorojimo sistemą perkraunama ir nustatoma su pradinėmis reikšmėmis. Visų algoritmų nagrinėjimui sistema buvo apmokoma nustatyta kiekį kartu ir po to naudojant apmokytą tinklą leidžiama atlikti sprendimus ant perkrautos srautinio apdorojimo sistemos. Pagrindinis srautinio apdorojimo sistemos balansavimo iššūkis - ilgas laiko tarpas tarp sistemos atnaujinimo. Tyrimui naudojama aplinka atlikusi pakeitimo veiksmą laukia 3 minutes, kas yra pakankamas laikas sistemai pasileisti ir pasiekti stabilią būseną. Dėl šios trukmės vienas epizodas trunka apie 1,5 valandos, kas yra pakankamai nemažas laiko tarpas žinant, kad norint pasiekti tikrai gerus rezultatus, gali tekti daryti apie 40 epizodų bei modifikuoti skatinamojo mokymosi algoritmą \cite{vaquero2018autotuning}. Šiame darbe pasirinkti nagrinėti trumpesnį apmokymo laikotarpį, bet skirtingų algoritmų ir su skirtingų kiekiu apmokytų epizodų siekiant patikrinti ar yra tendencija geresnio balansavimo priklausomai nuo algoritmo ir apmokymo kiekio. Kiekvienas algoritmo mokymai leidžiami iš naujo siekiant, kad rezultatai nebūtų įtakoti prieš tai atlikto mokymo dalies.
 
 \section{Eksperimento tyrimo planas}
 
