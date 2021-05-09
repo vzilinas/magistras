@@ -474,17 +474,17 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 
 \subsection{Balansavimo algoritmo apmokymas}
 
-Balansavimo algoritmo apmokymas yra atliekamas epizodais, kur vienas epizodas susidaro iš 25 žingsnių. Kiekvieno epizodo pradžioje srautinio apdorojimo sistemą perkraunama ir nustatoma su pradinėmis reikšmėmis. Visų algoritmų nagrinėjimui sistema buvo apmokoma nustatyta kiekį kartu ir po to naudojant apmokytą tinklą leidžiama atlikti sprendimus ant perkrautos srautinio apdorojimo sistemos. Pagrindinis srautinio apdorojimo sistemos balansavimo iššūkis - ilgas laiko tarpas tarp sistemos atnaujinimo. Tyrimui naudojama aplinka atlikusi pakeitimo veiksmą laukia 3 minutes, kas yra pakankamas laikas sistemai pasileisti ir pasiekti stabilią būseną. Dėl šios trukmės vienas epizodas trunka apie 1,5 valandos, kas yra pakankamai nemažas laiko tarpas žinant, kad norint pasiekti tikrai gerus rezultatus, gali tekti daryti apie 40 epizodų bei modifikuoti skatinamojo mokymosi algoritmą \cite{vaquero2018autotuning}. Šiame darbe pasirinkti nagrinėti trumpesnį apmokymo laikotarpį, bet skirtingų algoritmų ir su skirtingų kiekiu apmokytų epizodų siekiant patikrinti ar yra tendencija geresnio balansavimo priklausomai nuo algoritmo ir apmokymo kiekio. Kiekvienas algoritmo mokymai leidžiami iš naujo siekiant, kad rezultatai nebūtų įtakoti prieš tai atlikto mokymo dalies.
+Balansavimo algoritmo apmokymas yra atliekamas epizodais, kur vienas epizodas susidaro iš 25 žingsnių. Kiekvieno epizodo pradžioje srautinio apdorojimo sistemą perkraunama ir nustatoma su pradinę būsena. Visų algoritmų nagrinėjimui sistema buvo apmokoma nustatyta kiekį kartu ir po to naudojant apmokytą tinklą atliekami veiksmai ant iš naujo paleistos su pradinę konfigūracija srautinio apdorojimo sistema. Pagrindinis srautinio apdorojimo sistemos balansavimo algoritmo iššūkis - ilgas laiko tarpas tarp balansavimo žingsnių. Tyrimui sukurta aplinka atlikusi pakeitimą laukia 3 minutes, kas, buvo nustatyta, pakankamas laikas sistemai pasileisti ir pasiekti stabilią būseną. Dėl šios trukmės vienas epizodas trunka apie 1,5 valandos, Šiame darbe pasirinkti nagrinėti kelis apmokymo trukmės variantus su skirtingais algoritmais siekiant palyginti mokymosi efektyvumą balansavimo problemai spręsti. Apmokymas vykdomas sistemos veikimo metu ir kiekvienas tyrime atliktas apmokymas atliekamas iš naujo siekiant, kad rezultatai nepriklausytų vienas nuo kito.
 
-\section{Eksperimento tyrimo planas}
+\section{Eksperimento tyrimas}
 
 \subsection{Tyrimo tikslas}
 
-Šio tyrimo tikslas – įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algoritmo validumą. Tam reikia atlikti bandymus su eksperimentine sistema naudojančia aprašyta optimizavimo algoritmą, su eksperimentine sistema naudojančia REINFORCE algoritmą ir su aplinka naudojančią standartinę konfigūracija be jokių pakeitimų. Gautus bandymo duomenis palyginti ir nustatyti, ar pasiūlytas sprendimas tinka srautinio apdorojimo sistemų balansavimui.
+Šio tyrimo tikslas – įvertinti siūlomo balansavimo modelio ir pasirinkto optimizavimo algoritmo validumą. Tam atlikti bandymai su eksperimentine sistema naudojančia REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay algoritmus.
 
 \subsection{Eksperimentinė sistema}
 
-Eksperimentui atlikti naudojama lokali Heron aplinka ir papildomos posistemės skirtos duomenų generavimui, rezultatų rinkimui ir t.t. Pilna eksperimento sistema pavaizduota \ref{experiment} paveikslėlyje.
+Eksperimentui atlikti naudojama lokali Heron aplinka ir papildomos posistemės skirtos duomenų generavimui, rezultatų rinkimui ir t.t. Visa eksperimento sistema pavaizduota \ref{experiment} paveikslėlyje.
 
 \begin{figure}[H]
     \includegraphics[width=14cm]{img/Experiment.pdf}
@@ -492,15 +492,15 @@ Eksperimentui atlikti naudojama lokali Heron aplinka ir papildomos posistemės s
     \label{experiment}
 \end{figure} 
 
-Sistemos, kurios naudojamos eksperimente:
+Sistemos, kurios naudojamos tyrime:
 \begin{enumerate}
     \item Skatinamojo mašininio mokymosi sistema. Kadangi atliekami bandymai su skirtingais skatinamojo mokymosi algoritmais, kiekvienam jų sukurta atskira sistema: 
     \begin{itemize}
-        \item Skatinamojo mokymosi sistema naudojanti REINFORCE algoritmą, įgyvendinta naudojant tensorflow biblioteką ir oficialiai pateiktą dokumentaciją šio algoritmo įgyvendinimui. Taip pat šio algoritmo hiperparametrai sudėti pagal pateiktus \cite{vaquero2018autotuning} straipsnyje.
-        \item Giliojo skatinamojo mokymosi sistema naudojanti Deep Q Network algoritmą, įgyvendinta naudojant tensorflow ir stable–baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
-        \item Giliojo skatinamojo mokymosi sistema naudojanti Actor–Critic with Experience Replay algoritmą, įgyvendinta naudojant tensorflow ir stable–baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
+        \item Skatinamojo mokymosi sistema naudojanti REINFORCE algoritmą, įgyvendinta naudojant tensorflow biblioteką ir tensorflow pateiktą dokumentaciją šio algoritmo įgyvendinimui. Šio algoritmo hiperparametrai sudėti pagal pateiktus \cite{vaquero2018autotuning} straipsnyje.
+        \item Skatinamojo mokymosi sistema naudojanti Deep Q Network algoritmą, įgyvendinta naudojant tensorflow ir stable–baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
+        \item Skatinamojo mokymosi sistema naudojanti Actor–Critic with Experience Replay algoritmą, įgyvendinta naudojant tensorflow ir stable–baselines bibliotekas ir naudojant rekomenduojamus hiperparametrus.
     \end{itemize}
-    \item Skatinamojo mokymosi aplinka – aprašanti srautinio apdorojimo sistemos būseną, veiksmų aibę ir konfigūracijos žingsnį, kuris atnaujina srautinio apdorojimo sistemą, surenką būsenos duomenis ir apskaičiuoja atlygio reikšmę. 
+    \item Skatinamojo mokymosi aplinka – aprašanti srautinio apdorojimo sistemos būseną, veiksmų aibę ir žingsnio funkciją, kuro atnaujina srautinio apdorojimo sistemą, surenka būsenos duomenis ir apskaičiuoja atlygį. 
     \item Aplinkai reikalingos papildomos posistemės atlikti atnaujinimus ir surinkti duomenis:
     \begin{itemize}
         \item Metrikų surinkimo sistema parašyta Python kalba, naudojanti HTTP protokolą, būsenos duomenų surinkimui iš Heron API.
@@ -512,7 +512,7 @@ Sistemos, kurios naudojamos eksperimente:
     \item Reklamos analizės duomenų generavimo sistema parašyta su Clojure ir pateikta kartu su Reklamos analizės greitaveikos testu.
 \end{enumerate}
 
-Kompiuterinės įrangos su kuria atliekamas eksperimentas parametrai:
+Kompiuterinė įranga su kuria atliekamas eksperimentas parametrai:
 \begin{itemize}
     \item Procesorius: Intel Core i7–5930k (6 branduoliai/12 gijų)
     \item Operatyvi atmintis: 64 GB (2666 MHz)
@@ -520,21 +520,25 @@ Kompiuterinės įrangos su kuria atliekamas eksperimentas parametrai:
     \item Operacinė sistema: Windows 10 Education
 \end{itemize}
 
-Kadangi Heron nepalaiko Windows sistemos visi tyrimai ir visos reikiamos posistemės leidžiamos naudojant Windows Subsystem Linux (toliau WSL) su Ubuntu 18.04. WSL yra suderinamumo sluoksnis naudojantis Linux branduolį per Hyper–V, kieno pagalba galima leisti programas skirtas Linux be emuliacijos neprarandant greitaveikos.
+Kadangi Heron nepritaikyta Windows operacinei sistemai visi tyrimai ir visos reikiamos posistemės leidžiamos naudojant Windows Subsystem Linux (toliau WSL) su Ubuntu 18.04. WSL tai suderinamumo sluoksnis naudojantis Linux branduolį per Hyper–V, kieno dėka pagalba galima leisti programas skirtas Linux be emuliacijos neprarandant greitaveikos.
 
-Pagrindinės programinės įrangos versijos:
+Pagrindinės tyrime naudojamos programinės įrangos versijos:
 \begin{itemize}
     \item Apache Heron: 0.20.3
     \item Kafka: 2.13
     \item Redis: 4.0.9
-    \item Python: 3.6.9
     \item Java: 8
+    \item Python: 3.6.9
+    \begin{itemize}
+        \item Tensorflow 1.14 su stable–baselines 2.10 - DQN ir ACER algoritmams
+        \item Tensorflow 2.4 ir tf-agents 0.7.1 - REINFORCE algoritmui
+    \end{itemize}
 \end{itemize}
 \subsection{Eksperimentų apimtis}
 
-Eksperimentai atlikti su keturiais skirtingais sprendimais:
+Eksperimentai atlikti su šiomis balansavimo sprendimų variacijomis:
 \begin{itemize}
-    \item Srautinio apdorojimo sistemos veikimas su standartine konfigūracija.
+    \item Srautinio apdorojimo sistemos veikimas su standartine konfigūracija. <- PAŠALINTI JEI NEATLIKTA SU JUO
     \item Srautinio apdorojimo sistemos veikimas balansuojant ją naudojant sukurtą eksperimentinį sprendimą pagal apibrėžtą balansavimo algoritmą naudojant:
     \begin{itemize}
         \item REINFORCE algoritmą skatinamojo mokymosi posistemėje.
@@ -545,14 +549,15 @@ Eksperimentai atlikti su keturiais skirtingais sprendimais:
 
 Kiekvienas skatinamojo mokymosi sprendimas yra testuojamas su Reklamų analizės srautinio apdorojimo sistema.
 
-Reklamų analizės sistema rezultatus talpina tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam specifiniam kampanijos langui iki kol jis yra įrašomas į Redis duomenų bazę. Pasinaudojant šiais duomenimis, kiekvieną iteracija apskaičiuojamas vėlinimo vidurkis. 
+Reklamų analizės sistema rezultatus talpina į tekstini failą, kur kiekvienas įrašas yra vėlinimas milisekundėmis nuo paskutinio išsiųsto įrašo į žinučių eilę tam tikram kampanijos langui iki kol jis yra įrašomas į Redis duomenų bazę. Pasinaudojant šiais duomenimis, kiekvieną iteracija apskaičiuojamas paskutinių 30 sekundžių vėlinimo vidurkis. 
 
-Eksperimentai buvo atliekami su visais algoritmais apmokius juos 50 iteracijų, 100 iteracijų ir 250 iteracijų, tuo siekiant palyginti rezultatus tarp algoritmų ir bendra veikimą. Algoritmo efektyvumui patikrinti apmokytas modelis atlieka konfigūracijos keitimą 25 iteracijas ir matuojamas vėlinamas, kiekvieno po kiekvieno pakeitimo praėjus 3 minutėm, laikas kurio reikia srautinio apdorojimo sistemai pasileisti ir pasiekti pilną apkrovos stadiją.
+Eksperimentai buvo atliekami su visais algoritmais apmokius juos 50 iteracijų, 100 iteracijų ir 250 iteracijų, tuo siekiant palyginti rezultatus tarp algoritmų ir mokymosi trukmės. Algoritmo efektyvumui patikrinti apmokytas modelis atlieka konfigūracijos keitimą 25 iteracijas ir matuojamas vėlinamas po kiekvieno pakeitimo praėjus 3 minutėms - laikas, kurio reikia srautinio apdorojimo sistemai pasileisti ir pasiekti stabilią apkrovos stadiją.
 
 \subsection{Eksperimento rezultatai}
 
-Visuose grafikuose pateikiamos 25 iteracijos per kurias algoritmas nuo pradinės konfigūracijos atliko pakeitimus, kad pasiektų kuo mažesnį vėlinimą.
-Kadangi srautinio apdorojimo sistemas paleistas Heron galima atnaujinti tik išjungus ir paleidus iš naujo, todėl kiekviena iteracija trunka virš trijų minučių, kas susidaro iš sistemos perkrovimo ir sistemos veikimo stabilizacijos.
+Visuose grafikuose pateikiami vėlinimo pokyčiai per 25 iteracijas, per kurias algoritmas nuo pradinės konfigūracijos atliko pakeitimus. Matomi skirtumai tarp pirmos iteracijos tuo pačių algoritmų, tai yra dėl to, kad sistemos apdoroją duomenis nevienodu greičiu ir tam tikra paklaida visada įmanoma.
+
+GAL VERTA GRAFIKAMS APRIBOTI Y AŠĮ KAD VISI BŪTŲ VIENODI.
 \begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.4\textwidth}
