@@ -268,7 +268,7 @@ Actor–Critic algoritmai išsiskiria tuo, kad naudojami du tinklai, aktorius �
 
 Šio darbo tyrimui, ar skatinamasis mokymasis tinka srautinio apdorojimo sistemų balansavimui, naudojami keli algoritmai siekiant užtikrinti, jog rezultatai atitiktų skatinamojo mokymosi gebėjimą balansuoti, o ne pavienio algoritmo ir skirtingi kiekiai apmokymo žingsnių, siekiant patikrinti algoritmų apmokymo greičius sprendžiant balansavimo problemą. Pasirinkti algoritmai: 
 \begin{itemize}
-    \item REINFORCE sukonfigūruotas pagal \cite{williams1992simple} pateiktą konfigūracija.
+    \item REINFORCE \cite{williams1992simple} sukonfigūruotas pagal \cite{vaquero2018autotuning} pateiktą konfigūracija.
     \item Deep Q Network remiantis \cite{mnih2015human}.
     \item Actor–Critic with Experience Replay remiantis \cite{wang2016sample}, kadangi jam reikia mažiau duomenų, kad jis būtų efektyvesnis nei kiti algoritmai.
 \end{itemize}
@@ -365,25 +365,25 @@ Metrikos iš Heron srautinio apdorojimo sistemų gali būti pasiektos keliais sk
 
 \subsection{Tikslo funkcija}
 
-Srautinio apdorojimo sistemos valdymo tikslas – keičiant konfigūraciją, pasiekti didžiausią greitaveiką. Šiame tyrime greitaveika matuojama vėlinimu, todėl pasirinkta tikslo funkcija – tiesiogiai apsakičiuojamą pagal vėlinimą (\_\_execute–latency) ir duodamas teigiamas atlygis, jeigu pasiektas mažiausias vėlinimas, priešingu atveju neigiamas atlygis. 
+Srautinio apdorojimo sistemos valdymo tikslas – keičiant konfigūraciją, pasiekti didžiausią greitaveiką. Šiame tyrime greitaveika matuojama vėlinimu, todėl pasirinkta tikslo funkcija – tiesiogiai apskaičiuojamą pagal vėlinimą (\_\_execute–latency) ir duodamas teigiamas atlygis, jeigu pasiektas mažiausias vėlinimas, priešingu atveju neigiamas atlygis. 
 
 \section{Balansavimo algoritmas}
 
 \subsection{Srautinės architektūros sistemos konfigūracijos valdymo algoritmas}
 
-Algoritmo tikslas – pagal esamą būseną ir esamą konfigūraciją apskaičiuoti naują konfigūraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algoritmo pagrindas yra pasirinkti skatinamojo mašininio mokymosi algoritmai Deep Q Network ir Actor–Critic with Experience Replay.
+Algoritmo tikslas – pagal esamą būseną ir esamą konfigūraciją apskaičiuoti naują konfigūraciją, kuri pagerintų srautinės apdorojimo sistemos greitaveiką. Algoritmo pagrindui yra pasirinkti skatinamojo mašininio mokymosi algoritmai REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay.
 
-Kad algoritmas galėtų apskaičiuoti naują konfigūraciją, jam yra paduodami šie duomenys:
+Kad algoritmas galėtų apskaičiuoti naują konfigūraciją, jam reikalingi šie duomenys:
 \begin{itemize}
-    \item Srautinio apdorojimo sistemos metrikos (\ref{metrics–table} lentelė)
+    \item Dabartinė srautinio apdorojimo sistemos būsena - užklausos metų esantis komponentų lygiagretumas bei pasirinkta konfigūracija.
+    \item Srautinio apdorojimo sistemos metrikos (\ref{metrics–table} lentelė) - atlygio apskaičiavimui.
     \item Srautinio apdorojimo sistemos pradinė konfigūracija (\ref{param–table–pract} lentelė).
-    \item Konfigūruojamų parametrų sąrašas ir jų galimos reikšmės, aprašytos intervalu (pavyzdžiui \([512,4096]\)) arba tiksliais variantais (pavyzdžiui \([512, 1024, 2048, 4096]\)).
+    \item Veiksmų aibė kuriuos gali pasirinkti algoritmas.
 \end{itemize}
-Duomenys, kurie paduodami balansavimo algoritmui, yra renkami pastoviai, neatsižvelgiant į pačio algoritmo veikimą.
 
-Balansavimo algoritmas veikia ciklais visą srautinės apdorojimo sistemos veikimo laiką ir tarpas tarp ciklų turi būti pakankamai ilgas srautinio apdorojimo sistemai atsinaujinti su naujais konfigūracijos parametrais bei, kad surinktų duomenų kiekis būtų pakankamai svarūs pateikti mašininio mokymosi algoritmui. Balansavimo algoritmas, atlikęs skaičiavimus, grąžina naują konfigūracijos parametrų rinkinį ir laukia naujo ciklo pradžios. 
+Balansavimo algoritmas veikia ciklais visą srautinės apdorojimo sistemos veikimo laiką ir tarpas tarp ciklų turi būti pakankamai ilgas srautinio apdorojimo sistemai atsinaujinti su naujais konfigūracijos parametrais bei, kad surinktų duomenų kiekis būtų pakankamai svarūs pateikti mašininio mokymosi algoritmui. Balansavimo algoritmas, atlikęs skaičiavimus pasirenką veiksmą ir atlikęs jį laukia sekančio žingsnio. 
 
-Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network \cite{fan2020theoretical} ir Actor–Critic with Experience Replay \cite{wang2016sample} turi bendrus veikimo bruožus:
+Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai REINFORCE \cite{williams1992simple}, Deep Q network \cite{fan2020theoretical} ir Actor–Critic with Experience Replay \cite{wang2016sample} turi bendrus veikimo bruožus:
 \begin{itemize}
     \item Jie yra laisvo nuo modelio (angl. model–free) tipo skatinamojo mokymosi algoritmai. Tai aktualu mūsų atveju kadangi balansavimo algoritmas turi galėti prisitaikyti prie kintančių duomenų kiekio ir greičio bei kintančios aplinkos.
     \item Jie yra be strategijos (angl. off–policy) tipo, tai reiškia, kad jie mokosi atliekant skirtingus veiksmus, nebūtinai tuos, kurie buvo pasirinkti pagal dabartinę strategiją.
@@ -391,12 +391,17 @@ Balansavimui naudojami skatinamojo mašininio mokymosi algoritmai Deep Q network
 
 \subsection{Srautinio duomenų apdorojimo aplinkos apibrėžimas balansavimui}
 
-Balansavimui atlikti reikalingas tikslus apibrėžimas srautinio apdorojimo aplinkos, šis apibrėžimas susidaro iš: dabartinės srautinio apdorojimo sistemos būsenos, galimų veiksmų aibės ir žingsnio funkcijos, kuri atlieka veiksmą ir apskaičiuoja atlygį.
+Balansavimui atlikti reikalingas tikslus apibrėžimas srautinio apdorojimo aplinkos, šis apibrėžimas susidaro iš: galimų srautinio apdorojimo sistemos būsenų aibės, galimų veiksmų aibės ir funkcijų:
+\begin{itemize}
+    \item Inicializavimo funkcija - nustato pradinius sistemos parametrus, bei apibrėžia galimų veiksmų aibę ir aplinkos stebėjimo aibę.
+    \item Žingsnio funkcija - kaip įeiti priima veiksmą, jį atlieką ir grąžina žingsnio rezultatus - būseną, atlygi ir t.t.
+    \item Perrinkimo funkcija - grąžiną sistemą į pradinę būseną ir gražiną ją skatinamojo mokymosi algoritmui.
+\end{itemize}
 
-Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – konfigūracijos parametrai, kuriuos algoritmas gali koreguoti ir jų reikšmių aibė ir komponentų lygiagretumas. Pasirinkti algoritmai naudoja diskrečią veiksmų aibę. Todėl buvo sugeneruoti konfigūracijos parametrų rinkiniai pagal \ref{param–table–pract} pateiktas aibes.
+Kadangi pasirinkti algoritmai naudoja diskrečią veiksmų aibę, pasirinkta veiksmų aibė sudaryta iš srautinio apdorojimo komponentų lygiagretumo ir konfigūracijos rinkinio skaičiaus. Konfigūracijos parametrų rinkiniai sudaryti pagal \ref{param–table–pract} lentelėje pateiktas reikšmių aibes.
 
 \begin{longtable}{|p{0.59\linewidth}|p{0.4\linewidth}|}
-    \caption{Konfigūracijos elementų aibė}
+    \caption{Keičiamų konfigūracijos elementų aibė}
     \label{param–table–pract}\\
     \hline
     \rowcolor[HTML]{C0C0C0} 
@@ -405,7 +410,6 @@ Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – konfigūrac
     %
     \endhead
     %
-    component–parallelism=[skaičiavimo komponento pavadinimas]& \([1;10] * \text{Komponentų kiekis}\)\\ \hline
     heron.instance.tuning.expected.bolt.read.queue.size       & \([2;20]\) \\ \hline
     heron.instance.tuning.expected.bolt.write.queue.size      & \([2;20]\) \\ \hline
     heron.instance.tuning.expected.spout.read.queue.size      & \([128;512]\) \\ \hline
@@ -425,8 +429,9 @@ Srautinio apdorojimo sistemos balansavimo galimų veiksmų aibė – konfigūrac
     heron.api.config.topology\_container\_padding\_percentage & \([0;20]\) \\ \hline
 \end{longtable}
 
-Sujungus konfigūracijos atnaujinimą ir komponentų lygiagretumo valdymo sudarytas galimų veiksmų rinkinys (\ref{action–space} pav.).
-Pasirinkta išdalinti konfigūracijos rinkinius į 10 dalių siekiant gauti didesnius pokyčius atnaujinant konfigūracija ir taip pagreitinti modelio apmokymą. Taip pat modeliui pasirinkus veiksmą, kuris išeitų iš ribų, atliekamas 0 veiksmas – nedaryti nieko.
+Sudaryti 10 konfigūracijos rinkiniai išdalinus konfigūracijos elementus į lygias dalis pagal reikšmių aibę, siekiant, kad srautinės apdorojimo sistemos metrikos, atlikus vieną konfigūracijos pakeitimą, būtų žymus, kas leistų geriau pastebėti bei priduotų vertę atlikti konfigūracijos keitimą.
+
+Sujungus konfigūracijos atnaujinimą ir komponentų lygiagretumo valdymo sudarytas galimų veiksmų rinkinys, kurio dydis yra lygus \(3 + (2 * \text{komponentų kiekis})\) ir kiekvieno veiksmo reikšmė pateikta \ref{action–space} paveikslėlyje.
 
 \begin{longtable}{|p{0.1\linewidth}|p{0.6\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|}
     \caption{Galimų aplinkos veiksmų aibė}
@@ -439,32 +444,31 @@ Pasirinkta išdalinti konfigūracijos rinkinius į 10 dalių siekiant gauti dide
     \endhead
     %
     0                               & Nedaryti nieko & –  \\ \hline
-    1                               & Atnaujinti konfigūraciją, kurios numeris vienetų žemesnis & 0  \\ \hline
-    2                               & Atnaujinti konfigūraciją, kurios numeris vienetų aukštesnis & 10 \\ \hline
+    1                               & Pasirinkti konfigūracijos rinkinį, kurio numeris vienetų žemesnis & 0  \\ \hline
+    2                               & Pasirinkti konfigūracijos rinkinį, kurio numeris vienetų aukštesnis & 10 \\ \hline
     1 + 2n                          & Atnaujinti n–tojo komponento konfigūracija, sumažinant jo lygiagretumą & 1 \\ \hline
     2 + 2n                          & Atnaujinti n–tojo komponento konfigūracija, padidinant jo lygiagretumą & 9 \\ \hline
 \end{longtable}
 
-Srautinio apdorojimo sistemos dabartinė būsena, kuri yra gražinama – apibrėžiama kaip masyvas kurio ilgis yra komponentų kiekis + 1, o masyvo elementai rodo komponento lygiagretumo skaičių ir vienas elementas rodo dabartinės konfigūracijos numerį.
+Srautinio apdorojimo sistemos būsenos aibė – apibrėžiama kaip masyvas kuris susidaro iš srautinio apdorojimo komponentų lygiagretumo ir pasirinkto konfigūracijos rinkinio numerio. Pradinė būsena nustatyta, kad kiekvieno komponento lygiagretumo skaičius būtų 2, o pradinis konfigūracijos rinkinio numeris 5.
 
-Skatinamojo mokymosi algoritmo veikimui reikalingas atlygis, kuris darbe naudojamos aplinkos skaičiuojamas pagal for
-formulę:
+Skatinamojo mokymosi algoritmo veikimui reikalingas atlygis aplinkos apskaičiuojamas pagal formulę:
 \[ Atlygis(n) =
 \begin{cases}
     \text{min(Vėlinimas)} – \text{ Vėlinimas}_n  & \quad \text{Vėlinimas}_n \geq \text{min(Vėlinimas)}\\
     C – \text{ Vėlinimas}_n  & \quad \text{Vėlinimas}_n < \text{min(Vėlinimas)}
 \end{cases}
 \]
-C – konstanta apskaičiuojama per pirmą paleidimą, suapvalinus gautą vėlinimą su pradinę konfigūracija. \newline
+C – konstanta apskaičiuojama per pirmą paleidimą su pradinę konfigūracija, suapvalinus gautą vėlinimą. \newline
 Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 \begin{itemize}
- \item Įeities – atliekamo veiksmo skaičiaus, kuris nurodo aplinkai ką ji turi atlikti.
- \item Išeities – kuri susidaro iš reikšmių kortežo:
+ \item Įeities – atliekamo veiksmo skaičiaus, kuris nurodo aplinkai kokį veiksmą ji turi įvykdyti.
+ \item Išeities – atlikto veiksmo rezultatas, kuris susidaro iš:
  \begin{itemize}
-    \item Stebėjimo būsena – srautinio apdorojimo sistemos dabartinė būsena.
-    \item Atlygio – apskaičiuojamas naudojant metrikas.
-    \item Epizodo baigtumo rodiklio – nurodo ar aplinka baigė epizodą ir turi būti paleista iš naujo.
-    \item Papildoma informacija – naudojama derinimo pagalbai, neprivaloma.
+    \item Būsenos – srautinio apdorojimo sistemos dabartinis komponentų lygiagretumas ir sistemos konfigūracija.
+    \item Atlygio – apskaičiuoto naudojant metrikas gautas iš srautinio apdorojimo sistemos.
+    \item Epizodo baigtumo rodiklio – nurodančio, ar aplinka baigė epizodą ir turi būti paleista iš naujo.
+    \item Papildoma informacijos – naudojamos derinimo pagalbai.
  \end{itemize}
 \end{itemize}
 
