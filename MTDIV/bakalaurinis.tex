@@ -558,70 +558,58 @@ Eksperimentai buvo atliekami su visais algoritmais apmokius juos 50 iteracijų, 
 
 Visuose grafikuose pateikiami vėlinimo pokyčiai per 25 iteracijas, per kurias algoritmas nuo pradinės konfigūracijos atliko pakeitimus. Matomi skirtumai tarp pirmos iteracijos tuo pačių algoritmų, tai yra dėl to, kad sistemos apdoroją duomenis nevienodu greičiu ir tam tikra paklaida visada įmanoma.
 
-GAL VERTA GRAFIKAMS APRIBOTI Y AŠĮ KAD VISI BŪTŲ VIENODI.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_50_2.png}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_100_2.png}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_250_2.png}
+    \end{minipage}
+    \caption{REINFORCE algoritmo veikimas su 50, 100, 250 žingsnių apmokymo}
+\end{figure}
+Su REINFORCE algoritmu matome pakankamai anksti gerą rezultatą, kuris labai greitai konverguoja, kadangi šis algoritmas mokydamasis išnagrinėja visus variantas ir bandymo metu beveik visą laiką kartoja tą patį veiksmą, kuris davė didžiausią atlygį, tačiau laikydamasis tokio net ir po daugiau apmokymo jis išlaiko tokį patį efektyvumą. 
 \begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/reinforce_50.png}
-    \end{minipage}
-    \hspace{100mm}
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/dqn_50.png}
+        \includegraphics[width=\textwidth]{img/dqn_50_2.png}
     \end{minipage}
     \hspace{1mm}
     \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/acer_50.png}
+        \includegraphics[width=\textwidth]{img/dqn_100_2.png}
     \end{minipage}
-    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 50 mokymo iteracijų}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/dqn_250_2.png}
+    \end{minipage}
+    \caption{Deep Q Network algoritmo veikimas su 50, 100, 250 žingsnių apmokymo}
 \end{figure}
-
+Deep Q Network algoritmas veikia labai neefektyviai ir iš esmės atlieka veiksmus, kurie neduoda didelės baudos, su visais apmokymo kiekiais išlaikoma pakankamai vienodas vėlinimas ir tik apmokius su pakankamai daug duomenų matomas kažkoks ryškesnis bandymas mažinti vėlinimą pačioje pradžioje (kas gali būti išmokta) tačiau po to vėl grįžtama į tokį patį vėlinimą kaip ir pradiniame žingsnyje.
 \begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/reinforce_100.png}
-    \end{minipage}
-    \hspace{100mm}
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/dqn_100.png}
+        \includegraphics[width=\textwidth]{img/acer_50_2.png}
     \end{minipage}
     \hspace{1mm}
     \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/acer_100.png}
-    \end{minipage}
-    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 100 mokymo iteracijų}
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/reinforce_250.png}
-    \end{minipage}
-    \hspace{100mm}
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/dqn_250.png}
+        \includegraphics[width=\textwidth]{img/acer_100_2.png}
     \end{minipage}
     \hspace{1mm}
     \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/acer_250.png}
-    \end{minipage}
-    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 250 mokymo iteracijų}
-\end{figure}
-      
-\begin{figure}[H]
-    \centering
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/acer_1000.png}
-    \end{minipage}
-    \hspace{100mm}
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/acer_1000.png}
+        \includegraphics[width=\textwidth]{img/acer_250_2.png}
     \end{minipage}
     \hspace{1mm}
     \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{img/acer_1000.png}
+        \includegraphics[width=\textwidth]{img/acer_1000_2.png}
     \end{minipage}
-    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 1000 mokymo iteracijų}
+    \caption{Actor–Critic with Experience Replay algoritmo veikimas su 50, 100, 250, 1000 žingsnių apmokymo}
 \end{figure}
-
+Actor–Critic with Experience Replay algoritmas su nedideliu kiekiu elgiasi labai chaotiškas, tačiau apmokius su 1000 žingsnių pasiektas geriausias rezultatas iš visų algoritmų ir vėlinimas sumažintas apie 50 procentų. Tačiau apmokius nepakankamai matosi ir labiausias svyruojantys veiksmai, kas gali priversti sistemą veikti nestabiliai. 
 \sectionnonum{Rezultatai ir išvados}
 \subsection*{Rezultatai}
 \begin{enumerate}
@@ -631,10 +619,12 @@ GAL VERTA GRAFIKAMS APRIBOTI Y AŠĮ KAD VISI BŪTŲ VIENODI.
 \end{enumerate}
 
 \subsection*{Išvados}
-Srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi, tačiau tam reikia daug laiko apmokymui.
+Srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi, tačiau tam reikia skirti pakankamai laiko apmokymui ir svarbu pasirinkti tinkamą algoritmą naudojamos sistemos balansavimui.
 
+REINFORCE algoritmas labiau tinka naudoti su nedideliu kiekiu apmokymo ir yra tinkamas kai balansuojama sistema svarbu išlaikyti stabilumą.
 
-Srautinio sistemos balansavimo skatinamuoju mokymu efektyvumą stipriai mažina, tai, kad nėra funkcionalumo pakeisti konfigūraciją neperkraunant esamos srautinio apdorojimo sistemos.
+Actor–Critic with Experience Replay algoritmas tinka kai norima pasiekti gero rezultato ir yra įmanoma sukurt dirbtinę apkrova, kurios metu galima mokyti arba kai naudojamas ne kritinių srautinio apdorojimo sistemų balansavimui.
+
 \printbibliography[heading=bibintoc] 
 
 \end{document}
