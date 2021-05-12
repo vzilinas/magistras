@@ -42,11 +42,11 @@
 \setcounter{page}{2}
 
 \sectionnonumnocontent{Santrauka}
-TODO
+Šį darbą sudaro literatūros analizė ir tyrimas. Literatūros dalyje nagrinėjamas srautinio apdorojimo sistemų veikimas, jų greitaveikos matavimas bei derinimas. Taip pat analizuojami kitų autorių tyrimai nagrinėjantis sistemų derinimą naudojant skatinamąjį mokymąsi. Apžvelgiami kituose tyrimuose naudojami skatinamojo mokymosi algoritmai ir pasirenkami algoritmai, kurie naudojami tyrime. Tiriamojoje dalyje apibrėžiamas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi modelis ir apsirašoma tikslo funkcija. Taip pat apibrėžiamas balansavimo algoritmas, kuris naudojamas atlikti eksperimentus. Atlikus eksperimentą įrodoma, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi.
 \raktiniaizodziai{srautinis apdorojimas, skatinamasis mokymasis, balansavimas, "Heron", REINFORCE, DQN, ACER}   
 
 \sectionnonumnocontent{Summary}
-TODO
+his work consists of literature analysis and research. The literature part examines the workings of stream processing systems, way to measure their speed and the ability to tune the performance. Studies by other authors examining the auto-tuning of stream processing systems using reinforcement learning are also analyzed. The reinforcement learning algorithms used in other studies are reviewed and selected for use in the this works experiments. The research part defines the model of stream processing systems controlled using reinforcement learning and describes the goal function. The balancing algorithm used to perform the experiments is also defined. The experiment demonstrates that stream processing systems can be balanced using reinforcement learning.
 \keywords{stream processing, reinforcement learning, balancing, "Heron", REINFORCE, DQN, ACER}
 
 \tableofcontents
@@ -606,6 +606,21 @@ GAL VERTA GRAFIKAMS APRIBOTI Y AŠĮ KAD VISI BŪTŲ VIENODI.
     \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 250 mokymo iteracijų}
 \end{figure}
       
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/acer_1000.png}
+    \end{minipage}
+    \hspace{100mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/acer_1000.png}
+    \end{minipage}
+    \hspace{1mm}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{img/acer_1000.png}
+    \end{minipage}
+    \caption{Skatinamųjų mokymosi algoritmų atliktas balansavimas po 1000 mokymo iteracijų}
+\end{figure}
 
 \sectionnonum{Rezultatai ir išvados}
 \subsection*{Rezultatai}
