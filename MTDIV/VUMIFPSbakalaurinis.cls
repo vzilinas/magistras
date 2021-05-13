@@ -183,7 +183,7 @@
   \global\let\checkifdefined\relax
   \setcounter{footnote}{0}%
   % Nustatome dokumentui 1,5 eilutės intervalą
-  \spacing{1.55}
+  \spacing{1.57}
 }
 
 % Skyriaus pavadinimas, turinyje neturintis numerio
