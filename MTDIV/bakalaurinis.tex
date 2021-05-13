@@ -570,10 +570,13 @@ Visuose grafikuose pateikiami vėlinimo pokyčiai per 25 iteracijas, per kurias 
     \hspace{1mm}
     \begin{minipage}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/reinforce_250_2.png}
+    \end{minipage}    
+    \begin{minipage}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/reinforce_1000_2.png}
     \end{minipage}
-    \caption{REINFORCE algoritmo veikimas su 50, 100, 250 žingsnių apmokymo}
+    \caption{REINFORCE algoritmo veikimas su 50, 100, 250, 1000 žingsnių apmokymo}
 \end{figure}
-Su REINFORCE algoritmu matome pakankamai anksti gerą rezultatą, kuris labai greitai konverguoja, kadangi šis algoritmas mokydamasis išnagrinėja visus variantas ir bandymo metu beveik visą laiką kartoja tą patį veiksmą, kuris davė didžiausią atlygį, tačiau laikydamasis tokio net ir po daugiau apmokymo jis išlaiko tokį patį efektyvumą. 
+Su REINFORCE algoritmu matome pakankamai anksti gerą rezultatą, kuris labai greitai konverguoja, kadangi šis algoritmas mokydamasis išnagrinėja visus variantas ir bandymo metu beveik visą laiką kartoja tą patį veiksmą, kuris davė didžiausią atlygį, tačiau dėl tokios strategijos net ir po daugiau apmokymo jis išlaiko vienodą efektyvumą. 
 \begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.4\textwidth}
