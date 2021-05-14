@@ -42,11 +42,11 @@
 \setcounter{page}{2}
 
 \sectionnonumnocontent{Santrauka}
-Šį darbą sudaro literatūros analizė ir tyrimas. Literatūros dalyje nagrinėjamas srautinio apdorojimo sistemų veikimas, jų greitaveikos matavimas bei derinimas. Taip pat analizuojami kitų autorių tyrimai nagrinėjantys sistemų derinimą naudojant skatinamąjį mokymąsi. Apžvelgiami kituose tyrimuose naudojami skatinamojo mokymosi algoritmai ir pasirenkami algoritmai naudojami atlikti eksperimentus. Tiriamojoje dalyje apibrėžiamas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi modelis ir apsirašoma balansavimo tikslo funkcija. Taip pat apibrėžiamas balansavimo algoritmas, kuris naudojamas atlikti eksperimentus. Atlikus eksperimentą įrodoma, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi ir, kad geriausią rezultatą pasiekia ACER algoritmas, sumažindamas vėlinimą 50\%.
+Šį darbą sudaro literatūros analizė ir tyrimas. Literatūros dalyje nagrinėjamas srautinio apdorojimo sistemų veikimas, jų greitaveikos matavimas bei derinimas. Taip pat analizuojami kitų autorių tyrimai nagrinėjantys sistemų derinimą naudojant skatinamąjį mokymąsi. Apžvelgiami kituose tyrimuose naudojami skatinamojo mokymosi algoritmai ir pasirenkami algoritmai naudojami atlikti eksperimentus. Tiriamojoje dalyje apibrėžiamas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi modelis ir apsirašoma balansavimo tikslo funkcija. Taip pat apibrėžiamas balansavimo algoritmas, kuris naudojamas atlikti eksperimentus. Atlikus eksperimentą įrodoma, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi ir, kad geriausią rezultatą pasiekia ACER algoritmas, sumažindamas vėlinimą 50 procentų.
 \raktiniaizodziai{srautinis apdorojimas, skatinamasis mokymasis, balansavimas, „Heron“, REINFORCE, DQN, ACER}   
 
 \sectionnonumnocontent{Summary}
-This work consists of literature analysis and research. The literature part examines the workings of stream processing systems, way to measure their speed and the ability to tune the performance. Studies by other authors examining the auto–tuning of stream processing systems using reinforcement learning are also analyzed. The reinforcement learning algorithms used in other studies are reviewed and selected for use in the experimental part of this research. The research part defines the model of stream processing systems controlled using reinforcement learning and describes the goal function. The balancing algorithm used to perform the experiments is also defined. The experiment demonstrates that stream processing systems can be balanced using reinforcement learning and that ACER algorithm reaches the best result, lowering the latency by 50\%.
+This work consists of literature analysis and research. The literature part examines the workings of stream processing systems, way to measure their speed and the ability to tune the performance. Studies by other authors examining the auto–tuning of stream processing systems using reinforcement learning are also analyzed. The reinforcement learning algorithms used in other studies are reviewed and selected for use in the experimental part of this research. The research part defines the model of stream processing systems controlled using reinforcement learning and describes the goal function. The balancing algorithm used to perform the experiments is also defined. The experiment demonstrates that stream processing systems can be balanced using reinforcement learning and that ACER algorithm reaches the best result, lowering the latency by 50 percent.
 \keywords{stream processing, reinforcement learning, balancing, "Heron", REINFORCE, DQN, ACER}
 
 \tableofcontents
@@ -497,19 +497,21 @@ Reklamų analizės sistema rezultatus talpina į tekstinį failą, kur kiekviena
 Eksperimentai atlikti su visais algoritmais apmokius juos 50 iteracijų, 100 iteracijų, 250 iteracijų ir 1000 iteracijų tuo siekiant palyginti rezultatus tarp algoritmų ir mokymosi trukmės. Algoritmo efektyvumui patikrinti apmokytas modelis atlieka konfigūracijos keitimą 25 iteracijas ir matuojamas vėlinamas po kiekvieno pakeitimo praėjus 3 minutėms – laikas, kurio reikia srautinio apdorojimo sistemai pasileisti ir pasiekti stabilią apkrovos stadiją. Kadangi srautinio apdorojimo sistemos nėra pastovios, rezultatų įvertinimui apsibrėžta paklaida – 5 sekundės vėlinimo.
 
 \subsection{Eksperimentai}
-Eksperimentų tikslas – išmatuoti srautinės apdorojimo sistemos Reklamų analizės vėlinimą balansuojant ją naudojant atitinkamą algoritmą, palyginti vėlinimą su skirtingu kiekiu apmokymo žingsnių ir palyginti algoritmų rezultatus.
+Eksperimentų tikslas – išmatuoti Reklamų analizės srautinės apdorojimo sistemos vėlinimą, balansuojant ją su REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay algoritmais ir palyginti pasiektą vėlinimą su skirtingu apmokymo žingsnių kiekiu.
 
-Tinklai yra apmokyti 4 atskirus kartus su 50, 100, 250 ir 1000 žingsnių. Po apmokymo su skirtingu žingsnių kiekiu sistema paleidžiama iš naujo ir įvykdomi papildomi 25 testavimo žingsniai, kurių metu tinklas nėra mokomas, o renkami rezultatai. Surinkti rezultatai, pateikti grafikuose, rodo srautinės apdorojimo sistemos vėlinimą keičiant konfigūraciją naudojant atitinkamą algoritmą.
+Eksperimento metu tinklas yra apmokomas su kiekvienu nagrinėjamu algoritmu 4 atskirus kartus su 50, 100, 250 ir 1000 žingsnių. Po apmokymo su skirtingu žingsnių kiekiu sistema paleidžiama iš naujo ir įvykdomi papildomi 25 testavimo žingsniai, kurių metu tinklas nėra mokomas, o renkami rezultatai. Surinkti rezultatai pateikti grafikuose, kurie rodo srautinės apdorojimo sistemos vėlinimą keičiant konfigūraciją naudojant atitinkamą algoritmą.
 
 \subsubsection{Eksperimentas nr. 1 – balansavimas naudojant REINFORCE tinklą}
-Skirtingo apmokymo kiekio rezultatai:
+Po skirtingo apmokymo žingsnių kiekio pasiekti rezultatai pateikti \ref{reinforce–rez} paveikslėlyje, kurie parodo, kad po:
 \begin{itemize}
     \item 50 žingsnių – testavimo metu vėlinimas sumažėja nuo 158 sekundžių iki 131 sekundžių. 
     \item 100 žingsnių – testavimo metu vėlinimas sumažėja nuo 161 sekundžių iki 116 sekundžių.
     \item 250 žingsnių – testavimo metu vėlinimas sumažėja nuo 148 sekundžių iki 114 sekundžių.
     \item 1000 žingsnių – testavimo metu vėlinimas sumažėja nuo 150 sekundžių iki 128 sekundžių.
 \end{itemize}
-\begin{figure}[H]
+
+REINFORCE algoritmas su visais išbandytais apmokymo kiekiais testavimo metu pasiekia mažesnį vėlinimą. Visų bandymu metu sumažėjimas yra labai panašus – 15–20 procentų. Apmokius algoritmą 50, 100, 250 žingsnių kiekiu testavimo pradžioje vėlinimas svyruoja, 
+\begin{figure}[h!]
     \centering
     \begin{minipage}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/reinforce_50_2.png}
@@ -526,21 +528,22 @@ Skirtingo apmokymo kiekio rezultatai:
     \begin{minipage}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/reinforce_1000_2.png}
     \end{minipage}
-    \caption{Balansavimo su REINFORCE algoritmu rezultatai}
+    \caption{Balansavimo su REINFORCE algoritmu testavimo rezultatai}
     \label{reinforce–rez}
 \end{figure}
-REINFORCE algoritmas su visais išbandytais apmokymo kiekiais testavimo metu pasiekia mažesnį vėlinimą. Visų bandymu metu sumažėjimas yra labai panašus – 15–20\%. Apmokius 50, 100, 250 žingsnių algoritmas pirmais testavimo žingsniais vėlinimas svyruoja, o apmokius 1000 žingsnių svyravimas dingsta. Visais apmokymo kiekiais apmokyto REINFORCE tinklo vėlinimo rezultatai po 5 žingsnių keičiasi nežymiai.
+o apmokius 1000 žingsnių - pradinis svyravimas dingsta. Visų bandymų metu REINFORCE tinklo vėlinimo rezultatai po 5-to testavimo žingsnio keičiasi nežymiai (apsibrėžtos paklaidos ribose).
 
-Kadangi algoritmas su visais apmokymo kiekiais pasiekia labai vienoda sumažinimą, galima teigti, jog REINFORCE tinklas balansuoja srautinio apdorojimo sistemą nedideliais žingsniais ir pasiekia patikimus rezultatus. Tai reiškia, kad tokio tipo algoritmas išlaiko sistemą stabilią ir pasiekia vėlinimo mažinimą. Taip pat, kadangi vėlinimo rezultatai vienodi, galima teigti, jog šis algoritmas reikalauja nedaug apmokymo žingsnių.
+Kadangi algoritmas su visais apmokymo žingsnių kiekiais testavimo pabaigoje pasiekia vienodą vėlinimo rezultatą, galima teigti, kad REINFORCE tinklas balansuoja srautinio apdorojimo sistemą darydamas veiksmus generuojančius panašų atlygį. Tai reiškia, kad tokio tipo algoritmą galima naudoti vėlinimo mažinimui ir stabilios sistemos užtikrinimui. Taip pat, kadangi apmokius tinklą su skirtinais žingsnių kiekiais gaunami panašūs rezultatai, todėl galima teigti, jog šis algoritmas nepasiekia geresnio rezultato su didesniu kiekiu apmokymo žingsnių.
 
 \subsubsection{Eksperimentas nr. 2 – balansavimas naudojant Deep Q Network tinklą}
-Skirtingo apmokymo kiekio rezultatai:
+Pasiekti rezultatai pateikti \ref{dqn–rez} paveikslėlyje po skirtingo apmokymo žingsnių kiekio parodo, kad po:
 \begin{itemize}
     \item 50 žingsnių – testavimo metu vėlinimas sumažėja nuo 118 sekundžių iki 109 sekundžių. 
     \item 100 žingsnių – testavimo metu vėlinimas sumažėja nuo 113 sekundžių iki 95 sekundžių.
     \item 250 žingsnių – testavimo metu vėlinimas sumažėja nuo 126 sekundžių iki 107 sekundžių.
-    \item 1000 žingsnių – testavimo metu vėlinimas išauga nuo 115 sekundžių iki 144 sekundžių.
+    \item 1000 žingsnių – testavimo metu vėlinimas padidėja nuo 115 sekundžių iki 144 sekundžių.
 \end{itemize}
+
 \begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.45\textwidth}
@@ -558,20 +561,25 @@ Skirtingo apmokymo kiekio rezultatai:
     \begin{minipage}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/dqn_1000_2.png}
     \end{minipage}
-    \caption{Balansavimo su Deep Q Network algoritmu rezultatai}
+    \caption{Balansavimo su Deep Q Network algoritmu testavimo rezultatai}
+    \label{dqn–rez}
 \end{figure}
-Deep Q Network algoritmas su 50, 100 ir 250 apmokymo žingsnių vėlinimą sumažina, tačiau nežymiai. 100 ir 250 apmokymo žingsnių tinklas turi daug vėlinimo svyravimų, o 50 ir 1000 neturi svyravimų. 1000 žingsnių apmokytas algoritmas pabaigoje turi staigų augimą, nuo 100 sekundžių iki 140 sekundžių vėlinimo.
 
-Su visais apmokymo žingsnių kiekiais algoritmas pasiekia labai nedidelį pokyti, kas leidžia teigti, jog algoritmui nepakankamai mokymosi žingsnių, kad būtų atliktas išsamus tyrinėjimas ir algoritmas renkasi saugius veiksmus, kad dažniau būtų gaunamas neneigiamas atlygis. 1000 žingsnių apmokytas tinklas pasiekia mažesnį vėlinimą iki 20 žingsnio (nuo 115 iki 92 sekundžių), tačiau po šio žingsnio atliekamas veiksmas pakelia vėlinimą per 40 sekundžių ir todėl stipriai nukenčia bendras DQN algoritmo rezultatas.
+Deep Q Network tinklas po 50, 100 ir 250 apmokymo žingsnių vėlinimą sumažina, tačiau nežymiai – gaunamas vėlinimo skirtumas yra arti apsibrėžtos paklaidos. Tinklas po 100 apmokymo žingsnių atliekant testavimą turi daug vėlinimo svyravimų, o likę bandymai panašių svyravimų neturi. Po 1000 žingsnių apmokytas tinklas pasiekia mažesnį vėlinimą iki 20 žingsnio (nuo 115 iki 92 sekundžių), tačiau po šio žingsnio atliekamas veiksmas, dėl kurio vėlinimas smarkiai padidėja - nuo 100 sekundžių iki 140 sekundžių.
+
+Su visais apmokymo žingsnių kiekiais tinklas testavimo metu atlikdamas balansavimą pasiekia nedidelį vėlinimo pokytį, iš ko galima daryt prielaidą, kad algoritmas mokymosi metu nepakankamai ištyrinėjo veiksmų aibę ir dėl to nepasiekė gerų rezultatų. Net po apmokymo su 1000 žingsnių testavimo pabaigoje tinklas atliko veiksmą, dėl kurio pakyla vėlinimas.
 
 \subsubsection{Eksperimentas nr. 3 – balansavimas naudojant Actor–Critic with Experience Replay tinklą}
-Skirtingo apmokymo kiekio rezultatai:
+Po skirtingo apmokymo žingsnių kiekio pasiekti rezultatai pateikti \ref{acer-rez} paveikslėlyje, kurie parodo, kad po:
 \begin{itemize}
-    \item 50 žingsnių – testavimo metu vėlinimas išauga nuo 151 sekundžių iki 171 sekundžių. 
+    \item 50 žingsnių – testavimo metu vėlinimas padidėja nuo 151 sekundžių iki 171 sekundžių. 
     \item 100 žingsnių – testavimo metu vėlinimas sumažėja nuo 163 sekundžių iki 128 sekundžių.
     \item 250 žingsnių – testavimo metu vėlinimas išauga nuo 169 sekundžių iki 174 sekundžių.
-    \item 1000 žingsnių – testavimo metu vėlinimas sumažėja nuo 140 sekundžių iki 68 sekundžių.
+    \item 1000 žingsnių – testavimo metu vėlinimas padidėja nuo 140 sekundžių iki 68 sekundžių.
 \end{itemize}
+
+Actor–Critic with Experience Replay tinklas apmokytas 50 žingsnių po 5-to žingsnio sumažina vėlinimą nuo 151 iki 85 sekundžių, tačiau po to vėlinimas pradeda kilti ir pasiekia didesnę reikšmę negu pradiniame žingsnyje. Panašų sumažinimą turi ir 250 žingsnių apmokytas tinklas, kuris taip pat testavimą baigia su didesniu vėlinimu negu pradiniame žingsnyje. Po 100 apmokymo žingsnių  tinklas testavimo metu turi vėlinimo mažinimo tendenciją ir pasiekia mažesnį vėlinimą negu pradiniame žingsnyje, tačiau viso testavimo metu vėlinimo reikšmė svyruoja daugiau nei paklaida. Tinklas apmokytas su 1000 žingsnių iki 7-to testavimo žingsnio smarkiai sumažina vėlinimą, o tolimesniuose testavimo žingsniuose išlaiko panašų arba mažesnį vėlinimą ir kelių paskutinių žingsnių metu dar labiau sumažina vėlinimą. Ir taip sumažina vėlinimą 50 procentų po viso testavimo.
+
 \begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.45\textwidth}
@@ -589,12 +597,14 @@ Skirtingo apmokymo kiekio rezultatai:
     \begin{minipage}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/acer_1000_2.png}
     \end{minipage}
-    \caption{Balansavimo su Actor–Critic with Experience Replay algoritmu rezultatai}
+    \caption{Balansavimo su Actor–Critic with Experience Replay algoritmu testavimo rezultatai}
+    \label{acer-rez}
 \end{figure}
-Actor–Critic with Experience Replay apmokytas 1000 žingsnių sumažina vėlinimą 50 procentų ir neturi žymių svyravimų. Apmokytas 50 žingsnių algoritmas po 5 žingsnių sumažina vėlinimą nuo 151 iki 85 sekundžių, tačiau po to vėlinimas kyla ir pasiekia didesnį negu buvo pradiniame žingsnyje. Panašu sumažinimą kaip 50 žingsnių apmokymą turi ir 250 žingsnių apmokytas tinklas, kuris taip pat testavimą baigia su didesniu vėlinimu negu pradiniame žingsnyje. 100 žingsnių apmokytas tinklas pasiekia sumažinta vėlinimą, tačiau viso testavimo metu vėlinimas svyruoja daugiau nei paklaida.
 
-Actor–Critic with Experience Replay pasirodo labai gerai, kai yra apmokytas 1000 žingsnių ir pagal gautus rezultatus, galima tikėtis, jog su didesniu kiekiu apmokymo, turėtų galėti pasiekti dar geresnius rezultatus. Tačiau su mažiau nei 1000 žingsnių rezultatai yra labai stipriai svyruojantys – 50 ir 250 rezultatai rodo didelius sumažėjimu ir taip pat vėlinimo didėjimus. Galima teigti, jog 50 ir 100 apmokytas tinklas daro labiau spėjimus negu sprendimus. O 250 žingsnių apmokytas tinklas yra išmokęs gerus sprendimus iki 10 žingsnio, bet nėra pakankamai apmokytas mažinti vėlinimą viso testavimo metu.
+Actor–Critic with Experience Replay algoritmas po apmokymo su 1000 žingsnių pasirodo žymiai geriau negu po apmokymo su 250 žingsnių, kas parodo, jog optimalus apmokymo žingsnių kiekis yra didesni negu 250 žingsnių, tačiau tikslus apmokymo žingsnių kiekis, kai tinklo balansavimo rezultatai konverguoja, nebuvo nustatytas bandymų metu. Tačiau su mažiau nei 1000 apmokymo žingsnių rezultatai yra labai stipriai svyruojantys – po 50 ir 250 apmokymo žingsnių testavimo rezultatai turi staigų sumažėjimą po kurio seka smarkus kylimas ir nusistovėjimas, o po 100 apmokymo žingsnių testavimo rezultatai neturi staigaus mažėjimo, tačiau viso testavimo metu turi mažesnius svyravimus. Todėl galima teigti, jog šis algoritmas su neoptimaliu kiekiu apmokymo žingsnių yra jautrus stebėjimo aibės pokyčiams ir gali pasirinkti netinkamus veiksmus, nes nėra pakankamai ištyrinėjęs veiksmų aibės.
 
+\subsubsection{Eksperimentų apibendrinimas}
+TODO
 \sectionnonum{Rezultatai ir išvados}
 \subsection*{Rezultatai}
 \begin{enumerate}
