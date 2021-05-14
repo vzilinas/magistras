@@ -42,11 +42,11 @@
 \setcounter{page}{2}
 
 \sectionnonumnocontent{Santrauka}
-Šį darbą sudaro literatūros analizė ir tyrimas. Literatūros dalyje nagrinėjamas srautinio apdorojimo sistemų veikimas, jų greitaveikos matavimas bei derinimas. Taip pat analizuojami kitų autorių tyrimai nagrinėjantys sistemų derinimą naudojant skatinamąjį mokymąsi. Apžvelgiami kituose tyrimuose naudojami skatinamojo mokymosi algoritmai ir pasirenkami algoritmai naudojami atlikti eksperimentus. Tiriamojoje dalyje apibrėžiamas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi modelis ir apsirašoma balansavimo tikslo funkcija. Taip pat apibrėžiamas balansavimo algoritmas, kuris naudojamas atlikti eksperimentus. Atlikus eksperimentą įrodoma, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi ir, kad geriausią rezultatą pasiekia ACER algoritmas, sumažindamas vėlinimą 50 procentų.
+Šį darbą sudaro literatūros analizė ir tyrimas. Literatūros dalyje nagrinėjamas srautinio apdorojimo sistemų veikimas, jų greitaveikos matavimas bei derinimas. Taip pat analizuojami kitų autorių tyrimai nagrinėjantys sistemų derinimą naudojant skatinamąjį mokymąsi. Apžvelgiami kituose tyrimuose naudojami skatinamojo mokymosi algoritmai ir pasirenkami algoritmai naudojami atlikti eksperimentus. Tiriamojoje dalyje apibrėžiamas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi, modelis ir apsirašoma balansavimo tikslo funkcija. Taip pat apibrėžiamas balansavimo algoritmas, kuris naudojamas atlikti eksperimentus. Atlikus eksperimentus su REINFORCE, DQN ir ACER algoritmais buvo įrodyta, jog "Heron" srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi ir, kad geriausią rezultatą iš visų tirtų algoritmų pasiekia ACER - sumažindamas vėlinimą 50 procentų.
 \raktiniaizodziai{srautinis apdorojimas, skatinamasis mokymasis, balansavimas, „Heron“, REINFORCE, DQN, ACER}   
 
 \sectionnonumnocontent{Summary}
-This work consists of literature analysis and research. The literature part examines the workings of stream processing systems, way to measure their speed and the ability to tune the performance. Studies by other authors examining the auto–tuning of stream processing systems using reinforcement learning are also analyzed. The reinforcement learning algorithms used in other studies are reviewed and selected for use in the experimental part of this research. The research part defines the model of stream processing systems controlled using reinforcement learning and describes the goal function. The balancing algorithm used to perform the experiments is also defined. The experiment demonstrates that stream processing systems can be balanced using reinforcement learning and that ACER algorithm reaches the best result, lowering the latency by 50 percent.
+This work consists of literature analysis and research. The literature part examines the workings of stream processing systems, way to measure their speed and the ability to tune the performance. Studies by other authors examining the auto–tuning of stream processing systems using reinforcement learning are also analyzed. The reinforcement learning algorithms used in other studies are reviewed and selected for use in the experimental part of this research. The research part defines the model of stream processing systems controlled using reinforcement learning and describes the goal function. The balancing algorithm used to perform the experiments is also defined. Experiments with REINFORCE, DQN and ACER algorithms prove that "Heron" stream processing systems can be balanced using reinforcement learning and that ACER achieves the best result of all analyzed algorithms, lowering the latency by 50 percent.
 \keywords{stream processing, reinforcement learning, balancing, "Heron", REINFORCE, DQN, ACER}
 
 \tableofcontents
@@ -604,7 +604,11 @@ Actor–Critic with Experience Replay tinklas apmokytas 50 žingsnių po 5-to ž
 Actor–Critic with Experience Replay algoritmas po apmokymo su 1000 žingsnių pasirodo žymiai geriau negu po apmokymo su 250 žingsnių, kas parodo, jog optimalus apmokymo žingsnių kiekis yra didesni negu 250 žingsnių, tačiau tikslus apmokymo žingsnių kiekis, kai tinklo balansavimo rezultatai konverguoja, nebuvo nustatytas bandymų metu. Tačiau su mažiau nei 1000 apmokymo žingsnių rezultatai yra labai stipriai svyruojantys – po 50 ir 250 apmokymo žingsnių testavimo rezultatai turi staigų sumažėjimą po kurio seka smarkus kylimas ir nusistovėjimas, o po 100 apmokymo žingsnių testavimo rezultatai neturi staigaus mažėjimo, tačiau viso testavimo metu turi mažesnius svyravimus. Todėl galima teigti, jog šis algoritmas su neoptimaliu kiekiu apmokymo žingsnių yra jautrus stebėjimo aibės pokyčiams ir gali pasirinkti netinkamus veiksmus, nes nėra pakankamai ištyrinėjęs veiksmų aibės.
 
 \subsubsection{Eksperimentų apibendrinimas}
-TODO
+Pagal eksperimentų rezultatus pateiktus šiame skyriuje galima matyti, kad:
+\begin{itemize}
+    \item Tinklas naudojantis Actor–Critic with Experience Replay algoritmą ir apmokytas 1000 žingsnių testavimo metu pasiekia didžiausią vėlinimo pokyti palyginus su pradiniu žingsniu - 50 procentų sumažinimą. Tuo tarpu REINFORCE pasiektas didžiausias pokytis yra 20 procentų sumažinimas, o Deep Q Network pokyčio dydis yra arti apsibrėžtos paklaidos.
+    \item Tinklas naudojantis REINFORCE algoritmą apmokytas su išbandytais žingsnių kiekiais visada sumažina vėlinimą (15-20 procentų) ir išlaiko sistemą stabiliausią palyginus su kitais algoritmais. Tuo tarpu nors ir Deep Q Network neturi didelių vėlinimo svyravimų, tačiau nepasiekia tokio mažo pokyčio.
+\end{itemize}
 \sectionnonum{Rezultatai ir išvados}
 \subsection*{Rezultatai}
 \begin{enumerate}
@@ -614,13 +618,15 @@ TODO
 \end{enumerate}
 
 \subsection*{Išvados}
-Kadangi REINFORCE algoritmo balansuojamų srautinių sistemų vėlinimas yra sumažinamas 15-20\% ir apmokius skirtingais kiekiais žingsnių balansavimas nesukuria vėlinimo svyravimų didesnių nei 5 sekundės, šis algoritmas yra tinkamas balansuoti srautines apdorojimo sistemas, kurios turi išlikti stabilios veikimo metu.
 
-Kadangi Deep Q Network pasiekia stipriai svyruojančius rezultatus, nuo 20 sekundžių sumažinto vėlinimo iki beveik 30 sekundžių padidinto vėlinimo galima teigti, jog šio algoritmo tinkamumas balansuoti srautinio apdorojimo sistemas nėra įrodytas šiame darbe ir, kad būtų tinkamas gali reikalauti daugiau apmokymo žingsnių.
+REINFORCE algoritmas yra tinkamas balansuoti srautines apdorojimo sistemas, kurios turi išlikti stabilios veikimo metu. Kadangi šio algoritmo apmokytas tinklas balansuodamas srautinę sistemą vėlinimą sumažina 15-20 procentų ir tinklą apmokius su skirtingais žingsnių kiekiais balansavimas nepasiekia vėlinimo svyravimų didesnių nei 5 sekundės. 
 
-Kadangi Actor–Critic with Experience Replay algoritmo balansuojamų srautinio apdorojimo sistemų vėlinimas yra sumažinamas iki 50\%, šis algoritmas yra tinkamas balansuoti srautinio apdorojimo sistemos, kurios reikalauja žemo vėlinimo. Tačiau šio algoritmo balansavimo rezultatai priklauso nuo mokymo žingsnių ir algoritmas pasiekia mažesnį vėlinimą nei pradiniame žingsnyje tik po 1000 žingsnių apmokymo.  
+Atlikus bandymus su Deep Q Network algoritmu ir keičiant apmokymo žingsnių kiekius buvo nustatyta, kad balansuojamos sistemos gautas vėlinimo pokytis buvo panašus į darbo tyrimo dalyje apsibrėžtą paklaidą (5 sekundės) net kai apmokymas buvo daromas su 1000 žingsnių. Tad su darbe apibrėžtu didžiausiu mokymo žingsnių kiekiu tinklui su Deep Q Network algoritmu nepavyko pasiekti reikšmingo vėlinimo pokyčio sumažinimo - didesnio nei apibrėžta paklaida. 
 
-Remiantis šiomis išvadomis galima teigti, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi, tačiau skatinamojo mokymosi algoritmas ir apmokymo kiekis turi būti pasirinktas ir pritaikytas srautinio apdorojimo sistemai.
+Tyrimo metu buvo nustatyta, kad tinklas su Actor–Critic with Experience Replay algoritmu yra tinkamas balansuoti  srautinio apdorojimo sistemas, kurios reikalauja žemo vėlinimo. Kadangi apmokius tinklą naudojantį šį algoritmą su 1000 žingsniu buvo pasiektas 50 procentų vėlinimo sumažinimas. Iš visų atliktų bandymų Actor–Critic with Experience Replay algoritmo pasiektas rezultatas yra didžiausias vėlinimo sumažinimas iš visų analizuotų algoritmų.
+
+Remiantis šiomis išvadomis galima teigti, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi. Tačiau skatinamojo mokymosi algoritmas ir jo apmokymo žingsnių kiekis turi būti pasirinktas ir pritaikytas  balansuojamai srautinio apdorojimo sistemai siekiant sumažinti vėlinimą.
+
 \printbibliography[heading=bibintoc] 
 
 \appendix
