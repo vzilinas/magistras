@@ -25,7 +25,7 @@
 \department{Programų sistemų studijų programa}
 \papertype{Magistro baigiamasis darbas}
 \title{Srautinio apdorojimo sistemų balansavimas taikant skatinamąjį mokymąsi}
-\titleineng{Balancing stream processing systems using reinforcement learning}
+\titleineng{Balancing Stream Processing Systems Using Reinforcement Learning}
 \author{Vytautas Žilinas}
 \supervisor{Andrius Adamonis}
 \reviewer{Prof. dr. Aistis Raudys}
@@ -419,7 +419,7 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
 
 \subsection{Balansavimo algoritmo apmokymas}
 
-Balansavimo algoritmo apmokymas yra atliekamas epizodais, kur vienas epizodas susidaro iš 25 žingsnių. Kiekvieno epizodo pradžioje srautinio apdorojimo sistemą perkraunama ir nustatoma į pradinę būseną. Visų algoritmų nagrinėjimui sistema buvo apmokoma nustatyta kiekį kartų ir po to naudojant apmokytą tinklą atliekami veiksmai ant srautinio apdorojimo sistemos su pradinę konfigūracija. Pagrindinis srautinio apdorojimo sistemos balansavimo iššūkis – ilgas laiko tarpas tarp balansavimo žingsnių, nes srautinio apdorojimo sistema turi būti perkraunama pakeitus konfigūraciją, kad pokyčiai įsigaliotų. Eksperimentui atlikti sukurta skatinamojo mokymosi aplinka atlikusi pakeitimą laukia 3 minutes, kas, kaip buvo eksperimentiškai nustatyta, pakankamas laikas sistemai pasileisti ir pasiekti stabilią būseną – surenkamų metrikų nekeičiant konfigūracijos paklaida nėra didesnė nei pačios metrikos. Dėl šios trukmės vienas skatinamojo mokymosi epizodas trunka apie 1,5 valandos (epizodo trukmės paklaida susidaro, dėl skirtingos trukmės atnaujinimo veiksmo). 
+Balansavimo algoritmo apmokymas yra atliekamas epizodais, kur vienas epizodas susidaro iš 25 žingsnių. Kiekvieno epizodo pradžioje srautinio apdorojimo sistemą perkraunama ir nustatoma į pradinę būseną. Tinklas su pasirinktų algoritmų yra apmokoma nustatyta kiekį kartų ir po to naudojant apmokytą tinklą atliekami veiksmai ant srautinio apdorojimo sistemos su pradinę konfigūracija. Pagrindinis srautinio apdorojimo sistemos balansavimo iššūkis – ilgas laiko tarpas tarp balansavimo žingsnių, nes srautinio apdorojimo sistema turi būti perkraunama pakeitus konfigūraciją, kad pokyčiai įsigaliotų. Eksperimentui atlikti sukurta skatinamojo mokymosi aplinka atlikusi pakeitimą laukia 3 minutes, kas, kaip buvo eksperimentiškai nustatyta, pakankamas laikas sistemai pasileisti ir pasiekti stabilią būseną – surenkamų metrikų nekeičiant konfigūracijos paklaida nėra didesnė nei pačios metrikos. Dėl šios trukmės vienas skatinamojo mokymosi epizodas trunka apie 1,5 valandos (epizodo trukmės paklaida susidaro, dėl skirtingos trukmės atnaujinimo veiksmo). 
 
 Šiame darbe pasirinkti nagrinėti kelis apmokymo trukmės variantus su skirtingais algoritmais siekiant palyginti mokymosi efektyvumą balansavimo problemai spręsti. Apmokymas vykdomas sistemos veikimo metu ir kiekvienas tyrime atliktas apmokymas atliekamas iš naujo siekiant, kad rezultatai nepriklausytų vienas nuo kito.
 
@@ -481,25 +481,25 @@ Pagrindinės tyrime naudojamos programinės įrangos versijos:
         \item Tensorflow 2.4 ir tf–agents 0.7.1 – REINFORCE algoritmui
     \end{itemize}
 \end{itemize}
-\subsection{Eksperimentų apimtis}
+\subsection{Eksperimentų apimtis ir naudojama duomenų imtis}
 
-Tyrimas atliktas balansuojant srautinio apdorojimo sistemą naudojant sukurtą eksperimentinį sprendimą pagal apibrėžtą balansavimo algoritmą naudojant:
+Tyrimas atliktas balansuojant srautinio apdorojimo sistemą naudojant tinklą apmokytą pasirinktais algoritmais:
 \begin{itemize}
         \item REINFORCE algoritmą skatinamojo mokymosi posistemėje.
         \item Deep Q Network algoritmą skatinamojo mokymosi posistemėje.
         \item Actor–Critic with Experience Replay algoritmą skatinamojo mokymosi posistemėje.
 \end{itemize}
 
-Kiekvienas skatinamojo mokymosi sprendimas yra testuojamas su Reklamų analizės srautinio apdorojimo sistema.
+Kiekvienas skatinamojo mokymosi sprendimas yra testuojamas su Reklamų analizės srautinio apdorojimo sistema aprašyta "Srautinio apdorojimo sistemų matavimas ir derinimas" skyriuje.
 
 Reklamų analizės sistema rezultatus talpina į tekstinį failą, kur kiekvienas įrašas yra vėlinimas milisekundžių tikslumu nuo paskutinio išsiųsto įrašo į žinučių eilę tam tikram kampanijos langui iki kol jis yra įrašomas į Redis duomenų bazę. Pasinaudojant šiais duomenimis, po kiekvienos žingsnio apskaičiuojamas paskutinių 30 sekundžių vėlinimo vidurkis. 
 
 Eksperimentai atlikti su visais algoritmais apmokius juos 50 žingsnių, 100 žingsnių, 250 žingsnių ir 1000 žingsnių tuo siekiant palyginti rezultatus tarp algoritmų ir mokymosi trukmės. Algoritmo efektyvumui patikrinti apmokytas modelis atlieka konfigūracijos keitimą 25 žingsnius ir matuojamas vėlinamas po kiekvieno pakeitimo praėjus 3 minutėms – laikas, kurio reikia srautinio apdorojimo sistemai pasileisti ir pasiekti stabilią apkrovos stadiją. Kadangi srautinio apdorojimo sistemos nėra pastovios, rezultatų įvertinimui apsibrėžta paklaida – 5 sekundės vėlinimo.
 
 \subsection{Eksperimentai}
-Eksperimentų tikslas – išmatuoti Reklamų analizės srautinės apdorojimo sistemos vėlinimą, balansuojant ją su REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay algoritmais ir palyginti pasiektą vėlinimą su skirtingu apmokymo žingsnių kiekiu.
+Eksperimentų tikslas – išmatuoti srautinės apdorojimo sistemos vėlinimą, balansuojant ją su REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay algoritmais ir palyginti pasiektą vėlinimą su skirtingu apmokymo žingsnių kiekiu.
 
-Eksperimento metu tinklas yra apmokomas su kiekvienu nagrinėjamu algoritmu 4 atskirus kartus su 50, 100, 250 ir 1000 žingsnių. Po apmokymo su skirtingu žingsnių kiekiu sistema paleidžiama iš naujo ir įvykdomi papildomi 25 testavimo žingsniai, kurių metu tinklas nėra mokomas, o renkami rezultatai. Surinkti rezultatai pateikti grafikuose, kurie rodo srautinės apdorojimo sistemos vėlinimą keičiant konfigūraciją naudojant atitinkamą algoritmą.
+Eksperimento metu tinklas yra apmokomas su kiekvienu nagrinėjamu algoritmu 4 atskirus kartus su 50, 100, 250 ir 1000 žingsnių. Po apmokymo su skirtingu žingsnių kiekiu sistema paleidžiama iš naujo ir įvykdomi papildomi 25 testavimo žingsniai, kurių metu tinklas nėra mokomas, o renkami rezultatai. Surinkti rezultatai pateikti grafikuose, kurie rodo srautinės apdorojimo sistemos vėlinimą, po kiekvieno žingsnio keičiant konfigūraciją naudojant atitinkamą algoritmą.
 
 \subsubsection{Eksperimentas nr. 1 – balansavimas naudojant REINFORCE tinklą}
 Po skirtingo apmokymo žingsnių kiekio pasiekti rezultatai pateikti \ref{reinforce–rez} paveikslėlyje, kurie parodo, kad po:
@@ -606,7 +606,7 @@ Actor–Critic with Experience Replay algoritmas po apmokymo su 1000 žingsnių 
 \subsubsection{Eksperimentų apibendrinimas}
 Pagal eksperimentų rezultatus pateiktus šiame skyriuje galima matyti, kad:
 \begin{itemize}
-    \item Tinklas naudojantis Actor–Critic with Experience Replay algoritmą ir apmokytas 1000 žingsnių testavimo metu pasiekia didžiausią vėlinimo pokyti palyginus su pradiniu žingsniu – 50 procentų sumažinimą. Tuo tarpu REINFORCE pasiektas didžiausias pokytis yra 20 procentų sumažinimas, o Deep Q Network pokyčio dydis yra arti apsibrėžtos paklaidos.
+    \item Tinklas naudojantis Actor–Critic with Experience Replay algoritmą ir apmokytas 1000 žingsnių testavimo metu pasiekia didžiausią vėlinimo pokytį palyginus su pradiniu žingsniu – 50 procentų sumažinimą. Tuo tarpu REINFORCE pasiektas didžiausias pokytis yra 20 procentų sumažinimas, o Deep Q Network pokyčio dydis yra arti apsibrėžtos paklaidos.
     \item Tinklas naudojantis REINFORCE algoritmą apmokytas su išbandytais žingsnių kiekiais visada sumažina vėlinimą (15–20 procentų) ir išlaiko sistemą stabiliausią palyginus su kitais algoritmais. Tuo tarpu nors ir Deep Q Network neturi didelių vėlinimo svyravimų, tačiau nepasiekia tokio mažo pokyčio.
 \end{itemize}
 \sectionnonum{Rezultatai ir išvados}
@@ -619,13 +619,12 @@ Pagal eksperimentų rezultatus pateiktus šiame skyriuje galima matyti, kad:
 
 \subsection*{Išvados}
 
-REINFORCE algoritmas yra tinkamas balansuoti srautines apdorojimo sistemas, kurios turi išlikti stabilios veikimo metu. Kadangi šio algoritmo apmokytas tinklas balansuodamas srautinę sistemą vėlinimą sumažina 15–20 procentų ir tinklą apmokius su skirtingais žingsnių kiekiais balansavimas nepasiekia vėlinimo svyravimų didesnių nei 5 sekundės. 
-
-Atlikus bandymus su Deep Q Network algoritmu ir keičiant apmokymo žingsnių kiekius buvo nustatyta, kad balansuojamos sistemos gautas vėlinimo pokytis buvo panašus į darbo tyrimo dalyje apsibrėžtą paklaidą (5 sekundės) net kai apmokymas buvo daromas su 1000 žingsnių. Tad su darbe apibrėžtu didžiausiu mokymo žingsnių kiekiu tinklui su Deep Q Network algoritmu nepavyko pasiekti reikšmingo vėlinimo pokyčio sumažinimo – didesnio nei apibrėžta paklaida. 
-
-Tyrimo metu buvo nustatyta, kad tinklas su Actor–Critic with Experience Replay algoritmu yra tinkamas balansuoti  srautinio apdorojimo sistemas, kurios reikalauja žemo vėlinimo. Kadangi apmokius tinklą naudojantį šį algoritmą su 1000 žingsniu buvo pasiektas 50 procentų vėlinimo sumažinimas. Iš visų atliktų bandymų Actor–Critic with Experience Replay algoritmo pasiektas rezultatas yra didžiausias vėlinimo sumažinimas iš visų analizuotų algoritmų.
-
-Remiantis šiomis išvadomis galima teigti, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi. Tačiau skatinamojo mokymosi algoritmas ir jo apmokymo žingsnių kiekis turi būti pasirinktas ir pritaikytas  balansuojamai srautinio apdorojimo sistemai siekiant sumažinti vėlinimą.
+\begin{enumerate}
+    \item REINFORCE algoritmas yra tinkamas balansuoti srautines apdorojimo sistemas, kurios turi išlikti stabilios veikimo metu. Kadangi šio algoritmo apmokytas tinklas balansuodamas srautinę sistemą vėlinimą sumažina 15–20 procentų ir tinklą apmokius su skirtingais žingsnių kiekiais balansavimas nepasiekia vėlinimo svyravimų didesnių nei 5 sekundės. 
+    \item Atlikus bandymus su Deep Q Network algoritmu ir keičiant apmokymo žingsnių kiekius buvo nustatyta, kad balansuojamos sistemos gautas vėlinimo pokytis buvo panašus į darbo tyrimo dalyje apsibrėžtą paklaidą (5 sekundės) net kai apmokymas buvo daromas su 1000 žingsnių. Tad su darbe apibrėžtu didžiausiu mokymo žingsnių kiekiu tinklui su Deep Q Network algoritmu nepavyko pasiekti reikšmingo vėlinimo pokyčio sumažinimo – didesnio nei apibrėžta paklaida. 
+    \item Tyrimo metu buvo nustatyta, kad tinklas su Actor–Critic with Experience Replay algoritmu yra tinkamas balansuoti  srautinio apdorojimo sistemas, kurios reikalauja žemo vėlinimo. Kadangi apmokius tinklą naudojantį šį algoritmą su 1000 žingsniu buvo pasiektas 50 procentų vėlinimo sumažinimas. Iš visų atliktų bandymų Actor–Critic with Experience Replay algoritmo pasiektas rezultatas yra didžiausias vėlinimo sumažinimas iš visų analizuotų algoritmų.
+    \item Remiantis šiomis išvadomis galima teigti, jog srautinio apdorojimo sistemas galima balansuoti naudojant skatinamąjį mokymąsi.
+\end{enumerate}
 
 \printbibliography[heading=bibintoc] 
 
