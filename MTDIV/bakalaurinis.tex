@@ -69,13 +69,13 @@ Skatinamasis mokymasis yra vienas iš mašininio mokymosi tipų. Šis mokymasis 
 Yra sukurta daug skatinamojo mokymosi algoritmų (Monte Carlo, Q–learning, Deep Q Network ir kiti), šiame darbe yra apžvelgti algoritmai, kuriuos naudojo kiti autoriai savo tyrimuose susijusiuose su srautinio apdorojimo sistemų veikimo gerinimu ir pasirinkti keli iš jų siekiant patikrinti ar skatinamasis mokymasis yra tinkamas srautinių sistemų balansavimui ir kuris skatinamojo mokymosi algoritmas pasiekia geriausius rezultatus su tam tikru kiekiu apmokymo žingsnių. Magistro darbo tyrimui naudojami REINFORCE, Deep Q network bei Actor–Critic with Experience Replay skatinamojo mokymosi algoritmai ir tiriama, kaip kiekvienas iš jų pasirodo su vienodu kiekiu apmokymo žingsnių ir tokia pačia srautinio apdorojimo sistema siekiant nustatyti kiekvieno iš šių algoritmų gebėjimą balansuoti srautinio apdorojimo sistemas mažinant vėlinimą.
 
 Darbo tikslas – Ištirti skatinamojo mokymosi tinkamumą srautinio apdorojimo sistemų \mbox{balansavimui.}
-
-Tikslui pasiekti įgyvendinti šie uždaviniai:
+\newpage
+Tikslui pasiekti išsikelti šie uždaviniai:
 
 \begin{enumerate}
-    \item Sudarytas srautinio apdorojimo sistemų balansavimo modelis ir nustatytos valdymo metrikos bei apibrėžtos siekiamos metrikų reikšmės, kurios naudojamos eksperimentinėje sistemoje. Siekiant apibrėžti balansavimo uždavinį sprendžiamą tiriamojoje dalyje.
-    \item Parinkta srautinė apdorojimo sistema ir skatinamojo mokymosi algoritmai eksperimentui, atsirenkant iš algoritmų ir sistemų aprašomų literatūroje, norint ištirti skatinamojo mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui.
-    \item Sukurtas eksperimentinis sprendimas su pasirinkta srautinio apdorojimo sistema ir atlikti eksperimentai su skirtingais skatinamojo mokymosi algoritmais, siekiant įvertinti siūlomo balansavimo modelio ir pasirinktų algoritmų validumą.
+    \item Sudaryti srautinio apdorojimo sistemų balansavimo modelį ir nustatyti valdymo metrikas bei apibrėžti eksperimento siekiamas metrikų reikšmes, siekiant apibrėžti balansavimo uždavinį sprendžiamą tiriamojoje dalyje.
+    \item Parinkti srautinė apdorojimo sistemą ir skatinamojo mokymosi algoritmus eksperimentui, atsirenkant iš algoritmų ir sistemų aprašomų literatūroje, norint ištirti skatinamojo mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui.
+    \item Sukurti eksperimentinį sprendimą su pasirinkta srautinio apdorojimo sistema ir atlikti eksperimentus su skirtingais skatinamojo mokymosi algoritmais, siekiant įvertinti siūlomo balansavimo modelio ir pasirinktų algoritmų validumą.
 \end{enumerate}
 
 \section{Srautinio apdorojimo sistemų matavimas ir derinimas}
@@ -435,11 +435,11 @@ Algoritmo apmokymo testavimui, pasirinkta atlikti 25 žingsnius balansavimo, kur
 Eksperimentui atlikti naudojama lokali Heron aplinka ir papildomos posistemės skirtos duomenų generavimui, rezultatų rinkimui ir t.t. Visa eksperimento sistemos architektūros diagrama pateikta \ref{experiment} paveikslėlyje.
 
 \begin{figure}[H]
-    \includegraphics[width=14cm]{img/Experiment.pdf}
+    \includegraphics[width=16cm]{img/Experiment.pdf}
     \caption{Eksperimento sistemos architektūra}
     \label{experiment}
 \end{figure} 
-
+\pagebreak
 Sistemos, kurios naudojamos tyrime:
 \begin{enumerate}
     \item Skatinamojo mašininio mokymosi sistema. Kadangi atliekami bandymai su skirtingais skatinamojo mokymosi algoritmais, kiekvienam jų sukurta atskira sistema: 
@@ -469,7 +469,6 @@ Kompiuterinė įranga, kuria atliekamas eksperimentas parametrai:
 \end{itemize}
 
 Kadangi Heron nepritaikyta Windows operacinei sistemai, visi tyrimai ir visos reikiamos posistemės leidžiamos naudojant Windows Subsystem Linux (toliau WSL) su Ubuntu 18.04.
-\newpage
 Pagrindinės tyrime naudojamos programinės įrangos versijos:
 \begin{itemize}
     \item Apache Heron: 0.20.3
@@ -510,9 +509,12 @@ Po skirtingo apmokymo žingsnių kiekio pasiekti rezultatai pateikti \ref{reinfo
     \item 250 žingsnių – testavimo metu vėlinimas sumažėja nuo 148 sekundžių iki 114 sekundžių.
     \item 1000 žingsnių – testavimo metu vėlinimas sumažėja nuo 150 sekundžių iki 128 sekundžių.
 \end{itemize}
-
 REINFORCE algoritmas su visais išbandytais apmokymo kiekiais testavimo metu pasiekia mažesnį vėlinimą. Visų bandymu metu sumažėjimas yra labai panašus – 15–20 procentų.
-\begin{figure}[h!]
+Apmokius algoritmą 50, 100, 250 žingsnių kiekiu testavimo pradžioje vėlinimas svyruoja, o apmokius 1000 žingsnių – pradinis svyravimas dingsta. Visų bandymų metu REINFORCE tinklo vėlinimo rezultatai po 5–to testavimo žingsnio keičiasi nežymiai (apsibrėžtos paklaidos ribose).
+
+Kadangi algoritmas su visais apmokymo žingsnių kiekiais testavimo pabaigoje pasiekia vienodą vėlinimo rezultatą, galima teigti, kad REINFORCE tinklas balansuoja srautinio apdorojimo sistemą darydamas veiksmus generuojančius panašų atlygį.Tai reiškia, kad tokio tipo algoritmą galima naudoti vėlinimo mažinimui ir stabilios sistemos užtikrinimui. Taip pat, kadangi apmokius tinklą su skirtinais žingsnių kiekiais gaunami panašūs rezultatai, todėl galima teigti, jog šis algoritmas nepasiekia geresnio rezultato su didesniu kiekiu apmokymo žingsnių.
+
+\begin{figure}[H]
     \centering
     \begin{minipage}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{img/reinforce_50_2.png}
@@ -532,9 +534,6 @@ REINFORCE algoritmas su visais išbandytais apmokymo kiekiais testavimo metu pas
     \caption{Balansavimo su REINFORCE algoritmu testavimo rezultatai}
     \label{reinforce–rez}
 \end{figure}
-Apmokius algoritmą 50, 100, 250 žingsnių kiekiu testavimo pradžioje vėlinimas svyruoja, o apmokius 1000 žingsnių – pradinis svyravimas dingsta. Visų bandymų metu REINFORCE tinklo vėlinimo rezultatai po 5–to testavimo žingsnio keičiasi nežymiai (apsibrėžtos paklaidos ribose).
-
-Kadangi algoritmas su visais apmokymo žingsnių kiekiais testavimo pabaigoje pasiekia vienodą vėlinimo rezultatą, galima teigti, kad REINFORCE tinklas balansuoja srautinio apdorojimo sistemą darydamas veiksmus generuojančius panašų atlygį. Tai reiškia, kad tokio tipo algoritmą galima naudoti vėlinimo mažinimui ir stabilios sistemos užtikrinimui. Taip pat, kadangi apmokius tinklą su skirtinais žingsnių kiekiais gaunami panašūs rezultatai, todėl galima teigti, jog šis algoritmas nepasiekia geresnio rezultato su didesniu kiekiu apmokymo žingsnių.
 
 \subsubsection{Eksperimentas nr. 2 – balansavimas naudojant Deep Q Network tinklą}
 Pasiekti rezultatai pateikti \ref{dqn–rez} paveikslėlyje po skirtingo apmokymo žingsnių kiekio parodo, kad po:
