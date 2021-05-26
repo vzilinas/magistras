@@ -73,9 +73,9 @@ Darbo tikslas – Ištirti skatinamojo mokymosi tinkamumą srautinio apdorojimo 
 Tikslui pasiekti išsikelti šie uždaviniai:
 
 \begin{enumerate}
-    \item Sudaryti srautinio apdorojimo sistemų balansavimo modelį ir nustatyti valdymo metrikas bei siekiamas metrikų reikšmes, norint apibrėžti balansavimo uždavinį sprendžiamą tiriamojoje darbo dalyje.
-    \item Parinkti srautinio apdorojimo sistemą ir skatinamojo mokymosi algoritmus eksperimentui, atsirenkant iš algoritmų ir sistemų aprašomų literatūroje, siekiant ištirti skatinamojo mokymosi tinkamumą srautinio apdorojimo sistemų balansavimui.
-    \item Sukurti eksperimentinį sprendimą su pasirinkta srautinio apdorojimo sistema ir atlikti eksperimentus su skirtingais skatinamojo mokymosi algoritmais, siekiant įvertinti siūlomo balansavimo modelio ir pasirinktų algoritmų validumą.
+    \item Apibrėžti srautinių duomenų apdorojimo sistemų balansavimo dalykinę sritį – sudarant balansavimo modelį ir identifikuojant valdymo metrikas bei siekiamas metrikų reikšmes.
+    \item Parinkti srautinio apdorojimo sistemą ir skatinamojo mokymosi algoritmus, atliekant mokslinių darbų, nagrinėjančių srautinį duomenų apdorojimą, analizę.
+    \item Sudaryti balansavimui pritaikytą skatinamojo mokymosi modelį ir, atliekant eksperimentus su pasirinktais skatinamojo mokymosi algoritmais, įvertinti siūlomo modelio validumą srautinio apdorojimo sistemų balansavimui.
 \end{enumerate}
 
 \section{Srautinio apdorojimo sistemų matavimas ir derinimas}
@@ -417,11 +417,18 @@ Srautinio apdorojimo sistemos balansavimo žingsnio funkcija susidaro iš:
  \end{itemize}
 \end{itemize}
 
+\subsection{Balansavimui naudojamo algoritmo tikslas}
+Kadangi nagrinėjamos srautinės apdorojimo sistemos turi paklaidą atsirandančia dėl duomenų skirtumų ir dėl net ir nedidelių pokyčių aplinkoje, siekiant nagrinėti rezultatus, darbe apsibrėžta 5 sekundžių paklaida, kurį nepriklauso nuo balansavimo, o nuo pačios srautinio apdorojimo sistemos paklaidos.
+
+Siekiant nustatyti algoritmo tinkamumą balansavimui, nustatoma tinkamumo sąlyga – algoritmo balansavimo metu nuo pradinio testavimo žingsnio iki testavimo pabaigos yra pasiektas vėlinimo sumažinimas ir vėlinimo pokytis yra didesnis nei apibrėžta 5 sekundžių paklaida. 
+
+Tuo tarpu norint teigti, jog algoritmo atliekami sprendimai yra stabilus apibrėžiama sąlyga, kad algoritmo balansavimo metu srautinio apdorojimo vėlinimo svyravimai turi būti ne didesni nei apibrėžta 5 sekundžių paklaida. 
+
 \subsection{Balansavimo algoritmo apmokymas}
 
 Balansavimo algoritmo apmokymas yra atliekamas epizodais, kur vienas epizodas susidaro iš 25 žingsnių. Kiekvieno epizodo pradžioje srautinio apdorojimo sistemą perkraunama ir nustatoma į pradinę būseną. Tinklas su pasirinktų algoritmų yra apmokoma nustatyta kiekį kartų ir po to naudojant apmokytą tinklą atliekami veiksmai ant srautinio apdorojimo sistemos su pradinę konfigūracija. Pagrindinis srautinio apdorojimo sistemos balansavimo iššūkis – ilgas laiko tarpas tarp balansavimo žingsnių, nes srautinio apdorojimo sistema turi būti perkraunama pakeitus konfigūraciją, kad pokyčiai įsigaliotų. Balansavimo algoritmas tarp pakeitimų laukia 3 minutes, kas yra pakankamas laikas sistemai pasileisti ir pasiekti stabilią būseną – surenkamų metrikų nekeičiant konfigūracijos paklaida nėra didesnė nei 5 sekundės. Dėl šios trukmės vienas skatinamojo mokymosi epizodas trunka apie 1,5 valandos (epizodo trukmės paklaida susidaro, dėl skirtingos trukmės atnaujinimo veiksmo). 
 
-Šiame darbe pasirinkti nagrinėti kelis apmokymo trukmės variantus su skirtingais algoritmais siekiant palyginti algoritmų mokymosi efektyvumą balansavimo problemai spręsti. Pasirinktas 1000 žingsnių kiekis pagal \cite{vaquero2018autotuning} nagrinėjama "Balansavimas naudojant REINFORCE algoritmą" skyriuje. Taip pat pasirinkti 50, 100 ir 250 žingsnių apmokymo kiekiai, norint nustatyti kokio apmokymo žingsnių reikia, kad sistemos balansavimas būtų atliktas sėkmingai testavimo metu.
+Šiame darbe pasirinkti nagrinėti kelis apmokymo trukmės variantus su skirtingais algoritmais siekiant palyginti algoritmų mokymosi efektyvumą balansavimo problemai spręsti. Pasirinktas 1000 žingsnių kiekis pagal \cite{vaquero2018autotuning} nagrinėjama „Balansavimas naudojant REINFORCE algoritmą“ skyriuje. Taip pat pasirinkti 50, 100 ir 250 žingsnių apmokymo kiekiai, norint nustatyti kokio apmokymo žingsnių reikia, kad sistemos balansavimas būtų atliktas sėkmingai testavimo metu.
 
 Algoritmo apmokymo testavimui, pasirinkta atlikti 25 žingsnius balansavimo, kuriuo metu algoritmas kas žingsnį pakeičia konfigūraciją ir po 25 žingsnių pasiekia konfigūracijos rinkinį, kuris, sėkmingo balansavimo atveju pasiekia mažesnį vėlinimą nei su pradinę konfigūracija.
 \section{Eksperimentinis tyrimas}
@@ -490,7 +497,7 @@ Tyrimas atliktas balansuojant srautinio apdorojimo sistemą naudojant tinklą ap
         \item Actor–Critic with Experience Replay algoritmą skatinamojo mokymosi posistemėje.
 \end{itemize}
 
-Kiekvienas skatinamojo mokymosi sprendimas yra testuojamas su Reklamų analizės srautinio apdorojimo sistema aprašyta "Srautinio apdorojimo sistemų matavimas ir derinimas" skyriuje.
+Kiekvienas skatinamojo mokymosi sprendimas yra testuojamas su Reklamų analizės srautinio apdorojimo sistema aprašyta „Srautinio apdorojimo sistemų matavimas ir derinimas“ skyriuje.
 
 Reklamų analizės sistema rezultatus talpina į tekstinį failą, kur kiekvienas įrašas yra vėlinimas milisekundžių tikslumu nuo paskutinio išsiųsto įrašo į žinučių eilę tam tikram kampanijos langui iki kol jis yra įrašomas į Redis duomenų bazę. Pasinaudojant šiais duomenimis, po kiekvienos žingsnio apskaičiuojamas paskutinių 30 sekundžių vėlinimo vidurkis. 
 
@@ -604,21 +611,17 @@ Actor–Critic with Experience Replay algoritmas po apmokymo su 1000 žingsnių 
 
 \subsection{Eksperimentų rezultatai}
 
-Siekiant nustatyti algoritmo tinkamumą balansavimui, nustatoma tinkamumo sąlyga - algoritmo balansavimo metu nuo pradinio testavimo žingsnio iki testavimo pabaigos pasiektas vėlinimo sumažinimas, kuris yra didesnis nei apibrėžta 5 sekundžių paklaida. 
-
-Tuo tarpu norint teigti, jog algoritmo atliekami sprendimai yra stabilus apibrėžiama sąlyga, kad algoritmo balansavimo metu srautinio apdorojimo vėlinimo svyravimai turi būti ne didesni nei apibrėžta 5 sekundžių paklaida. 
-
-Pagal eksperimentų rezultatus pateiktus šiame skyriuje galima matyti, kad:
+Eksperimentų rezultatus nagrinėjant pagal tinkamumo ir stabilumo sąlygas apibrėžtas „Balansavimo algoritmo“ skyriuje galima matyti, kad:
 \begin{itemize}
-    \item Tinklas naudojantis Actor–Critic with Experience Replay algoritmą ir apmokytas 1000 žingsnių testavimo metu pasiekia didžiausią vėlinimo pokytį palyginus su pradiniu žingsniu – 50 procentų sumažinimą. Tuo tarpu REINFORCE pasiektas didžiausias pokytis yra 20 procentų sumažinimas, o Deep Q Network pokyčio dydis yra arti apsibrėžtos 5 sekundžių paklaidos.
-    \item Tinklas naudojantis REINFORCE algoritmą apmokytas su išbandytais žingsnių kiekiais visada sumažina vėlinimą (15–20 procentų) palyginus su pradiniu žingsniu ir išlaiko sistemą stabiliausią palyginus su kitais algoritmais. Tuo tarpu, nors ir Deep Q Network neturi didelių vėlinimo svyravimų, tačiau nepasiekia tokio mažo pokyčio.
+    \item Tinklas naudojantis Actor–Critic with Experience Replay algoritmą ir apmokytas 1000 žingsnių testavimo metu pasiekia didžiausią vėlinimo pokytį palyginus su pradiniu žingsniu – 50 procentų sumažinimą ir yra tinkamas balansavimo uždaviniui spręsti. Tuo tarpu REINFORCE pasiektas didžiausias pokytis yra 20 procentų sumažinimas ir irgi yra tinkamas balansavimui, o Deep Q Network pokyčio dydis yra arti apsibrėžtos 5 sekundžių paklaidos. 
+    \item Tinklas naudojantis REINFORCE algoritmą apmokytas su išbandytais žingsnių kiekiais visada sumažina vėlinimą (15–20 procentų) palyginus su pradiniu žingsniu ir išlaiko sistemą stabilią palyginus su kitais algoritmais. Tuo tarpu, nors ir Deep Q Network neturi didelių vėlinimo svyravimų, tačiau nepasiekia tokio mažo pokyčio.
 \end{itemize}
 \sectionnonum{Rezultatai ir išvados}
 \subsection*{Rezultatai}
 \begin{enumerate}
-    \item Sudarytas srautinės apdorojimo sistemos, valdomos skatinamuoju mokymusi, modelis.
-    \item Apibrėžtas srautinio apdorojimo sistemos balansavimo algoritmas.
-    \item Sukurta eksperimentinė sistema ir atlikti eksperimentai su REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay skatinamojo mokymosi algoritmais.
+    \item Apibrėžti srautinių duomenų apdorojimo sistemų balansavimo dalykinę sritį ir identifikuotos valdymo metrikos bei siekiamos metrikų reikšmės.
+    \item Pasirinkta reklamų analizės srautinio apdorojimo sistema ir REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay skatinamojo mokymosi algoritmai.
+    \item Sudarytas modelis, ir atlikti eksperimentai su REINFORCE, Deep Q Network ir Actor–Critic with Experience Replay skatinamojo mokymosi algoritmais bei įvertintas siūlomo modelio validumas srautinio apdorojimo sistemų balansavimui.
 \end{enumerate}
 
 \subsection*{Išvados}
